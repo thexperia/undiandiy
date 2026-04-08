@@ -107,7 +107,7 @@ nav{
 .mode-tab.gp{color:var(--coral);border-bottom-color:var(--coral);}
 
 /* Draw body */
-.draw-body{flex:1;background:var(--bg);padding:24px 20px 40px;display:flex;flex-direction:column;align-items:center;}
+.draw-body{flex:1;background:var(--bg);padding:14px 16px 24px;display:flex;flex-direction:column;align-items:center;}
 .draw-inner{width:100%;max-width:860px;}
 
 /* No event */
@@ -119,8 +119,8 @@ nav{
 /* Header card */
 .dp-header-card{
   background:var(--panel);border:1.5px solid var(--border);border-radius:var(--rl);
-  padding:16px 20px;margin-bottom:16px;
-  display:flex;align-items:center;gap:14px;box-shadow:var(--sh);
+  padding:10px 16px;margin-bottom:10px;
+  display:flex;align-items:center;gap:12px;box-shadow:var(--sh);
 }
 .dp-hc-ico{width:46px;height:46px;border-radius:12px;background:var(--gold-bg);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
 .dp-hc-info{flex:1;}
@@ -132,7 +132,7 @@ nav{
 .dp-hc-lbl{font-size:0.62rem;color:rgba(255,255,255,0.5);display:block;margin-top:1px;}
 
 /* Duration bar */
-.dur-bar{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:var(--rs);background:var(--panel);border:1.5px solid var(--border);margin-bottom:16px;}
+.dur-bar{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:var(--rs);background:var(--panel);border:1.5px solid var(--border);margin-bottom:10px;}
 .dur-bar label{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
 .dur-bar input[type=range]{flex:1;accent-color:var(--gold-text);cursor:pointer;}
 .dur-val{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--gold-text);min-width:32px;text-align:right;font-weight:600;}
@@ -141,11 +141,11 @@ nav{
    Fixed-size cards, equal height via grid-auto-rows */
 .prize-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
   grid-auto-rows:auto;
-  gap:12px;
-  margin-bottom:18px;
-  align-items:stretch;
+  gap:8px;
+  margin-bottom:12px;
+  align-items:start;
 }
 
 /* Each prize card */
@@ -158,26 +158,26 @@ nav{
 
 /* Prize card header */
 .pc-header{
-  background:var(--navy);padding:8px 12px;
+  background:var(--navy);padding:6px 10px;
   display:flex;align-items:center;justify-content:space-between;
 }
-.pc-title{font-size:0.72rem;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:6px;}
+.pc-title{font-size:0.67rem;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:6px;}
 .pc-count-badge{background:var(--gold);color:var(--navy);font-size:0.62rem;font-weight:800;padding:2px 7px;border-radius:999px;flex-shrink:0;font-family:'DM Mono',monospace;}
 
 /* Winner rows inside card */
 .pc-winners{display:flex;flex-direction:column;flex:1;}
 .pc-winner-row{
-  display:flex;align-items:center;gap:8px;
-  padding:0 12px;height:44px;flex-shrink:0;
+  display:flex;align-items:center;gap:6px;
+  padding:0 8px;height:34px;flex-shrink:0;
   border-bottom:1px solid var(--border);
 }
 .pc-winner-row:last-child{border-bottom:none;}
 .pc-winner-num{font-size:0.6rem;font-weight:700;color:var(--muted2);font-family:'DM Mono',monospace;width:16px;flex-shrink:0;}
 /* Slot viewport */
-.pc-slot-vp{flex:1;height:28px;overflow:hidden;position:relative;border-radius:5px;background:var(--bg2);border:1px solid var(--border);}
+.pc-slot-vp{flex:1;height:22px;overflow:hidden;position:relative;border-radius:4px;background:var(--bg2);border:1px solid var(--border);}
 .pc-slot-track{display:flex;flex-direction:column;will-change:transform;}
-.pc-slot-item{height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 6px;}
-.pc-slot-item span{font-size:0.78rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;}
+.pc-slot-item{height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 5px;}
+.pc-slot-item span{font-size:0.72rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;}
 /* Winner state */
 .pc-winner-row.revealed{background:var(--gold-bg);}
 .pc-winner-row.revealed .pc-slot-vp{background:var(--gold-bg);border-color:var(--gold-border);}
@@ -203,20 +203,20 @@ nav{
 
 /* ── GRAND PRIZE picker ── */
 .gp-picker-label{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
-.gp-items{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.gp-items{display:flex;flex-direction:row;flex-wrap:wrap;gap:6px;margin-bottom:12px;}
 .gp-item{
-  display:flex;align-items:center;gap:12px;padding:12px 16px;
-  border-radius:var(--r);border:1.5px solid var(--border);background:var(--panel);
-  cursor:pointer;transition:all .15s;box-shadow:var(--sh);
+  display:flex;align-items:center;gap:7px;padding:7px 12px;
+  border-radius:999px;border:1.5px solid var(--border);background:var(--panel);
+  cursor:pointer;transition:all .15s;flex-shrink:0;
 }
-.gp-item:hover{border-color:var(--gold-border);}
-.gp-item.selected{border-color:var(--gold);background:var(--gold-bg);box-shadow:0 0 0 2px rgba(212,150,26,0.15);}
+.gp-item:hover{border-color:var(--gold-border);background:var(--gold-bg);}
+.gp-item.selected{border-color:var(--gold);background:var(--gold-bg);box-shadow:0 0 0 2px rgba(212,150,26,0.2);}
 .gp-item.exhausted{opacity:.45;cursor:not-allowed;}
-.gp-item-ico{font-size:1.1rem;}
+.gp-item-ico{font-size:0.85rem;}
 .gp-item-info{flex:1;}
-.gp-item-name{font-size:0.9rem;font-weight:700;color:var(--text);}
-.gp-item-sub{font-size:0.7rem;color:var(--muted);margin-top:1px;}
-.gp-item-badge{font-size:0.67rem;font-weight:700;padding:3px 9px;border-radius:5px;}
+.gp-item-name{font-size:0.8rem;font-weight:700;color:var(--text);}
+.gp-item-sub{font-size:0.64rem;color:var(--muted);margin-top:0;}
+.gp-item-badge{font-size:0.62rem;font-weight:700;padding:2px 7px;border-radius:5px;margin-left:2px;}
 .gp-badge-avail{background:var(--gold-bg);color:var(--gold-text);border:1px solid var(--gold-border);}
 .gp-badge-done{background:var(--bg2);color:var(--muted2);border:1px solid var(--border);}
 
@@ -463,6 +463,16 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 .info-grade-grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
 .info-grade-chip{padding:3px 9px;border-radius:5px;background:var(--gold-bg);border:1px solid var(--gold-border);font-size:0.72rem;font-weight:700;color:var(--gold-text);font-family:'DM Mono',monospace;}
 
+
+.btn-reroll{
+  padding:10px 18px;border-radius:9px;
+  border:1.5px solid var(--coral-border);background:var(--coral-bg);
+  color:var(--coral);cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:0.82rem;font-weight:700;
+  transition:all .15s;
+}
+.btn-reroll:hover{background:var(--coral);color:#fff;border-color:var(--coral);}
+
 </style>
 </head>
 <body>
@@ -555,6 +565,7 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
         <div class="prize-grid" id="prize-grid"></div>
         <div class="ctrl-row">
           <button class="btn-main gold" id="btn-dp-draw" onclick="startDpDraw()">🎲 Undi Semua Doorprize</button>
+          <button class="btn-reroll" id="btn-dp-reroll" onclick="rerollDraw()" style="display:none">↺ Undi Ulang</button>
         </div>
         <div class="status-txt" id="dp-status"></div>
         <button class="info-panel-toggle" id="dp-info-toggle" onclick="toggleInfoPanel('dp')" style="display:none">
@@ -579,14 +590,15 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
         </div>
         <div class="gp-picker-label">Pilih Grand Prize yang akan diundi:</div>
         <div class="gp-items" id="gp-items"></div>
-        <div class="dur-bar">
-          <label>⏱ Durasi per pemenang</label>
-          <input type="range" id="roll-dur-gp" min="3" max="20" value="7" oninput="document.getElementById('dur-val-gp').textContent=this.value+'s'">
-          <span class="dur-val" id="dur-val-gp">7s</span>
-        </div>
-        <div id="gp-focused-card" style="width:100%;margin-bottom:16px;display:none"></div>
+        <div id="gp-focused-card" style="width:100%;margin-bottom:10px;display:none"></div>
         <div class="ctrl-row">
           <button class="btn-main coral" id="btn-gp-draw" onclick="startGpDraw()" disabled>🏆 Undi Grand Prize</button>
+          <button class="btn-reroll" id="btn-gp-reroll" onclick="rerollDraw()" style="display:none">↺ Undi Ulang</button>
+        </div>
+        <div class="dur-bar" style="margin-top:6px">
+          <label>⏱ Durasi</label>
+          <input type="range" id="roll-dur-gp" min="3" max="20" value="7" oninput="document.getElementById('dur-val-gp').textContent=this.value+'s'">
+          <span class="dur-val" id="dur-val-gp">7s</span>
         </div>
         <div class="status-txt" id="gp-status"></div>
         <button class="info-panel-toggle" id="gp-info-toggle" onclick="toggleInfoPanel('gp')" style="display:none">
@@ -687,6 +699,12 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
             <div class="fg" style="max-width:78px"><div class="flbl">Jumlah</div><input type="number" id="dp-count" value="1" min="1"></div>
             <button class="btn-add" onclick="addPrize('dp')">+ Tambah</button>
           </div>
+          <div style="margin-top:10px">
+            <div class="flbl">📋 Paste Massal dari Excel</div>
+            <textarea id="dp-bulk" placeholder="Paste 2 kolom dari Excel (Nama Hadiah + Jumlah):&#10;Speaker Bluetooth JBL&#9;3&#10;Voucher Belanja Rp500.000&#9;5&#10;&#10;Jumlah kosong → default 1"></textarea>
+            <p class="paste-hint">Copy 2 kolom di Excel → Ctrl+C → paste → klik proses. Format: <code>Nama Hadiah[Tab]Jumlah</code></p>
+            <button class="btn-proc" onclick="bulkAddPrize('dp')">📋 Proses Paste Doorprize</button>
+          </div>
           <div id="dp-list"></div>
         </div>
         <!-- Grand Prize -->
@@ -697,6 +715,12 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
             <div class="fg"><div class="flbl">Nama Grand Prize</div><input type="text" id="gp-name" placeholder="mis. Honda Scoopy" onkeyup="if(event.key==='Enter')addPrize('gp')"></div>
             <div class="fg" style="max-width:78px"><div class="flbl">Jumlah</div><input type="number" id="gp-count" value="1" min="1"></div>
             <button class="btn-add" onclick="addPrize('gp')">+ Tambah</button>
+          </div>
+          <div style="margin-top:10px">
+            <div class="flbl">📋 Paste Massal dari Excel</div>
+            <textarea id="gp-bulk" placeholder="Paste 2 kolom dari Excel (Nama Hadiah + Jumlah):&#10;Smart TV Samsung 65&quot;&#9;1&#10;Honda Scoopy&#9;1&#10;&#10;Jumlah kosong → default 1"></textarea>
+            <p class="paste-hint">Copy 2 kolom di Excel → Ctrl+C → paste → klik proses. Format: <code>Nama Hadiah[Tab]Jumlah</code></p>
+            <button class="btn-proc" onclick="bulkAddPrize('gp')">📋 Proses Paste Grand Prize</button>
           </div>
           <div id="gp-list"></div>
         </div>
@@ -1049,8 +1073,8 @@ function renderDpStage(){
 
   // Find max count for uniform card height
   const maxCount=ev.doorprizes.reduce((m,p)=>Math.max(m,p.count),1);
-  const rowH=44; // px per winner row
-  const cardBodyH=(maxCount*rowH); // all cards same height
+  const rowH=34; // px per winner row (compact)
+  const cardBodyH=(maxCount*rowH);
 
   let winnerOffset=0;
   ev.doorprizes.forEach((prize,pi)=>{
@@ -1070,7 +1094,7 @@ function renderDpStage(){
     // Winners body — fixed height regardless of count
     const body=document.createElement('div');
     body.className='pc-winners';
-    body.style.minHeight=cardBodyH+'px';
+    body.style.minHeight=''; // each card fits content
 
     for(let i=0;i<prize.count;i++){
       const w=prizeWinners[i]||null;
@@ -1100,7 +1124,7 @@ function renderDpStage(){
         const items=[...names,...names,...names,...names,...names,...names];
         track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
         const mid=Math.floor(items.length/2);
-        track.style.transform='translateY(-'+(mid*28)+'px)';
+        track.style.transform='translateY(-'+(mid*22)+'px)';
       }else{
         track.innerHTML='<div class="pc-slot-item"><span style="color:var(--muted2)">—</span></div>';
       }
@@ -1122,40 +1146,38 @@ function renderDpStage(){
 /* Pool builders */
 function buildDpPool(){
   /* DOORPRIZE RULES:
-     - Organik: hanya G2, G3, G4. G5 tidak eligible.
-       Probabilitas: G2 > G3 > G4 (makin tinggi pangkat, makin kecil peluang)
+     - Organik: grade yang punya bobot > 0 saja eligible
+       Probabilitas per grade sesuai % yang diset admin (G2>G3>G4 default)
      - Non-organik: semua eligible, flat equal weight
-     - Rasio: organik 40% total weight, non-organik 60% total weight
-     - Peserta yang sudah menang DP tidak bisa menang lagi
+     - Rasio organik:non dijaga ketat via normalisasi di akhir
   */
   const ev=getEv(selEvId);if(!ev)return[];
   const r=ev.ratios||{organic:40,non:60,g2:50,g3:35,g4:15};
   const evW=S.winners.filter(w=>w.evId===selEvId);
   const dpK=new Set(evW.filter(w=>w.prizeType==='DOORPRIZE').map(w=>w.key));
-  // Weight per grade dalam porsi organik: G2:g2%, G3:g3%, G4:g4%, G5:0%
-  const gm={G2:r.g2||50,G3:r.g3||35,G4:r.g4||15};
-  let pool=[];
-  const avO=(ev.organic||[]).filter(e=>{
-    const k=e.name+'|org';
-    if(dpK.has(k))return false;      // sudah menang DP
-    if(e.grade==='G5')return false;  // G5 tidak eligible DP
-    return true;
-  });
+  const gm={G2:r.g2||0,G3:r.g3||0,G4:r.g4||0,G5:r.g5||0,G6:r.g6||0,G7:r.g7||0};
+  // Hitung total bobot grade yang eligible (yang ada pesertanya dan bobotnya > 0)
+  const avO=(ev.organic||[]).filter(e=>!dpK.has(e.name+'|org')&&(gm[e.grade]||0)>0);
   const avN=(ev.nonOrganic||[]).filter(e=>!dpK.has(e.name+'|non'));
-  // Organik: bobot = r.organic% dibagi per grade lalu per orang dalam grade
+  let pool=[];
+  if(!avO.length&&!avN.length)return[];
+  // Hitung ulang grade weights hanya untuk grade yang masih punya peserta eligible
+  const activeGrades=[...new Set(avO.map(e=>e.grade))];
+  const activeGradeTotal=activeGrades.reduce((s,g)=>s+(gm[g]||0),0);
   avO.forEach(e=>{
-    const k=e.name+'|org';
     const grp=avO.filter(x=>x.grade===e.grade);
-    const gradeShare=r.organic*(gm[e.grade]||0)/100; // porsi grade dalam total
-    const w=grp.length?gradeShare/grp.length:0;
-    pool.push({name:e.name,type:'org',grade:e.grade,weight:w,key:k});
+    // Normalisasi: grade share proporsional dari grade yg masih ada, dikali target organik
+    const normalizedGradeShare=activeGradeTotal>0?(gm[e.grade]||0)/activeGradeTotal:0;
+    const w=grp.length?r.organic*normalizedGradeShare/grp.length:0;
+    pool.push({name:e.name,type:'org',grade:e.grade,weight:w,key:e.name+'|org'});
   });
-  // Non-organik: bobot = r.non% dibagi rata per orang
   avN.forEach(e=>{
-    const k=e.name+'|non';
     const w=avN.length?r.non/avN.length:0;
-    pool.push({name:e.name,type:'non',grade:null,weight:w,key:k});
+    pool.push({name:e.name,type:'non',grade:null,weight:w,key:e.name+'|non'});
   });
+  // Normalisasi total ke 100 untuk menjaga rasio organik:non konsisten
+  const totalW=pool.reduce((s,p)=>s+p.weight,0);
+  if(totalW>0)pool.forEach(p=>p.weight=p.weight/totalW*100);
   return pool;
 }
 function buildGpPool(){
@@ -1190,12 +1212,14 @@ function buildGpPool(){
     if(pol==='exclude'&&dpK.has(k))return false;
     return true;
   });
-  // Organik: same grade-weighted as DP
+  // Organik: grade-weighted, normalized
+  const activeGradesGp=[...new Set(avO.map(e=>e.grade))];
+  const activeGradeTotalGp=activeGradesGp.reduce((s,g)=>s+(gm[g]||0),0);
   avO.forEach(e=>{
     const k=e.name+'|org';
     const grp=avO.filter(x=>x.grade===e.grade);
-    const gradeShare=r.organic*(gm[e.grade]||0)/100;
-    let w=grp.length?gradeShare/grp.length:0;
+    const normalizedGradeShare=activeGradeTotalGp>0?(gm[e.grade]||0)/activeGradeTotalGp:0;
+    let w=grp.length?r.organic*normalizedGradeShare/grp.length:0;
     if(pol==='reduce'&&dpK.has(k))w*=rf;
     pool.push({name:e.name,type:'org',grade:e.grade,weight:w,key:k});
   });
@@ -1206,6 +1230,9 @@ function buildGpPool(){
     if(pol==='reduce'&&dpK.has(k))w*=rf;
     pool.push({name:e.name,type:'non',grade:null,weight:w,key:k});
   });
+  // Normalize to 100
+  const totalWgp=pool.reduce((s,p)=>s+p.weight,0);
+  if(totalWgp>0)pool.forEach(p=>p.weight=p.weight/totalWgp*100);
   return pool;
 }
 function pick(pool,exclude=[]){
@@ -1224,12 +1251,51 @@ async function startDpDraw(){
   const slotList=[];
   ev.doorprizes.forEach((p,pi)=>{for(let i=0;i<p.count;i++)slotList.push({prizeName:p.name,pi,si:i});});
   if(!slotList.length)return;
-  const pool=buildDpPool();
-  if(pool.length<slotList.length){toast('⚠️ Peserta tidak cukup!');return;}
   rolling=true;document.getElementById('btn-dp-draw').disabled=true;
-  // Pick unique winners
-  const winners=[];const used=[];
-  for(let i=0;i<slotList.length;i++){const w=pick(pool,used);if(!w)break;winners.push(w);used.push(w);}
+  // Stratified pick: pick organik dan non-organik secara terpisah
+  // agar rasio PERSIS sesuai setting (bukan probabilistik)
+  const ev2=getEv(selEvId);
+  const r2=ev2.ratios||{organic:40,non:60};
+  const nOrg=Math.round(slotList.length*r2.organic/100);
+  const nNon=slotList.length-nOrg;
+  const gm2={G2:r2.g2||0,G3:r2.g3||0,G4:r2.g4||0,G5:r2.g5||0,G6:r2.g6||0,G7:r2.g7||0};
+  const avO2=(ev2.organic||[]).filter(e=>!S.winners.some(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE'&&w.key===e.name+'|org')&&(gm2[e.grade]||0)>0);
+  const avN2=(ev2.nonOrganic||[]).filter(e=>!S.winners.some(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE'&&w.key===e.name+'|non'));
+  if(avO2.length<nOrg||avN2.length<nNon){
+    if(avO2.length+avN2.length<slotList.length){toast('⚠️ Peserta tidak cukup!');rolling=false;return;}
+    // Fallback: adjust counts if one group is too small
+  }
+  // Build weighted sub-pools
+  function buildSubPool(arr,isOrg){
+    const activeG=[...new Set(arr.map(e=>e.grade))];
+    const actTotal=activeG.reduce((s,g)=>s+(gm2[g]||0),0);
+    return arr.map(e=>{
+      if(!isOrg)return{...e,weight:1,key:e.name+'|non',type:'non'};
+      const grp=arr.filter(x=>x.grade===e.grade);
+      const norm=actTotal>0?(gm2[e.grade]||0)/actTotal:1/arr.length;
+      return{...e,weight:norm/grp.length,key:e.name+'|org',type:'org'};
+    });
+  }
+  function pickFrom(pool,n,usedKeys){
+    const picked=[];
+    for(let i=0;i<n;i++){
+      const av=pool.filter(p=>!usedKeys.has(p.key));
+      if(!av.length)break;
+      const tot=av.reduce((s,p)=>s+p.weight,0);
+      let rr=Math.random()*tot;
+      let chosen=av[av.length-1];
+      for(const p of av){rr-=p.weight;if(rr<=0){chosen=p;break;}}
+      picked.push(chosen);usedKeys.add(chosen.key);
+    }
+    return picked;
+  }
+  const usedKeys=new Set();
+  const orgWinners=pickFrom(buildSubPool(avO2,true),Math.min(nOrg,avO2.length),usedKeys);
+  const nonWinners=pickFrom(buildSubPool(avN2,false),Math.min(nNon,avN2.length),usedKeys);
+  // Interleave: shuffle org+non together in random order
+  const allWinners=[...orgWinners,...nonWinners];
+  for(let i=allWinners.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[allWinners[i],allWinners[j]]=[allWinners[j],allWinners[i]];}
+  const winners=allWinners;
   const dur=(parseFloat(document.getElementById('roll-dur').value)||6)*1000;
   const names=getAllNames();if(!names.length){rolling=false;return;}
   // Prime all tracks
@@ -1241,8 +1307,9 @@ async function startDpDraw(){
   });
   document.getElementById('dp-status').textContent='🎰 Rolling…';
   // Animate all with stagger
-  const promises=slotList.map((s,i)=>animatePrizeSlot(s.pi,s.si,winners[i],dur,i*90,names));
+  const promises=slotList.map((s,i)=>animatePrizeSlot(s.pi,s.si,winners[i],dur,i*30,names));
   await Promise.all(promises);
+  revealAllDpSlots(slotList,winners);
   document.getElementById('dp-status').textContent='';
   // Save winners
   slotList.forEach((s,i)=>{
@@ -1254,9 +1321,11 @@ async function startDpDraw(){
   rolling=false;
   launchConfetti();
   showInfoToggle('dp');
+  if(isOperator){const rb=document.getElementById('btn-dp-reroll');if(rb)rb.style.display='flex';}
 }
 
 function animatePrizeSlot(pi,si,winner,dur,delay,names){
+  // delay=small stagger for start only, all finish at same time → all reveal together
   return new Promise(resolve=>{
     setTimeout(()=>{
       const track=document.getElementById('ptrack-'+pi+'-'+si);
@@ -1264,25 +1333,33 @@ function animatePrizeSlot(pi,si,winner,dur,delay,names){
       const safeIdx=Math.max(0,names.indexOf(winner.name));
       const big=[];for(let i=0;i<60;i++)big.push(names[i%names.length]);big.push(names[safeIdx]);
       track.innerHTML=big.map((n,j)=>'<div class="pc-slot-item'+(j===big.length-1?' winner':'')+'"><span>'+n+'</span></div>').join('');
-      const tIdx=big.length-1,tY=(tIdx*28)-(28/2-14);
+      const tIdx=big.length-1,tY=tIdx*22;
       const t0=performance.now();
-      const stopOff=(pi*10+si)*160;
-      function ease(t){return 1-Math.pow(1-t,5);}
+      function ease(t){return 1-Math.pow(1-t,4);}
       function anim(now){
-        const p=Math.min((now-t0)/(dur+stopOff),1);
+        const p=Math.min((now-t0)/dur,1);
         track.style.transform='translateY(-'+(tY*ease(p))+'px)';
         if(p<1){requestAnimationFrame(anim);}
-        else{
-          const last=track.children[tIdx];
-          if(last){last.querySelector('span').style.color='var(--gold-text)';last.querySelector('span').style.fontWeight='800';}
-          const row=document.getElementById('prow-'+pi+'-'+si);
-          if(row)row.classList.add('revealed');
-          document.getElementById('pcard-'+pi).classList.add('done');
-          resolve();
-        }
+        else{resolve();}
       }
       requestAnimationFrame(anim);
     },delay);
+  });
+}
+
+// Called after all slots finish → reveal all at once
+function revealAllDpSlots(slotList,winners){
+  slotList.forEach((s,i)=>{
+    const w=winners[i];if(!w)return;
+    const track=document.getElementById('ptrack-'+s.pi+'-'+s.si);
+    if(track){
+      const last=track.lastElementChild;
+      if(last){last.querySelector('span').style.color='var(--gold-text)';last.querySelector('span').style.fontWeight='800';}
+    }
+    const row=document.getElementById('prow-'+s.pi+'-'+s.si);
+    if(row)row.classList.add('revealed');
+    const card=document.getElementById('pcard-'+s.pi);
+    if(card)card.classList.add('done');
   });
 }
 
@@ -1331,8 +1408,8 @@ function selectGp(idx){
 function buildGpFocusedCard(pi,prize,wonCount){
   const fc=document.getElementById('gp-focused-card');if(!fc)return;
   const names=getAllNames();
-  const rowH=44;
-  const cardBodyH=Math.max(prize.count*rowH, 88);
+  const rowH=34;
+  const cardBodyH=Math.max(prize.count*rowH, 68);
   const gpAllW=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===prize.name);
   const isDone=gpAllW.length>=prize.count;
 
@@ -1343,13 +1420,13 @@ function buildGpFocusedCard(pi,prize,wonCount){
 
   const hdr=document.createElement('div');
   hdr.className='pc-header';
-  hdr.style.cssText='background:'+(isDone?'var(--teal)':'var(--coral)')+';padding:14px 20px;';
+  hdr.style.cssText='background:'+(isDone?'var(--teal)':'var(--coral)')+';padding:10px 16px;';
   hdr.innerHTML='<span class="pc-title" style="font-size:1rem">🏆 '+prize.name+'</span><span class="pc-count-badge" style="background:rgba(255,255,255,0.25);color:#fff;font-size:0.8rem">×'+prize.count+'</span>';
   card.appendChild(hdr);
 
   const body=document.createElement('div');
   body.className='pc-winners';
-  body.style.minHeight=cardBodyH+'px';
+  body.style.minHeight=''; // each card fits content
 
   for(let i=0;i<prize.count;i++){
     const w=gpAllW[i]||null;
@@ -1367,7 +1444,7 @@ function buildGpFocusedCard(pi,prize,wonCount){
     }else if(names.length){
       const items=[...names,...names,...names,...names,...names,...names];
       track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
-      const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*28)+'px)';
+      const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*22)+'px)';
     }else{
       track.innerHTML='<div class="pc-slot-item"><span style="color:var(--muted2)">—</span></div>';
     }
@@ -1386,9 +1463,52 @@ async function startGpDraw(){
   const p=ev.grandprizes[gpSelIdx];if(!p)return;
   const alreadyWon=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===p.name).length;
   const remaining=p.count-alreadyWon;if(remaining<=0){toast('Hadiah ini sudah selesai diundi.');return;}
-  const pool=buildGpPool();if(!pool.length){toast('⚠️ Tidak ada peserta eligible!');return;}
-  const winners=[];const used=[];
-  for(let i=0;i<remaining;i++){const w=pick(pool,used);if(!w)break;winners.push(w);used.push(w);}
+  // GP stratified pick
+  const evGp=getEv(selEvId);
+  const rGp=evGp.ratios||{};
+  const gpOrgPct=rGp.gpOrganic||50,gpNonPct=rGp.gpNon||50;
+  const nGpOrg=Math.round(remaining*gpOrgPct/100);
+  const nGpNon=remaining-nGpOrg;
+  const gmGp={G2:rGp.g2||0,G3:rGp.g3||0,G4:rGp.g4||0,G5:rGp.g5||0,G6:rGp.g6||0,G7:rGp.g7||0};
+  const pol2=evGp.dpPolicy||'full',rf2=(evGp.reduceFactor||50)/100;
+  const dpKeys2=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE').map(w=>w.key));
+  const gpKeys2=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE').map(w=>w.key));
+  const avOgp=(evGp.organic||[]).filter(e=>{
+    const k=e.name+'|org';
+    return !gpKeys2.has(k)&&(gmGp[e.grade]||0)>0&&!(pol2==='exclude'&&dpKeys2.has(k));
+  });
+  const avNgp=(evGp.nonOrganic||[]).filter(e=>{
+    const k=e.name+'|non';
+    return !gpKeys2.has(k)&&!(pol2==='exclude'&&dpKeys2.has(k));
+  });
+  if(avOgp.length+avNgp.length<remaining){toast('⚠️ Peserta tidak cukup!');return;}
+  function buildGpSubPool(arr,isOrg){
+    const actG=[...new Set(arr.map(e=>e.grade))];
+    const actT=actG.reduce((s,g)=>s+(gmGp[g]||0),0);
+    return arr.map(e=>{
+      if(!isOrg){let w2=1;if(pol2==='reduce'&&dpKeys2.has(e.name+'|non'))w2*=rf2;return{...e,weight:w2,key:e.name+'|non',type:'non'};}
+      const grp=arr.filter(x=>x.grade===e.grade);
+      const norm=actT>0?(gmGp[e.grade]||0)/actT:1/arr.length;
+      let w2=norm/grp.length;if(pol2==='reduce'&&dpKeys2.has(e.name+'|org'))w2*=rf2;
+      return{...e,weight:w2,key:e.name+'|org',type:'org'};
+    });
+  }
+  function pickFromGp(pool2,n2,usedK){
+    const picked2=[];
+    for(let i=0;i<n2;i++){
+      const av2=pool2.filter(p=>!usedK.has(p.key));
+      if(!av2.length)break;
+      const tot2=av2.reduce((s,p)=>s+p.weight,0);
+      let rr2=Math.random()*tot2;let ch2=av2[av2.length-1];
+      for(const p of av2){rr2-=p.weight;if(rr2<=0){ch2=p;break;}}
+      picked2.push(ch2);usedK.add(ch2.key);
+    }
+    return picked2;
+  }
+  const usedKgp=new Set();
+  const orgWgp=pickFromGp(buildGpSubPool(avOgp,true),Math.min(nGpOrg,avOgp.length),usedKgp);
+  const nonWgp=pickFromGp(buildGpSubPool(avNgp,false),Math.min(nGpNon,avNgp.length),usedKgp);
+  const winners=[...orgWgp,...nonWgp];
   if(!winners.length){toast('Peserta tidak cukup.');return;}
   rolling=true;document.getElementById('btn-gp-draw').disabled=true;
   document.getElementById('gp-status').textContent='🎰 Rolling…';
@@ -1426,6 +1546,7 @@ async function startGpDraw(){
   rolling=false;gpSelIdx=null;
   document.getElementById('btn-gp-draw').disabled=true;
   showInfoToggle('gp');
+  if(isOperator){const rb=document.getElementById('btn-gp-reroll');if(rb)rb.style.display='flex';}
   // Update total counter
   const totalDone=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE').length;
   const totalAll=ev.grandprizes.reduce((s,p)=>s+p.count,0);
@@ -1440,16 +1561,15 @@ function animateGpTrack(pi,si,winner,dur,names){
     const big=[];for(let i=0;i<60;i++)big.push(names[i%names.length]);big.push(names[safeIdx]);
     track.innerHTML=big.map((n,j)=>'<div class="pc-slot-item'+(j===big.length-1?' winner':'')+'"><span>'+n+'</span></div>').join('');
     const tIdx=big.length-1;
-    // Fix: target item center minus slot center
-    const tY=(tIdx*28)+14-14;  // scroll so winner row is visible
+    const tY=tIdx*22;
     const t0=performance.now();
     function ease(t){return 1-Math.pow(1-t,5);}
     function anim(now){
       const p=Math.min((now-t0)/dur,1);
-      track.style.transform='translateY(-'+(tIdx*28*ease(p))+'px)';
+      track.style.transform='translateY(-'+(tY*ease(p))+'px)';
       if(p<1){requestAnimationFrame(anim);}
       else{
-        track.style.transform='translateY(-'+(tIdx*28)+'px)';
+        track.style.transform='translateY(-'+(tIdx*22)+'px)';
         const last=track.children[tIdx];
         if(last){last.querySelector('span').style.color='var(--gold-text)';last.querySelector('span').style.fontWeight='800';}
         const row=document.getElementById('gprow-'+pi+'-'+si);
@@ -1541,6 +1661,24 @@ function bulkAdd(t){
   else{if(!ev.nonOrganic)ev.nonOrganic=[];lines.forEach(line=>{const name=line.split(/\t/)[0].trim();if(!name)return;if(ev.nonOrganic.some(e=>e.name===name)){dup++;return;}ev.nonOrganic.push({name});added++;});document.getElementById('non-bulk').value='';renderTL('non-list',ev.nonOrganic,'non');}
   const msgs=[];if(added)msgs.push('✓ '+added+' ditambahkan');if(dup)msgs.push(dup+' duplikat dilewati');toast(msgs.join(', ')||'Tidak ada data baru.');
 }
+function bulkAddPrize(t){
+  const ev=getEv(adminEvId);if(!ev)return;
+  const raw=document.getElementById(t+'-bulk').value;
+  const lines=raw.split('\n').map(l=>l.trim()).filter(Boolean);
+  let added=0,dup=0;
+  const arr=t==='dp'?ev.doorprizes:ev.grandprizes;
+  lines.forEach(line=>{
+    const parts=line.split(/\t|;/);
+    const name=(parts[0]||'').trim();if(!name)return;
+    const count=parseInt(parts[1])||1;
+    if(arr.some(p=>p.name===name)){dup++;return;}
+    arr.push({name,count});added++;
+  });
+  document.getElementById(t+'-bulk').value='';
+  renderPL(t+'-list',arr,t);
+  const msgs=[];if(added)msgs.push('✓ '+added+' hadiah ditambahkan');if(dup)msgs.push(dup+' duplikat dilewati');
+  toast(msgs.join(', ')||'Tidak ada data baru.');
+}
 function updR(){
   const r={};['organic','non','g2','g3','g4','g5','g6','g7'].forEach(k=>{r[k]=parseFloat(document.getElementById('r-'+k)?.value)||0;});
   r.gpOrganic=parseFloat(document.getElementById('r-gp-organic')?.value)||0;
@@ -1616,8 +1754,8 @@ function renderInfoPanel(type){
   // Count organik vs non
   const orgW=winners.filter(w=>w.type==='org');
   const nonW=winners.filter(w=>w.type==='non');
-  const orgPct=winners.length?Math.round(orgW.length/winners.length*100):0;
-  const nonPct=100-orgPct;
+  const orgPct=winners.length?(orgW.length/winners.length*100).toFixed(2):0;
+  const nonPct=winners.length?((nonW.length/winners.length)*100).toFixed(2):0;
 
   // Grade breakdown
   const gradeCnt={};
@@ -1641,7 +1779,7 @@ function renderInfoPanel(type){
 
   if(orgW.length>0){
     html+='<div class="info-row" style="flex-direction:column;align-items:flex-start;gap:6px"><span class="info-row-label">Breakdown Pangkat Organik</span><div class="info-grade-grid">';
-    Object.entries(gradeCnt).sort().forEach(([g,c])=>{html+='<span class="info-grade-chip">'+g+': '+c+'</span>';});
+    const totalGradeW=Object.values(gradeCnt).reduce((s,v)=>s+v,0);Object.entries(gradeCnt).sort().forEach(([g,c])=>{const pct=totalGradeW?(c/totalGradeW*100).toFixed(2):0;html+='<span class="info-grade-chip">'+g+': '+c+' ('+pct+'%)</span>';});
     html+='</div></div>';
   }
 
@@ -1663,6 +1801,35 @@ function renderInfoPanel(type){
 function showInfoToggle(type){
   const btn=document.getElementById(type+'-info-toggle');
   if(btn&&isOperator)btn.style.display='flex';
+}
+
+
+function rerollDraw(){
+  const ev=getEv(selEvId);if(!ev)return;
+  const mode=curMode==='dp'?'DOORPRIZE':'GRAND PRIZE';
+  const modeLabel=curMode==='dp'?'Doorprize':'Grand Prize';
+  const count=S.winners.filter(w=>w.evId===selEvId&&w.prizeType===mode).length;
+  if(count===0){toast('Belum ada pemenang untuk di-reset.');return;}
+  if(!confirm('Undi ulang '+modeLabel+' untuk kegiatan "'+ev.name+'"?\n\nIni akan menghapus '+count+' pemenang '+modeLabel+' dan mengulang dari awal.\nPemenang '+modeLabel+' yang ada akan dihapus permanen.\n\nLanjutkan?'))return;
+  // Remove only winners of this event + this type
+  S.winners=S.winners.filter(w=>!(w.evId===selEvId&&w.prizeType===mode));
+  save();
+  // Reset UI
+  if(curMode==='dp'){
+    document.getElementById('btn-dp-draw').textContent='🎲 Undi Semua Doorprize';
+    document.getElementById('btn-dp-draw').disabled=!isOperator;
+    document.getElementById('btn-dp-reroll').style.display='none';
+    const ip=document.getElementById('dp-info-panel');if(ip)ip.classList.remove('open');
+    const it=document.getElementById('dp-info-toggle');if(it)it.style.display='none';
+    renderDpStage();
+  } else {
+    document.getElementById('btn-gp-draw').disabled=true;
+    document.getElementById('btn-gp-reroll').style.display='none';
+    const ip=document.getElementById('gp-info-panel');if(ip)ip.classList.remove('open');
+    const it=document.getElementById('gp-info-toggle');if(it)it.style.display='none';
+    renderGpStage();
+  }
+  toast('↺ '+modeLabel+' direset — siap diundi ulang.');
 }
 
 </script>
