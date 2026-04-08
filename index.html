@@ -671,7 +671,7 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
           <div class="fr">
             <div class="fg"><div class="flbl">Nama</div><input type="text" id="org-name" placeholder="Nama pegawai" onkeyup="if(event.key==='Enter')addEmp('org')"></div>
             <div class="fg" style="max-width:90px"><div class="flbl">Pangkat</div>
-              <select id="org-grade"><option value="G2">G2</option><option value="G3">G3</option><option value="G4" selected>G4</option><option value="G5">G5</option></select>
+              <select id="org-grade"><option value="G2">G2</option><option value="G3">G3</option><option value="G4" selected>G4</option><option value="G5">G5</option><option value="G6">G6</option><option value="G7">G7</option></select>
             </div>
             <button class="btn-add" onclick="addEmp('org')">+ Tambah</button>
           </div>
@@ -711,15 +711,13 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
             <div class="ratio-row"><div class="ratio-lbl">Non-Organik<small>Keseluruhan</small></div><div class="ratio-iw"><input type="number" id="r-non" min="0" max="100" value="20" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-teal" id="rb-non" style="width:20%"></div></div></div>
             <div class="ratio-ttl ok" id="rt-main">Total: 100% ✓</div>
             <hr class="divider">
-            <div style="font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px">Break-down Organik (G2+G3+G4 = 100% · G5 tidak eligible)</div>
+            <div style="font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px">Break-down Organik</div>
             <div class="ratio-row"><div class="ratio-lbl">G2</div><div class="ratio-iw"><input type="number" id="r-g2" min="0" max="100" value="10" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g2" style="width:10%"></div></div></div>
             <div class="ratio-row"><div class="ratio-lbl">G3</div><div class="ratio-iw"><input type="number" id="r-g3" min="0" max="100" value="20" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g3" style="width:20%"></div></div></div>
             <div class="ratio-row"><div class="ratio-lbl">G4</div><div class="ratio-iw"><input type="number" id="r-g4" min="0" max="100" value="30" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g4" style="width:30%"></div></div></div>
-            <div class="ratio-row" style="opacity:.4">
-  <div class="ratio-lbl">G5 <small style="color:var(--red);font-weight:700">Tidak eligible</small></div>
-  <div class="ratio-iw"><input type="number" id="r-g5" value="0" disabled style="background:var(--bg2);cursor:not-allowed"><span class="ratio-pct">%</span></div>
-  <div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g5" style="width:0%"></div></div>
-</div>
+            <div class="ratio-row"><div class="ratio-lbl">G5</div><div class="ratio-iw"><input type="number" id="r-g5" min="0" max="100" value="0" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g5" style="width:0%"></div></div></div>
+            <div class="ratio-row"><div class="ratio-lbl">G6</div><div class="ratio-iw"><input type="number" id="r-g6" min="0" max="100" value="0" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g6" style="width:0%"></div></div></div>
+            <div class="ratio-row"><div class="ratio-lbl">G7</div><div class="ratio-iw"><input type="number" id="r-g7" min="0" max="100" value="0" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g7" style="width:0%"></div></div></div>
             <div class="ratio-ttl ok" id="rt-org">Total organik: 100% ✓</div>
           </div>
         </div>
@@ -754,12 +752,12 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
    Lihat panduan deploy untuk caranya.
 ══════════════════════════════════════ */
 const FIREBASE_CONFIG = {
-  apiKey: "AIzaSyDWnculikZCSNe9q0bOrs5xwjXvCe3Ogds",
-  authDomain: "undian-diy.firebaseapp.com",
-  projectId: "undian-diy",
-  storageBucket: "undian-diy.firebasestorage.app",
+  apiKey:            "AIzaSyDWnculikZCSNe9q0bOrs5xwjXvCe3Ogds",
+  authDomain:        "undian-diy.firebaseapp.com",
+  projectId:         "undian-diy",
+  storageBucket:     "undian-diy.firebasestorage.app",
   messagingSenderId: "769378017551",
-  appId: "1:769378017551:web:47e3e9779ad1c8bdefde7a"
+  appId:             "1:769378017551:web:47e3e9779ad1c8bdefde7a"
 };
 
 /* ══════════════════════════════════════
@@ -1134,12 +1132,12 @@ function buildGpPool(){
   const evW=S.winners.filter(w=>w.evId===selEvId);
   const dpK=new Set(evW.filter(w=>w.prizeType==='DOORPRIZE').map(w=>w.key));
   const gpK=new Set(evW.filter(w=>w.prizeType==='GRAND PRIZE').map(w=>w.key));
-  const gm={G2:r.g2||50,G3:r.g3||35,G4:r.g4||15}; // G5=0
+  const gm={G2:r.g2||0,G3:r.g3||0,G4:r.g4||0,G5:r.g5||0,G6:r.g6||0,G7:r.g7||0};
   let pool=[];
   const avO=(ev.organic||[]).filter(e=>{
     const k=e.name+'|org';
     if(gpK.has(k))return false;       // sudah menang 1 GP — tidak boleh lagi
-    if(e.grade==='G5')return false;   // G5 tidak eligible GP
+    if((gm[e.grade]||0)===0)return false;  // grade dengan bobot 0 tidak eligible
     if(pol==='exclude'&&dpK.has(k))return false;
     return true;
   });
@@ -1463,7 +1461,7 @@ function fillAdminEvSel(){
   if(S.events.find(e=>e.id===cur))sel.value=cur;
 }
 function createEv(){
-  const ev={id:uid(),name:'Kegiatan Baru',loc:'',dateStart:'',dateEnd:'',doorprizes:[],grandprizes:[],organic:[],nonOrganic:[],ratios:{organic:40,non:60,g2:50,g3:35,g4:15,g5:0},dpPolicy:'full',reduceFactor:50};
+  const ev={id:uid(),name:'Kegiatan Baru',loc:'',dateStart:'',dateEnd:'',doorprizes:[],grandprizes:[],organic:[],nonOrganic:[],ratios:{organic:40,non:60,g2:50,g3:35,g4:15,g5:0,g6:0,g7:0},dpPolicy:'full',reduceFactor:50};
   S.events.push(ev);save();fillAdminEvSel();loadEvEd(ev.id);fillDrawEvSel();
 }
 function deleteEv(){
@@ -1483,8 +1481,8 @@ function loadEvEd(id){
   document.getElementById('ev-ds').value=ev.dateStart||'';document.getElementById('ev-de').value=ev.dateEnd||'';
   renderPL('dp-list',ev.doorprizes,'dp');renderPL('gp-list',ev.grandprizes,'gp');
   renderTL('org-list',ev.organic,'org');renderTL('non-list',ev.nonOrganic,'non');
-  const def={organic:40,non:60,g2:50,g3:35,g4:15};
-  ['organic','non','g2','g3','g4'].forEach(k=>{const el=document.getElementById('r-'+k);if(el)el.value=(ev.ratios||{})[k]??def[k];});
+  const def={organic:40,non:60,g2:50,g3:35,g4:15,g5:0,g6:0,g7:0};
+  ['organic','non','g2','g3','g4','g5','g6','g7'].forEach(k=>{const el=document.getElementById('r-'+k);if(el)el.value=(ev.ratios||{})[k]??def[k];});
   updR();selPol(ev.dpPolicy||'full',false);document.getElementById('reduce-fac').value=ev.reduceFactor||50;
   document.getElementById('save-ok').style.display='none';
 }
@@ -1499,23 +1497,22 @@ function bulkAdd(t){
   const ev=getEv(adminEvId);if(!ev)return;
   const raw=document.getElementById(t==='org'?'org-bulk':'non-bulk').value;
   const lines=raw.split('\n').map(l=>l.trim()).filter(Boolean);let added=0,dup=0;
-  if(t==='org'){if(!ev.organic)ev.organic=[];lines.forEach(line=>{const parts=line.split(/\t|;/);const name=(parts[0]||'').trim();if(!name)return;let grade='G4';if(parts[1]){const g=(parts[1]||'').trim().toUpperCase().replace(/\s/g,'');if(['G2','G3','G4','G5'].includes(g))grade=g;}if(ev.organic.some(e=>e.name===name)){dup++;return;}ev.organic.push({name,grade});added++;});document.getElementById('org-bulk').value='';renderTL('org-list',ev.organic,'org');}
+  if(t==='org'){if(!ev.organic)ev.organic=[];lines.forEach(line=>{const parts=line.split(/\t|;/);const name=(parts[0]||'').trim();if(!name)return;let grade='G4';if(parts[1]){const g=(parts[1]||'').trim().toUpperCase().replace(/\s/g,'');if(['G2','G3','G4','G5','G6','G7'].includes(g))grade=g;}if(ev.organic.some(e=>e.name===name)){dup++;return;}ev.organic.push({name,grade});added++;});document.getElementById('org-bulk').value='';renderTL('org-list',ev.organic,'org');}
   else{if(!ev.nonOrganic)ev.nonOrganic=[];lines.forEach(line=>{const name=line.split(/\t/)[0].trim();if(!name)return;if(ev.nonOrganic.some(e=>e.name===name)){dup++;return;}ev.nonOrganic.push({name});added++;});document.getElementById('non-bulk').value='';renderTL('non-list',ev.nonOrganic,'non');}
   const msgs=[];if(added)msgs.push('✓ '+added+' ditambahkan');if(dup)msgs.push(dup+' duplikat dilewati');toast(msgs.join(', ')||'Tidak ada data baru.');
 }
 function updR(){
-  const r={};['organic','non','g2','g3','g4'].forEach(k=>{r[k]=parseFloat(document.getElementById('r-'+k)?.value)||0;});
-  r.g5=0; // G5 tidak eligible, selalu 0
-  const mt=r.organic+r.non, ot=r.g2+r.g3+r.g4; // G5 tidak dihitung
-  ['organic','non','g2','g3','g4'].forEach(k=>{const b=document.getElementById('rb-'+k);if(b)b.style.width=Math.min(r[k],100)+'%';});
+  const r={};['organic','non','g2','g3','g4','g5','g6','g7'].forEach(k=>{r[k]=parseFloat(document.getElementById('r-'+k)?.value)||0;});
+  const mt=r.organic+r.non, ot=r.g2+r.g3+r.g4+r.g5+r.g6+r.g7;
+  ['organic','non','g2','g3','g4','g5','g6','g7'].forEach(k=>{const b=document.getElementById('rb-'+k);if(b)b.style.width=Math.min(r[k],100)+'%';});
   const m1=document.getElementById('rt-main');m1.className='ratio-ttl '+(mt===100?'ok':'err');m1.textContent='Total: '+mt+'%'+(mt===100?' ✓':' ✗ (harus 100%)');
-  const m2=document.getElementById('rt-org');m2.className='ratio-ttl '+(ot===100?'ok':'err');m2.textContent='Total organik G2+G3+G4: '+ot+'%'+(ot===100?' ✓':' ✗ (harus 100%)');
+  const m2=document.getElementById('rt-org');m2.className='ratio-ttl '+(ot===100?'ok':'err');m2.textContent='Total organik: '+ot+'%'+(ot===100?' ✓':' ✗ (harus 100%)');
 }
 function selPol(val,save2=true){['full','reduce','exclude'].forEach(p=>{document.getElementById('pol-'+p)?.classList.toggle('sel',p===val);});const r=document.querySelector('input[name="pol"][value="'+val+'"]');if(r)r.checked=true;document.getElementById('reduce-row').style.display=val==='reduce'?'flex':'none';}
 function saveEv(){
   const ev=getEv(adminEvId);if(!ev)return;updR();
   ev.name=document.getElementById('ev-name').value.trim()||'Kegiatan Baru';ev.loc=document.getElementById('ev-loc').value.trim();ev.dateStart=document.getElementById('ev-ds').value;ev.dateEnd=document.getElementById('ev-de').value;
-  const r={};['organic','non','g2','g3','g4'].forEach(k=>{r[k]=parseFloat(document.getElementById('r-'+k)?.value)||0;});r.g5=0;ev.ratios=r;
+  const r={};['organic','non','g2','g3','g4','g5','g6','g7'].forEach(k=>{r[k]=parseFloat(document.getElementById('r-'+k)?.value)||0;});ev.ratios=r;
   ev.dpPolicy=document.querySelector('input[name="pol"]:checked')?.value||'full';ev.reduceFactor=parseFloat(document.getElementById('reduce-fac').value)||50;
   save();fillAdminEvSel();fillDrawEvSel();if(selEvId===adminEvId)renderDrawMeta(ev);
   const ok=document.getElementById('save-ok');ok.style.display='block';setTimeout(()=>ok.style.display='none',2800);toast('✓ Pengaturan disimpan!');
