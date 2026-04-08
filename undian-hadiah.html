@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Serba-Serbi Berhadiah — KPwBI DIY</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════
+   PALETTE — warm light base, dark navy accents
+═══════════════════════════════ */
+:root{
+  --bg:#F0F2F8;
+  --bg2:#E4E8F4;
+  --panel:#FFFFFF;
+  --panel2:#F5F7FC;
+  --border:#DDE2EF;
+  --border2:#C8CFE6;
+  --text:#1A2340;
+  --muted:#6B7499;
+  --muted2:#A0ADCA;
+  --navy:#1A2340;
+  --navy2:#253160;
+  --gold:#D4961A;
+  --gold-bg:#FFF8E6;
+  --gold-border:#F0D080;
+  --gold-text:#8A5E00;
+  --coral:#C9482A;
+  --coral-bg:#FFF0EC;
+  --coral-border:#F0B8A8;
+  --teal:#0E7A72;
+  --teal-bg:#E6F7F5;
+  --teal-border:#90D4CE;
+  --green:#15803D;
+  --green-bg:#F0FDF4;
+  --red:#DC2626;
+  --red-bg:#FEF2F2;
+  --purple:#6D28D9;
+  --purple-bg:#F5F3FF;
+  --sh:0 2px 12px rgba(26,35,64,0.10);
+  --sh-lg:0 8px 32px rgba(26,35,64,0.14);
+  --r:12px;--rs:8px;--rl:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;overflow-x:hidden;}
+#confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;height:58px;
+  background:var(--navy);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;
+  box-shadow:0 2px 16px rgba(26,35,64,0.25);
+}
+.nav-logo{display:flex;align-items:center;gap:10px;}
+.nav-logo-icon{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--gold),#E8A020);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.nav-logo-text strong{font-size:0.9rem;font-weight:800;color:#fff;display:block;line-height:1.25;}
+.nav-logo-text small{font-size:0.62rem;color:rgba(255,255,255,0.55);display:block;}
+.nav-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+.nav-tab{padding:6px 14px;border-radius:7px;border:none;background:transparent;color:rgba(255,255,255,0.6);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:600;transition:all .15s;white-space:nowrap;}
+.nav-tab:hover{color:#fff;background:rgba(255,255,255,0.1);}
+.nav-tab.active{background:var(--gold);color:var(--navy);}
+.nav-mode-badge{padding:4px 10px;border-radius:6px;font-size:0.67rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border:1px solid;}
+.nav-mode-badge.viewer{background:var(--teal-bg);color:var(--teal);border-color:var(--teal-border);}
+.nav-mode-badge.operator{background:var(--gold-bg);color:var(--gold-text);border-color:var(--gold-border);}
+
+/* ── PAGE ── */
+.page{display:none;min-height:100vh;padding-top:58px;}
+.page.active{display:block;}
+#page-draw.active{display:flex;flex-direction:column;}
+
+/* ═══════════════════════════════
+   DRAW PAGE
+═══════════════════════════════ */
+.draw-hero{
+  background:var(--navy);
+  border-bottom:3px solid var(--gold);
+  padding:16px 20px 14px;
+}
+.draw-hero-inner{max-width:860px;margin:0 auto;}
+.ev-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.ev-label{color:rgba(255,255,255,0.5);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap;}
+.ev-select{
+  flex:1;min-width:160px;max-width:320px;
+  padding:8px 32px 8px 12px;border-radius:8px;
+  border:1px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.1) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23fff' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+  color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.86rem;font-weight:600;
+  outline:none;cursor:pointer;appearance:none;
+}
+.ev-select option{background:var(--navy);}
+.ev-select:focus{border-color:var(--gold);}
+.ev-meta{display:flex;gap:8px;flex-wrap:wrap;}
+.ev-pill{display:flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);font-size:0.72rem;color:rgba(255,255,255,0.7);}
+.op-exit-btn{padding:5px 12px;border-radius:7px;border:1px solid rgba(255,255,255,0.25);background:transparent;color:rgba(255,255,255,0.75);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:600;transition:all .13s;}
+.op-exit-btn:hover{background:rgba(255,255,255,0.1);color:#fff;}
+
+/* Mode tabs */
+.mode-bar{background:var(--panel);border-bottom:2px solid var(--border);}
+.mode-bar-inner{max-width:860px;margin:0 auto;padding:0 20px;display:flex;}
+.mode-tab{padding:12px 24px;border:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.mode-tab:hover{color:var(--text);}
+.mode-tab.dp{color:var(--gold-text);border-bottom-color:var(--gold);}
+.mode-tab.gp{color:var(--coral);border-bottom-color:var(--coral);}
+
+/* Draw body */
+.draw-body{flex:1;background:var(--bg);padding:24px 20px 40px;display:flex;flex-direction:column;align-items:center;}
+.draw-inner{width:100%;max-width:860px;}
+
+/* No event */
+.no-ev{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 20px;text-align:center;}
+.no-ev-ico{font-size:2.8rem;margin-bottom:14px;}
+.no-ev h3{font-size:1rem;font-weight:700;color:var(--text);margin-bottom:6px;}
+.no-ev p{font-size:0.82rem;color:var(--muted);line-height:1.6;}
+
+/* Header card */
+.dp-header-card{
+  background:var(--panel);border:1.5px solid var(--border);border-radius:var(--rl);
+  padding:16px 20px;margin-bottom:16px;
+  display:flex;align-items:center;gap:14px;box-shadow:var(--sh);
+}
+.dp-hc-ico{width:46px;height:46px;border-radius:12px;background:var(--gold-bg);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.dp-hc-info{flex:1;}
+.dp-hc-label{font-size:0.67rem;font-weight:700;color:var(--gold-text);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;}
+.dp-hc-title{font-size:1.05rem;font-weight:800;color:var(--text);}
+.dp-hc-sub{font-size:0.74rem;color:var(--muted);margin-top:2px;}
+.dp-hc-num-wrap{background:var(--navy);border-radius:10px;padding:8px 14px;text-align:center;flex-shrink:0;}
+.dp-hc-num{font-size:1.4rem;font-weight:800;color:var(--gold);font-family:'DM Mono',monospace;display:block;line-height:1;}
+.dp-hc-lbl{font-size:0.62rem;color:rgba(255,255,255,0.5);display:block;margin-top:1px;}
+
+/* Duration bar */
+.dur-bar{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:var(--rs);background:var(--panel);border:1.5px solid var(--border);margin-bottom:16px;}
+.dur-bar label{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
+.dur-bar input[type=range]{flex:1;accent-color:var(--gold-text);cursor:pointer;}
+.dur-val{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--gold-text);min-width:32px;text-align:right;font-weight:600;}
+
+/* ── PRIZE GRID ──
+   Fixed-size cards, equal height via grid-auto-rows */
+.prize-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  grid-auto-rows:auto;
+  gap:12px;
+  margin-bottom:18px;
+  align-items:stretch;
+}
+
+/* Each prize card */
+.prize-card-slot{
+  background:var(--panel);border:1.5px solid var(--border);border-radius:var(--r);
+  overflow:hidden;display:flex;flex-direction:column;
+  box-shadow:var(--sh);transition:border-color .25s,box-shadow .25s;
+}
+.prize-card-slot.done{border-color:var(--gold-border);box-shadow:0 0 0 2px rgba(212,150,26,0.15);}
+
+/* Prize card header */
+.pc-header{
+  background:var(--navy);padding:8px 12px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.pc-title{font-size:0.72rem;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:6px;}
+.pc-count-badge{background:var(--gold);color:var(--navy);font-size:0.62rem;font-weight:800;padding:2px 7px;border-radius:999px;flex-shrink:0;font-family:'DM Mono',monospace;}
+
+/* Winner rows inside card */
+.pc-winners{display:flex;flex-direction:column;flex:1;}
+.pc-winner-row{
+  display:flex;align-items:center;gap:8px;
+  padding:0 12px;height:44px;flex-shrink:0;
+  border-bottom:1px solid var(--border);
+}
+.pc-winner-row:last-child{border-bottom:none;}
+.pc-winner-num{font-size:0.6rem;font-weight:700;color:var(--muted2);font-family:'DM Mono',monospace;width:16px;flex-shrink:0;}
+/* Slot viewport */
+.pc-slot-vp{flex:1;height:28px;overflow:hidden;position:relative;border-radius:5px;background:var(--bg2);border:1px solid var(--border);}
+.pc-slot-track{display:flex;flex-direction:column;will-change:transform;}
+.pc-slot-item{height:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 6px;}
+.pc-slot-item span{font-size:0.78rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;}
+/* Winner state */
+.pc-winner-row.revealed{background:var(--gold-bg);}
+.pc-winner-row.revealed .pc-slot-vp{background:var(--gold-bg);border-color:var(--gold-border);}
+.pc-winner-row.revealed .pc-slot-item.winner span{color:var(--gold-text);font-weight:800;}
+
+/* Controls */
+.ctrl-row{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;}
+.btn-main{
+  padding:12px 36px;border-radius:10px;border:none;cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;font-size:0.94rem;font-weight:800;
+  background:var(--navy);color:#fff;
+  box-shadow:0 4px 16px rgba(26,35,64,0.25);transition:all .15s;
+}
+.btn-main:hover{background:var(--navy2);transform:translateY(-1px);box-shadow:0 6px 22px rgba(26,35,64,0.3);}
+.btn-main:active{transform:none;}
+.btn-main:disabled{opacity:.38;cursor:not-allowed;transform:none;box-shadow:none;}
+.btn-main.gold{background:linear-gradient(135deg,var(--gold),#C07800);color:var(--navy);}
+.btn-main.gold:hover{box-shadow:0 6px 22px rgba(212,150,26,0.35);}
+.btn-main.coral{background:linear-gradient(135deg,#E05A3A,var(--coral));color:#fff;}
+.btn-sec{padding:10px 20px;border-radius:9px;border:1.5px solid var(--border2);background:var(--panel);color:var(--text);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;font-weight:700;transition:all .15s;}
+.btn-sec:hover{border-color:var(--gold);color:var(--gold-text);}
+.status-txt{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);text-align:center;width:100%;}
+
+/* ── GRAND PRIZE picker ── */
+.gp-picker-label{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.gp-items{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
+.gp-item{
+  display:flex;align-items:center;gap:12px;padding:12px 16px;
+  border-radius:var(--r);border:1.5px solid var(--border);background:var(--panel);
+  cursor:pointer;transition:all .15s;box-shadow:var(--sh);
+}
+.gp-item:hover{border-color:var(--gold-border);}
+.gp-item.selected{border-color:var(--gold);background:var(--gold-bg);box-shadow:0 0 0 2px rgba(212,150,26,0.15);}
+.gp-item.exhausted{opacity:.45;cursor:not-allowed;}
+.gp-item-ico{font-size:1.1rem;}
+.gp-item-info{flex:1;}
+.gp-item-name{font-size:0.9rem;font-weight:700;color:var(--text);}
+.gp-item-sub{font-size:0.7rem;color:var(--muted);margin-top:1px;}
+.gp-item-badge{font-size:0.67rem;font-weight:700;padding:3px 9px;border-radius:5px;}
+.gp-badge-avail{background:var(--gold-bg);color:var(--gold-text);border:1px solid var(--gold-border);}
+.gp-badge-done{background:var(--bg2);color:var(--muted2);border:1px solid var(--border);}
+
+/* GP drum */
+.drum-wrap{
+  width:100%;border-radius:var(--rl);overflow:hidden;
+  background:var(--panel);border:1.5px solid var(--border);
+  box-shadow:var(--sh);margin-bottom:16px;position:relative;
+}
+.drum-fade-t,.drum-fade-b{position:absolute;left:0;right:0;height:80px;z-index:2;pointer-events:none;}
+.drum-fade-t{top:0;background:linear-gradient(to bottom,var(--panel),transparent);}
+.drum-fade-b{bottom:0;background:linear-gradient(to top,var(--panel),transparent);}
+.drum-hl{
+  position:absolute;top:50%;left:0;right:0;height:56px;transform:translateY(-50%);z-index:3;pointer-events:none;
+  border-top:2px solid var(--gold);border-bottom:2px solid var(--gold);background:var(--gold-bg);
+}
+.drum-vp{height:280px;overflow:hidden;}
+.drum-track{display:flex;flex-direction:column;will-change:transform;}
+.drum-item{height:56px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.drum-item span{font-size:1.1rem;font-weight:700;color:var(--text);}
+.drum-item.winner span{color:var(--gold-text);font-size:1.35rem;font-weight:800;}
+
+/* GP winners display — shows inside the card, not chips below */
+.gp-winners-list{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.gp-winner-item{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:var(--rs);
+  background:var(--gold-bg);border:1.5px solid var(--gold-border);
+}
+.gp-winner-num{font-size:0.62rem;font-weight:700;color:var(--gold-text);font-family:'DM Mono',monospace;width:18px;text-align:center;}
+.gp-winner-prize{font-size:0.66rem;font-weight:700;color:var(--gold-text);text-transform:uppercase;letter-spacing:.5px;}
+.gp-winner-name{font-size:0.92rem;font-weight:800;color:var(--navy);}
+
+/* Viewer lock */
+.viewer-lock{
+  position:fixed;bottom:0;left:0;right:0;z-index:400;
+  background:rgba(26,35,64,0.97);border-top:2px solid rgba(212,150,26,0.4);
+  backdrop-filter:blur(12px);
+  padding:10px 20px;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  font-size:0.8rem;color:rgba(255,255,255,0.6);
+}
+.viewer-lock-badge{display:flex;align-items:center;gap:6px;background:var(--teal-bg);border:1px solid var(--teal-border);color:var(--teal);padding:4px 11px;border-radius:7px;font-size:0.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+
+/* Operator PIN modal */
+.modal-bg{position:fixed;inset:0;background:rgba(26,35,64,0.65);backdrop-filter:blur(6px);z-index:900;display:flex;align-items:center;justify-content:center;padding:20px;}
+.modal{background:var(--panel);border:1.5px solid var(--border);border-radius:var(--rl);padding:30px 26px;max-width:340px;width:100%;box-shadow:var(--sh-lg);}
+.modal h3{font-size:1.05rem;font-weight:800;color:var(--text);margin-bottom:3px;}
+.modal p{font-size:0.76rem;color:var(--muted);margin-bottom:18px;line-height:1.5;}
+.modal input{width:100%;padding:11px;border-radius:9px;border:1.5px solid var(--border2);background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;text-align:center;letter-spacing:8px;outline:none;margin-bottom:8px;transition:border-color .14s;}
+.modal input:focus{border-color:var(--gold);}
+.modal-err{color:var(--red);font-size:0.76rem;margin-bottom:8px;display:none;}
+.modal-btns{display:flex;gap:8px;}
+.btn-modal-ok{flex:1;padding:10px;border-radius:9px;border:none;background:var(--navy);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.86rem;font-weight:800;cursor:pointer;}
+.btn-modal-ok:hover{background:var(--navy2);}
+.btn-modal-cancel{padding:10px 16px;border-radius:9px;border:1.5px solid var(--border2);background:transparent;color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.86rem;font-weight:600;cursor:pointer;}
+
+/* ═══════════════════════════════
+   RESULTS PAGE
+═══════════════════════════════ */
+#page-results{background:var(--bg);}
+.pg-hdr{background:var(--navy);padding:22px 20px 0;border-bottom:3px solid var(--gold);}
+.pg-hdr-inner{max-width:860px;margin:0 auto;}
+.pg-hdr h2{font-size:1.4rem;font-weight:800;color:#fff;margin-bottom:2px;}
+.pg-hdr p{font-size:0.76rem;color:rgba(255,255,255,0.5);margin-bottom:14px;}
+.r-filter-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px;}
+.r-filter-row label{font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.4px;}
+.r-sel{padding:6px 12px;border-radius:7px;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.1);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.82rem;font-weight:600;outline:none;}
+.r-sel option{background:var(--navy);}
+.r-tabs{display:flex;gap:5px;margin-bottom:0;padding-bottom:0;}
+.rtab{padding:7px 16px;border-radius:7px 7px 0 0;border:1px solid transparent;background:transparent;color:rgba(255,255,255,0.5);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:700;transition:all .13s;border-bottom:3px solid transparent;}
+.rtab:hover{color:#fff;}
+.rtab.active{background:var(--panel);color:var(--text);border-color:var(--border);border-bottom-color:transparent;margin-bottom:-3px;}
+.r-body{max-width:860px;margin:0 auto;padding:20px 20px 40px;}
+.r-card{background:var(--panel);border-radius:var(--r);border:1.5px solid var(--border);overflow:hidden;box-shadow:var(--sh);}
+.r-table{width:100%;border-collapse:collapse;}
+.r-table th{text-align:left;font-size:0.68rem;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;padding:10px 14px;background:var(--panel2);border-bottom:1.5px solid var(--border);}
+.r-table td{padding:10px 14px;font-size:0.84rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+.r-table tr:last-child td{border-bottom:none;}
+.r-table tr:hover td{background:var(--bg);}
+.badge{padding:2px 8px;border-radius:5px;font-size:0.64rem;font-family:'DM Mono',monospace;font-weight:600;}
+.b-org{background:var(--teal-bg);color:var(--teal);}
+.b-non{background:var(--purple-bg);color:var(--purple);}
+.b-dp{background:var(--gold-bg);color:var(--gold-text);}
+.b-gp{background:var(--coral-bg);color:var(--coral);}
+.empty-st{text-align:center;color:var(--muted);padding:48px 20px;font-size:0.85rem;}
+.btn-danger{margin-top:14px;padding:8px 20px;border-radius:8px;border:1.5px solid var(--red);background:transparent;color:var(--red);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.78rem;font-weight:700;transition:all .13s;}
+.btn-danger:hover{background:var(--red);color:#fff;}
+
+/* ═══════════════════════════════
+   ADMIN PAGE
+═══════════════════════════════ */
+#page-admin{background:var(--bg);}
+.a-lock{display:flex;align-items:center;justify-content:center;min-height:90vh;padding:20px;}
+.a-lock-card{background:var(--panel);border:1.5px solid var(--border);border-radius:var(--rl);padding:36px 30px;max-width:360px;width:100%;text-align:center;box-shadow:var(--sh-lg);}
+.a-lock-card h2{font-size:1.25rem;font-weight:800;color:var(--text);margin-bottom:4px;}
+.a-lock-card p{font-size:0.76rem;color:var(--muted);margin-bottom:22px;line-height:1.5;}
+.lock-inp{width:100%;padding:11px;border-radius:9px;border:1.5px solid var(--border2);background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;text-align:center;letter-spacing:6px;outline:none;margin-bottom:10px;display:block;transition:border-color .14s;}
+.lock-inp:focus{border-color:var(--gold);}
+.btn-gold-full{width:100%;padding:11px;border-radius:9px;border:none;background:var(--navy);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;transition:all .13s;}
+.btn-gold-full:hover{background:var(--navy2);}
+.lock-err{color:var(--red);font-size:0.76rem;margin-top:8px;}
+#a-content{display:none;}
+.a-hdr{background:var(--navy);padding:18px 20px;border-bottom:3px solid var(--gold);}
+.a-hdr-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;}
+.a-hdr h2{font-size:1.25rem;font-weight:800;color:#fff;}
+.a-hdr p{font-size:0.72rem;color:rgba(255,255,255,0.5);margin-top:2px;}
+.btn-logout{padding:6px 14px;border-radius:7px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.75rem;font-weight:600;transition:all .13s;}
+.btn-logout:hover{color:#fff;border-color:rgba(255,255,255,0.4);}
+.a-body{max-width:860px;margin:0 auto;padding:20px 20px 60px;}
+
+/* Event selector */
+.ev-nav-row{display:flex;gap:8px;align-items:center;margin-bottom:18px;flex-wrap:wrap;}
+.ev-nav-label{font-size:0.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
+.ev-nav-select{
+  padding:8px 32px 8px 12px;border-radius:8px;border:1.5px solid var(--border2);
+  background:var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7499' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 10px center;
+  color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;font-weight:600;
+  outline:none;min-width:200px;flex:1;max-width:300px;appearance:none;
+}
+.ev-nav-select:focus{border-color:var(--gold);}
+.btn-new-ev{padding:8px 14px;border-radius:8px;border:1.5px dashed var(--teal-border);background:var(--teal-bg);color:var(--teal);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.76rem;font-weight:700;transition:all .13s;white-space:nowrap;}
+.btn-new-ev:hover{background:var(--teal);color:#fff;border-style:solid;}
+
+/* Admin sections */
+.as{background:var(--panel);border:1.5px solid var(--border);border-radius:var(--r);padding:18px;margin-bottom:14px;box-shadow:var(--sh);}
+.as-hdr{display:flex;align-items:center;gap:9px;margin-bottom:4px;}
+.as-ico{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.88rem;flex-shrink:0;}
+.as h3{font-size:0.94rem;font-weight:800;color:var(--text);}
+.sec-d{font-size:0.74rem;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.fr{display:flex;gap:8px;margin-bottom:8px;align-items:flex-end;flex-wrap:wrap;}
+.fg{display:flex;flex-direction:column;gap:4px;flex:1;min-width:100px;}
+.flbl{font-size:0.7rem;font-weight:700;color:var(--muted);letter-spacing:.4px;text-transform:uppercase;}
+input[type=text],input[type=number],input[type=password],input[type=date],select,textarea{padding:8px 11px;border-radius:8px;border:1.5px solid var(--border2);background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;font-weight:500;outline:none;width:100%;transition:border-color .14s;}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);background:var(--panel);}
+select option{background:var(--panel);}
+textarea{resize:vertical;min-height:80px;line-height:1.5;}
+.paste-hint{font-size:0.68rem;color:var(--muted);margin-top:4px;line-height:1.5;}
+.paste-hint code{background:var(--panel2);border:1px solid var(--border);padding:1px 5px;border-radius:3px;color:var(--gold-text);font-family:'DM Mono',monospace;font-size:0.66rem;}
+.btn-add{padding:8px 14px;border-radius:8px;border:1.5px solid var(--teal-border);background:var(--teal-bg);color:var(--teal);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.76rem;font-weight:700;transition:all .13s;white-space:nowrap;}
+.btn-add:hover{background:var(--teal);color:#fff;}
+.btn-proc{margin-top:7px;padding:7px 14px;border-radius:8px;border:1.5px solid var(--border2);background:var(--panel2);color:var(--text);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.76rem;font-weight:700;transition:all .13s;}
+.btn-proc:hover{background:var(--border2);}
+.tag-list{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.tag{display:flex;align-items:center;gap:5px;padding:4px 9px;border-radius:6px;background:var(--panel2);border:1.5px solid var(--border);font-size:0.75rem;}
+.tag-n{color:var(--text);font-weight:600;}
+.tag-s{color:var(--muted);font-size:0.65rem;font-family:'DM Mono',monospace;}
+.tag-d{color:var(--muted2);cursor:pointer;font-size:0.85rem;background:none;border:none;transition:color .12s;padding:0;}
+.tag-d:hover{color:var(--red);}
+.stg-hdr{display:flex;justify-content:space-between;align-items:center;margin:10px 0 4px;}
+.stg-hdr span{font-size:0.7rem;color:var(--muted);font-weight:600;}
+.stg-hdr button{background:none;border:none;color:var(--red);font-size:0.7rem;cursor:pointer;font-weight:600;}
+.divider{border:none;border-top:1.5px solid var(--border);margin:12px 0;}
+.pe{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--border);}
+.pe:last-child{border-bottom:none;}
+.pe-info{flex:1;}
+.pe-name{font-size:0.84rem;font-weight:700;color:var(--text);}
+.pe-count{font-size:0.68rem;color:var(--muted);}
+.pe-del{background:none;border:none;color:var(--muted2);cursor:pointer;font-size:0.84rem;padding:0;}
+.pe-del:hover{color:var(--red);}
+/* Ratio */
+.ratio-g{display:flex;flex-direction:column;gap:10px;}
+.ratio-row{display:flex;align-items:center;gap:10px;}
+.ratio-lbl{width:150px;font-size:0.78rem;font-weight:600;flex-shrink:0;color:var(--text);}
+.ratio-lbl small{display:block;font-size:0.64rem;color:var(--muted);font-weight:400;margin-top:1px;}
+.ratio-iw{position:relative;width:76px;flex-shrink:0;}
+.ratio-iw input{padding-right:24px;text-align:right;}
+.ratio-pct{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:0.76rem;pointer-events:none;}
+.ratio-bg{flex:1;height:5px;border-radius:3px;background:var(--border);overflow:hidden;}
+.ratio-b{height:100%;border-radius:3px;transition:width .3s;}
+.b-gold{background:var(--gold);}
+.b-teal{background:var(--teal);}
+.ratio-ttl{font-family:'DM Mono',monospace;font-size:0.72rem;text-align:right;font-weight:500;}
+.ratio-ttl.ok{color:var(--green);}
+.ratio-ttl.err{color:var(--red);}
+/* Policy */
+.pol-g{display:flex;flex-direction:column;gap:7px;}
+.pol-opt{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border-radius:9px;border:1.5px solid var(--border);cursor:pointer;transition:all .13s;background:var(--panel2);}
+.pol-opt:hover{border-color:var(--teal-border);}
+.pol-opt.sel{border-color:var(--teal);background:var(--teal-bg);}
+.pol-opt input[type=radio]{accent-color:var(--teal);width:14px;height:14px;flex-shrink:0;margin-top:2px;}
+.po-t{font-size:0.82rem;font-weight:700;display:block;color:var(--text);}
+.po-d{font-size:0.7rem;color:var(--muted);}
+.reduce-row{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg);border-radius:7px;margin-top:4px;flex-wrap:wrap;border:1px solid var(--border);}
+.reduce-row label{font-size:0.74rem;color:var(--muted);font-weight:600;}
+.reduce-row input{max-width:68px;}
+.btn-del-ev{padding:6px 12px;border-radius:7px;border:1.5px solid var(--red);background:var(--red-bg);color:var(--red);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.74rem;font-weight:700;transition:all .13s;}
+.btn-del-ev:hover{background:var(--red);color:#fff;}
+.btn-save{width:100%;padding:12px;border-radius:10px;border:none;background:var(--navy);color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;font-weight:800;cursor:pointer;transition:all .13s;box-shadow:var(--sh);}
+.btn-save:hover{background:var(--navy2);transform:translateY(-1px);}
+.save-ok{text-align:center;color:var(--green);font-size:0.78rem;margin-top:8px;display:none;font-weight:600;}
+
+/* Toast */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--navy);color:#fff;padding:9px 20px;border-radius:10px;font-size:0.8rem;font-weight:600;box-shadow:var(--sh-lg);z-index:9000;transition:transform .28s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;}
+.toast.show{transform:translateX(-50%) translateY(0);}
+
+/* ── MOBILE ── */
+@media(max-width:600px){
+  nav{padding:0 12px;}
+  .nav-logo-text small{display:none;}
+  .nav-tab{padding:5px 10px;font-size:0.73rem;}
+  .draw-hero{padding:12px;}
+  .draw-body{padding:12px 10px 30px;}
+  .mode-tab{padding:10px 14px;font-size:0.78rem;}
+  .prize-grid{grid-template-columns:1fr 1fr;gap:8px;}
+  .btn-main{padding:11px 22px;font-size:0.88rem;}
+  .a-body{padding:14px 12px 50px;}
+  .as{padding:14px;}
+  .a-hdr-inner{flex-direction:column;gap:10px;align-items:flex-start;}
+  .pg-hdr{padding:14px 12px 0;}
+  .r-body{padding:14px 12px 40px;}
+  .r-table th,.r-table td{padding:8px 10px;font-size:0.76rem;}
+  .a-lock-card{padding:28px 18px;}
+  .modal{padding:22px 18px;}
+}
+@media(max-width:400px){
+  .prize-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+
+<!-- OPERATOR MODAL -->
+<div class="modal-bg" id="op-modal" style="display:none" onclick="if(event.target===this)closeOpModal()">
+  <div class="modal">
+    <h3>🎛 Mode Operator</h3>
+    <p>Masukkan PIN Operator untuk dapat menjalankan undian.</p>
+    <input type="password" id="op-pin-inp" placeholder="• • • •" maxlength="8" onkeyup="if(event.key==='Enter')checkOpPin()">
+    <div class="modal-err" id="op-modal-err">PIN salah. Coba lagi.</div>
+    <div class="modal-btns">
+      <button class="btn-modal-cancel" onclick="closeOpModal()">Batal</button>
+      <button class="btn-modal-ok" onclick="checkOpPin()">Masuk</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🎁</div>
+    <div class="nav-logo-text">
+      <strong>Serba-Serbi Berhadiah</strong>
+      <small>Kantor Perwakilan Bank Indonesia DIY</small>
+    </div>
+  </div>
+  <div class="nav-right">
+    <span class="nav-mode-badge viewer" id="mode-badge">👁 Viewer</span>
+    <button class="nav-tab active" onclick="showPage('draw')">Undian</button>
+    <button class="nav-tab" onclick="showPage('results')">Hasil</button>
+    <button class="nav-tab" onclick="showPage('admin')">Admin</button>
+  </div>
+</nav>
+
+<!-- ══ DRAW PAGE ══ -->
+<div id="page-draw" class="page active">
+  <div class="draw-hero">
+    <div class="draw-hero-inner">
+      <div class="ev-row">
+        <span class="ev-label">Kegiatan:</span>
+        <select class="ev-select" id="draw-ev-sel" onchange="onSelEv()">
+          <option value="">— Pilih kegiatan —</option>
+        </select>
+        <span id="op-toggle-area"></span>
+      </div>
+      <div class="ev-meta" id="ev-meta" style="display:none">
+        <div class="ev-pill">📅 <span id="em-date">—</span></div>
+        <div class="ev-pill">📍 <span id="em-loc">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mode-bar">
+    <div class="mode-bar-inner">
+      <button class="mode-tab dp" id="mtab-dp" onclick="setMode('dp')">🎁 Doorprize</button>
+      <button class="mode-tab" id="mtab-gp" onclick="setMode('gp')">🏆 Grand Prize</button>
+    </div>
+  </div>
+
+  <div class="draw-body">
+    <div class="no-ev" id="no-ev">
+      <div class="no-ev-ico">🎯</div>
+      <h3>Pilih kegiatan terlebih dahulu</h3>
+      <p>Gunakan dropdown di atas.<br>Buat kegiatan baru di menu Admin.</p>
+    </div>
+
+    <div class="draw-inner" id="draw-content" style="display:none">
+
+      <!-- DP STAGE -->
+      <div id="dp-stage" style="display:none">
+        <div class="dp-header-card">
+          <div class="dp-hc-ico">🎁</div>
+          <div class="dp-hc-info">
+            <div class="dp-hc-label">Doorprize — Semua Hadiah</div>
+            <div class="dp-hc-title" id="dp-hc-title">Siap Diundi</div>
+            <div class="dp-hc-sub" id="dp-hc-sub">Klik Undi untuk mengundi semua doorprize sekaligus</div>
+          </div>
+          <div class="dp-hc-num-wrap">
+            <span class="dp-hc-num" id="dp-total-num">0</span>
+            <span class="dp-hc-lbl">pemenang</span>
+          </div>
+        </div>
+        <div class="dur-bar">
+          <label>⏱ Durasi</label>
+          <input type="range" id="roll-dur" min="3" max="15" value="6" oninput="document.getElementById('dur-val').textContent=this.value+'s'">
+          <span class="dur-val" id="dur-val">6s</span>
+        </div>
+        <div class="prize-grid" id="prize-grid"></div>
+        <div class="ctrl-row">
+          <button class="btn-main gold" id="btn-dp-draw" onclick="startDpDraw()">🎲 Undi Semua Doorprize</button>
+        </div>
+        <div class="status-txt" id="dp-status"></div>
+      </div>
+
+      <!-- GP STAGE -->
+      <div id="gp-stage" style="display:none">
+        <div class="dp-header-card" style="margin-bottom:16px">
+          <div class="dp-hc-ico" style="background:var(--coral-bg);border-color:var(--coral-border)">🏆</div>
+          <div class="dp-hc-info">
+            <div class="dp-hc-label" style="color:var(--coral)">Grand Prize</div>
+            <div class="dp-hc-title" id="gp-hc-title">Siap Diundi</div>
+            <div class="dp-hc-sub" id="gp-hc-sub">Pilih grand prize lalu klik Undi</div>
+          </div>
+          <div class="dp-hc-num-wrap">
+            <span class="dp-hc-num" id="gp-total-num">0</span>
+            <span class="dp-hc-lbl">pemenang</span>
+          </div>
+        </div>
+        <div class="gp-picker-label">Pilih Grand Prize yang akan diundi:</div>
+        <div class="gp-items" id="gp-items"></div>
+        <div class="dur-bar">
+          <label>⏱ Durasi per pemenang</label>
+          <input type="range" id="roll-dur-gp" min="3" max="20" value="7" oninput="document.getElementById('dur-val-gp').textContent=this.value+'s'">
+          <span class="dur-val" id="dur-val-gp">7s</span>
+        </div>
+        <div class="prize-grid" id="prize-grid-gp"></div>
+        <div class="ctrl-row">
+          <button class="btn-main coral" id="btn-gp-draw" onclick="startGpDraw()" disabled>🏆 Undi Grand Prize</button>
+        </div>
+        <div class="status-txt" id="gp-status"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="viewer-lock" id="viewer-lock">
+    <div class="viewer-lock-badge">👁 Viewer</div>
+    <span>Mode tampilan saja &nbsp;·&nbsp;</span>
+    <button class="btn-sec" style="padding:5px 14px;font-size:0.74rem" onclick="openOpModal()">Masuk sebagai Operator</button>
+  </div>
+</div>
+
+<!-- ══ RESULTS PAGE ══ -->
+<div id="page-results" class="page">
+  <div class="pg-hdr">
+    <div class="pg-hdr-inner">
+      <h2>Hasil Undian</h2>
+      <p>Rekap seluruh pemenang</p>
+      <div class="r-filter-row">
+        <label>Kegiatan:</label>
+        <select class="r-sel" id="r-ev-fil" onchange="renderResults()"><option value="">Semua</option></select>
+      </div>
+      <div class="r-tabs">
+        <button class="rtab active" onclick="setRTab('all',this)">Semua</button>
+        <button class="rtab" onclick="setRTab('dp',this)">Doorprize</button>
+        <button class="rtab" onclick="setRTab('gp',this)">Grand Prize</button>
+      </div>
+    </div>
+  </div>
+  <div class="r-body">
+    <div class="r-card">
+      <table class="r-table">
+        <thead><tr><th>#</th><th>Kegiatan</th><th>Hadiah</th><th>Nama</th><th>Tipe</th><th>Pangkat</th></tr></thead>
+        <tbody id="r-tbody"></tbody>
+      </table>
+      <div id="r-empty" class="empty-st">Belum ada pemenang.</div>
+    </div>
+    <div style="text-align:center">
+      <button class="btn-danger" onclick="resetWinners()">⟳ Reset Semua Pemenang</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN PAGE ══ -->
+<div id="page-admin" class="page">
+  <div class="a-lock" id="a-lock">
+    <div class="a-lock-card">
+      <h2>🔐 Admin Panel</h2>
+      <p>Masukkan password untuk mengelola kegiatan undian</p>
+      <input type="password" class="lock-inp" id="a-pass" placeholder="••••••••" onkeyup="if(event.key==='Enter')checkPass()">
+      <button class="btn-gold-full" onclick="checkPass()">Masuk</button>
+      <div class="lock-err" id="lock-err"></div>
+    </div>
+  </div>
+  <div id="a-content">
+    <div class="a-hdr">
+      <div class="a-hdr-inner">
+        <div><h2>⚙️ Admin Panel</h2><p>Kelola kegiatan, peserta, hadiah & pengaturan undian</p></div>
+        <button class="btn-logout" onclick="adminLogout()">Keluar</button>
+      </div>
+    </div>
+    <div class="a-body">
+      <div class="ev-nav-row">
+        <span class="ev-nav-label">Kegiatan:</span>
+        <select class="ev-nav-select" id="a-ev-sel" onchange="loadEvEd(this.value)">
+          <option value="">— Pilih kegiatan —</option>
+        </select>
+        <button class="btn-new-ev" onclick="createEv()">+ Kegiatan Baru</button>
+      </div>
+
+      <div id="a-ev-editor" style="display:none">
+        <!-- Info -->
+        <div class="as">
+          <div class="as-hdr"><div class="as-ico" style="background:var(--gold-bg)">📋</div><h3>Info Kegiatan</h3></div>
+          <p class="sec-d">Tampil di navbar dan halaman undian.</p>
+          <div class="fr"><div class="fg" style="flex:2"><div class="flbl">Nama Kegiatan</div><input type="text" id="ev-name" placeholder="mis. Rikat Rakit Raket 2026"></div></div>
+          <div class="fr">
+            <div class="fg"><div class="flbl">Lokasi</div><input type="text" id="ev-loc" placeholder="mis. Medan"></div>
+            <div class="fg"><div class="flbl">Tanggal Mulai</div><input type="date" id="ev-ds"></div>
+            <div class="fg"><div class="flbl">Tanggal Selesai</div><input type="date" id="ev-de"></div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;margin-top:8px">
+            <button class="btn-del-ev" onclick="deleteEv()">🗑 Hapus Kegiatan Ini</button>
+          </div>
+        </div>
+        <!-- Doorprize -->
+        <div class="as">
+          <div class="as-hdr"><div class="as-ico" style="background:var(--gold-bg)">🎁</div><h3>Doorprize</h3></div>
+          <p class="sec-d">Semua doorprize diundi sekaligus — N hadiah = N pemenang dalam satu klik.</p>
+          <div class="fr">
+            <div class="fg"><div class="flbl">Nama Doorprize</div><input type="text" id="dp-name" placeholder="mis. Speaker Bluetooth" onkeyup="if(event.key==='Enter')addPrize('dp')"></div>
+            <div class="fg" style="max-width:78px"><div class="flbl">Jumlah</div><input type="number" id="dp-count" value="1" min="1"></div>
+            <button class="btn-add" onclick="addPrize('dp')">+ Tambah</button>
+          </div>
+          <div id="dp-list"></div>
+        </div>
+        <!-- Grand Prize -->
+        <div class="as">
+          <div class="as-hdr"><div class="as-ico" style="background:var(--coral-bg)">🏆</div><h3>Grand Prize</h3></div>
+          <p class="sec-d">Operator pilih item, drum rolling per pemenang secara berurutan.</p>
+          <div class="fr">
+            <div class="fg"><div class="flbl">Nama Grand Prize</div><input type="text" id="gp-name" placeholder="mis. Honda Scoopy" onkeyup="if(event.key==='Enter')addPrize('gp')"></div>
+            <div class="fg" style="max-width:78px"><div class="flbl">Jumlah</div><input type="number" id="gp-count" value="1" min="1"></div>
+            <button class="btn-add" onclick="addPrize('gp')">+ Tambah</button>
+          </div>
+          <div id="gp-list"></div>
+        </div>
+        <!-- Organik -->
+        <div class="as">
+          <div class="as-hdr"><div class="as-ico" style="background:var(--teal-bg)">👔</div><h3>Pegawai Organik</h3></div>
+          <p class="sec-d">Tambah satu per satu atau paste massal dari Excel.</p>
+          <div class="fr">
+            <div class="fg"><div class="flbl">Nama</div><input type="text" id="org-name" placeholder="Nama pegawai" onkeyup="if(event.key==='Enter')addEmp('org')"></div>
+            <div class="fg" style="max-width:90px"><div class="flbl">Pangkat</div>
+              <select id="org-grade"><option value="G2">G2</option><option value="G3">G3</option><option value="G4" selected>G4</option><option value="G5">G5</option></select>
+            </div>
+            <button class="btn-add" onclick="addEmp('org')">+ Tambah</button>
+          </div>
+          <div style="margin-top:12px">
+            <div class="flbl">📋 Paste Massal dari Excel</div>
+            <textarea id="org-bulk" placeholder="Paste 2 kolom dari Excel (Nama + Pangkat):&#10;Budi Santoso	G4&#10;Ani Wijaya	G3&#10;&#10;Pangkat kosong → default G4"></textarea>
+            <p class="paste-hint">Copy 2 kolom di Excel → Ctrl+C → paste → klik proses. Format: <code>Nama[Tab]Pangkat</code></p>
+            <button class="btn-proc" onclick="bulkAdd('org')">📋 Proses Paste Organik</button>
+          </div>
+          <div class="stg-hdr"><span id="org-lbl">0 pegawai</span><button onclick="clearEmp('org')">Hapus semua</button></div>
+          <div class="tag-list" id="org-list"></div>
+        </div>
+        <!-- Non-Organik -->
+        <div class="as">
+          <div class="as-hdr"><div class="as-ico" style="background:var(--purple-bg)">🤝</div><h3>Pegawai Non-Organik</h3></div>
+          <p class="sec-d">Tambah satu per satu atau paste massal dari Excel.</p>
+          <div class="fr">
+            <div class="fg"><div class="flbl">Nama</div><input type="text" id="non-name" placeholder="Nama pegawai" onkeyup="if(event.key==='Enter')addEmp('non')"></div>
+            <button class="btn-add" onclick="addEmp('non')">+ Tambah</button>
+          </div>
+          <div style="margin-top:12px">
+            <div class="flbl">📋 Paste Massal dari Excel</div>
+            <textarea id="non-bulk" placeholder="Paste satu kolom nama:&#10;Dodi Pratama&#10;Eka Sari"></textarea>
+            <p class="paste-hint">Copy satu kolom nama di Excel → paste → proses.</p>
+            <button class="btn-proc" onclick="bulkAdd('non')">📋 Proses Paste Non-Organik</button>
+          </div>
+          <div class="stg-hdr"><span id="non-lbl">0 pegawai</span><button onclick="clearEmp('non')">Hapus semua</button></div>
+          <div class="tag-list" id="non-list"></div>
+        </div>
+        <!-- Rasio -->
+        <div class="as">
+          <div class="as-hdr"><div class="as-ico" style="background:var(--gold-bg)">⚖️</div><h3>Rasio Probabilitas</h3></div>
+          <p class="sec-d">Total organik + non-organik = 100%. Break-down per pangkat = 100%.</p>
+          <div class="ratio-g">
+            <div style="font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px">Kelompok Utama</div>
+            <div class="ratio-row"><div class="ratio-lbl">Pegawai Organik<small>Keseluruhan</small></div><div class="ratio-iw"><input type="number" id="r-organic" min="0" max="100" value="80" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-organic" style="width:80%"></div></div></div>
+            <div class="ratio-row"><div class="ratio-lbl">Non-Organik<small>Keseluruhan</small></div><div class="ratio-iw"><input type="number" id="r-non" min="0" max="100" value="20" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-teal" id="rb-non" style="width:20%"></div></div></div>
+            <div class="ratio-ttl ok" id="rt-main">Total: 100% ✓</div>
+            <hr class="divider">
+            <div style="font-size:.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px">Break-down Organik (G2+G3+G4 = 100% · G5 tidak eligible)</div>
+            <div class="ratio-row"><div class="ratio-lbl">G2</div><div class="ratio-iw"><input type="number" id="r-g2" min="0" max="100" value="10" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g2" style="width:10%"></div></div></div>
+            <div class="ratio-row"><div class="ratio-lbl">G3</div><div class="ratio-iw"><input type="number" id="r-g3" min="0" max="100" value="20" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g3" style="width:20%"></div></div></div>
+            <div class="ratio-row"><div class="ratio-lbl">G4</div><div class="ratio-iw"><input type="number" id="r-g4" min="0" max="100" value="30" oninput="updR()"><span class="ratio-pct">%</span></div><div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g4" style="width:30%"></div></div></div>
+            <div class="ratio-row" style="opacity:.4">
+  <div class="ratio-lbl">G5 <small style="color:var(--red);font-weight:700">Tidak eligible</small></div>
+  <div class="ratio-iw"><input type="number" id="r-g5" value="0" disabled style="background:var(--bg2);cursor:not-allowed"><span class="ratio-pct">%</span></div>
+  <div class="ratio-bg"><div class="ratio-b b-gold" id="rb-g5" style="width:0%"></div></div>
+</div>
+            <div class="ratio-ttl ok" id="rt-org">Total organik: 100% ✓</div>
+          </div>
+        </div>
+        <!-- Kebijakan -->
+        <div class="as">
+          <div class="as-hdr"><div class="as-ico" style="background:var(--purple-bg)">🔁</div><h3>Kebijakan Pemenang Doorprize → Grand Prize</h3></div>
+          <p class="sec-d">Perlakuan peserta yang sudah menang doorprize saat undian grand prize.</p>
+          <div class="pol-g">
+            <label class="pol-opt sel" id="pol-full" onclick="selPol('full')"><input type="radio" name="pol" value="full" checked><div><span class="po-t">Peluang Penuh</span><span class="po-d">Pemenang doorprize ikut grand prize dengan peluang normal.</span></div></label>
+            <label class="pol-opt" id="pol-reduce" onclick="selPol('reduce')"><input type="radio" name="pol" value="reduce"><div><span class="po-t">Peluang Dikurangi</span><span class="po-d">Pemenang doorprize ikut tapi bobot peluangnya diperkecil.</span></div></label>
+            <div class="reduce-row" id="reduce-row" style="display:none"><label>Sisa peluang:</label><div style="position:relative;width:68px"><input type="number" id="reduce-fac" min="1" max="99" value="50"></div><span style="font-size:.74rem;color:var(--muted)">% dari normal</span></div>
+            <label class="pol-opt" id="pol-exclude" onclick="selPol('exclude')"><input type="radio" name="pol" value="exclude"><div><span class="po-t">Tidak Ikut</span><span class="po-d">Pemenang doorprize tidak bisa mendapatkan grand prize.</span></div></label>
+          </div>
+        </div>
+        <!-- Simpan -->
+        <div class="as">
+          <button class="btn-save" onclick="saveEv()">💾 Simpan Pengaturan Kegiatan Ini</button>
+          <div class="save-ok" id="save-ok">✓ Berhasil disimpan!</div>
+        </div>
+      </div><!-- /a-ev-editor -->
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ══════════════════════════════════════
+   FIREBASE CONFIG
+   Isi 6 nilai di bawah dengan data dari
+   Firebase Console → Project Settings → Web App
+   Lihat panduan deploy untuk caranya.
+══════════════════════════════════════ */
+const firebaseConfig = {
+  apiKey: "AIzaSyDWnculikZCSNe9q0bOrs5xwjXvCe3Ogds",
+  authDomain: "undian-diy.firebaseapp.com",
+  projectId: "undian-diy",
+  storageBucket: "undian-diy.firebasestorage.app",
+  messagingSenderId: "769378017551",
+  appId: "1:769378017551:web:47e3e9779ad1c8bdefde7a"
+};
+
+/* ══════════════════════════════════════
+   STATE  —  password & PIN hardcoded
+══════════════════════════════════════ */
+const ADMIN_PASS = 'akukeren#21';
+const OP_PIN     = '2110';
+
+let S = { events:[], winners:[] };
+let selEvId=null, curMode='dp', gpSelIdx=null, rolling=false, cFrame;
+let rTab='all', adminEvId=null, isOperator=false;
+
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function getEv(id){return S.events.find(e=>e.id===id);}
+
+/* ══════════════════════════════════════
+   FIREBASE — realtime Firestore
+   Semua data disimpan di 2 dokumen:
+     /undian/settings  → events, operatorPin, password
+     /undian/winners   → winners array
+   onSnapshot memastikan semua device
+   langsung update saat ada perubahan.
+══════════════════════════════════════ */
+let db = null;
+let fbReady = false;
+const FB_SETTINGS_DOC = 'settings';
+const FB_WINNERS_DOC  = 'winners';
+const FB_COLLECTION   = 'undian';
+
+async function initFirebase(){
+  const { initializeApp }       = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js');
+  const { getFirestore, doc, setDoc, onSnapshot, getDoc }
+                                = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+  const app = initializeApp(FIREBASE_CONFIG);
+  db = getFirestore(app);
+
+  // Show connecting state
+  showSyncBadge('connecting');
+
+  // ── Listen to settings (events, config) ──
+  const settingsRef = doc(db, FB_COLLECTION, FB_SETTINGS_DOC);
+  onSnapshot(settingsRef, snap => {
+    if(snap.exists()){
+      const data = snap.data();
+      S.events = data.events || [];
+      // Refresh all UI that depends on events
+      fillDrawEvSel();
+      fillAdminEvSel();
+      refreshResultsEventFilter();
+      // If current draw event still valid, refresh it
+      if(selEvId && S.events.find(e=>e.id===selEvId)){
+        renderDrawMeta(getEv(selEvId));
+        setMode(curMode);
+      } else if(selEvId){
+        selEvId=null;renderDrawContent();
+      }
+      // If admin editing an event that still exists, refresh editor fields
+      if(adminEvId && S.events.find(e=>e.id===adminEvId)){
+        // Only refresh tag lists (not form fields — don't clobber what user is typing)
+        const ev=getEv(adminEvId);
+        if(ev){renderPL('dp-list',ev.doorprizes,'dp');renderPL('gp-list',ev.grandprizes,'gp');renderTL('org-list',ev.organic,'org');renderTL('non-list',ev.nonOrganic,'non');}
+      }
+    }
+    showSyncBadge('ok');
+    fbReady=true;
+  }, err=>{console.error('Settings listener error',err);showSyncBadge('error');});
+
+  // ── Listen to winners ──
+  const winnersRef = doc(db, FB_COLLECTION, FB_WINNERS_DOC);
+  onSnapshot(winnersRef, snap => {
+    if(snap.exists()){
+      S.winners = snap.data().list || [];
+      // Refresh results page if open
+      if(document.getElementById('page-results').classList.contains('active')) renderResults();
+      // Refresh draw stage winner display (non-rolling)
+      if(!rolling){
+        if(curMode==='dp') renderDpStage();
+        else renderGpStage();
+      }
+    }
+    showSyncBadge('ok');
+  }, err=>{console.error('Winners listener error',err);showSyncBadge('error');});
+}
+
+async function saveSettings(){
+  if(!db){console.warn('Firebase not ready');return;}
+  const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+  await setDoc(doc(db, FB_COLLECTION, FB_SETTINGS_DOC), { events: S.events });
+}
+
+async function saveWinners(){
+  if(!db){console.warn('Firebase not ready');return;}
+  const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
+  await setDoc(doc(db, FB_COLLECTION, FB_WINNERS_DOC), { list: S.winners });
+}
+
+// Unified save — always saves both (small docs, cheap)
+async function save(){
+  await Promise.all([saveSettings(), saveWinners()]);
+}
+
+// Sync status badge in nav
+function showSyncBadge(state){
+  let el = document.getElementById('sync-badge');
+  if(!el){
+    el=document.createElement('span');el.id='sync-badge';
+    el.style.cssText='padding:3px 9px;border-radius:6px;font-size:0.65rem;font-weight:700;letter-spacing:.4px;text-transform:uppercase;border:1px solid;margin-right:4px;';
+    const navRight=document.querySelector('.nav-right');
+    navRight.insertBefore(el,navRight.firstChild);
+  }
+  if(state==='ok'){el.textContent='🟢 Sync';el.style.background='#F0FDF4';el.style.color='#15803D';el.style.borderColor='#90D4CE';}
+  else if(state==='connecting'){el.textContent='⏳ Connecting';el.style.background='#FFF8E6';el.style.color='#8A5E00';el.style.borderColor='#F0D080';}
+  else{el.textContent='🔴 Offline';el.style.background='#FEF2F2';el.style.color='#DC2626';el.style.borderColor='#FECACA';}
+}
+
+function refreshResultsEventFilter(){
+  const sel=document.getElementById('r-ev-fil');if(!sel)return;
+  const cur=sel.value;sel.innerHTML='<option value="">Semua</option>';
+  S.events.forEach(ev=>{const o=document.createElement('option');o.value=ev.id;o.textContent=ev.name||'(Tanpa nama)';sel.appendChild(o);});
+  if(S.events.find(e=>e.id===cur))sel.value=cur;
+}
+
+/* Toast */
+let tT;
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(tT);tT=setTimeout(()=>t.classList.remove('show'),2800);}
+
+/* Nav */
+function showPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-tab')[['draw','results','admin'].indexOf(p)].classList.add('active');
+  document.getElementById('page-'+p).classList.add('active');
+  if(p==='draw')refreshDraw();
+  if(p==='results')refreshResults();
+  if(p==='admin')refreshAdmin();
+}
+
+/* Operator mode */
+function updateModeBadge(){
+  const b=document.getElementById('mode-badge');
+  const vl=document.getElementById('viewer-lock');
+  const ta=document.getElementById('op-toggle-area');
+  if(isOperator){
+    b.textContent='🎛 Operator';b.className='nav-mode-badge operator';
+    vl.style.display='none';
+    ta.innerHTML='<button class="op-exit-btn" onclick="exitOperator()">← Keluar Operator</button>';
+  }else{
+    b.textContent='👁 Viewer';b.className='nav-mode-badge viewer';
+    vl.style.display='flex';
+    ta.innerHTML='';
+  }
+  // toggle draw buttons
+  ['btn-dp-draw'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el&&!el.textContent.includes('✓'))el.disabled=!isOperator;
+  });
+  const gpBtn=document.getElementById('btn-gp-draw');
+  if(gpBtn)gpBtn.disabled=!isOperator||gpSelIdx===null;
+}
+function openOpModal(){document.getElementById('op-modal').style.display='flex';document.getElementById('op-pin-inp').value='';document.getElementById('op-modal-err').style.display='none';setTimeout(()=>document.getElementById('op-pin-inp').focus(),100);}
+function closeOpModal(){document.getElementById('op-modal').style.display='none';}
+function checkOpPin(){
+  if(document.getElementById('op-pin-inp').value===OP_PIN){isOperator=true;closeOpModal();updateModeBadge();toast('✓ Mode Operator aktif');}
+  else{document.getElementById('op-modal-err').style.display='block';}
+}
+function exitOperator(){isOperator=false;updateModeBadge();toast('Kembali ke mode Viewer.');}
+
+/* Auth admin */
+function checkPass(){
+  if(document.getElementById('a-pass').value===ADMIN_PASS){
+    document.getElementById('a-lock').style.display='none';
+    document.getElementById('a-content').style.display='block';
+    refreshAdmin();
+  }else{document.getElementById('lock-err').textContent='Password salah.';}
+}
+function adminLogout(){
+  document.getElementById('a-lock').style.display='flex';
+  document.getElementById('a-content').style.display='none';
+  document.getElementById('a-pass').value='';
+  document.getElementById('lock-err').textContent='';
+}
+
+/* Draw page */
+function refreshDraw(){fillDrawEvSel();updateModeBadge();}
+function fillDrawEvSel(){
+  const sel=document.getElementById('draw-ev-sel');sel.innerHTML='<option value="">— Pilih kegiatan —</option>';
+  S.events.forEach(ev=>{const o=document.createElement('option');o.value=ev.id;o.textContent=ev.name||'(Tanpa nama)';sel.appendChild(o);});
+  if(selEvId&&S.events.find(e=>e.id===selEvId))sel.value=selEvId;
+}
+function onSelEv(){
+  selEvId=document.getElementById('draw-ev-sel').value||null;
+  gpSelIdx=null;
+  const ev=selEvId?getEv(selEvId):null;
+  renderDrawMeta(ev);renderDrawContent();
+}
+function renderDrawMeta(ev){
+  const m=document.getElementById('ev-meta');
+  if(ev&&(ev.loc||ev.dateStart)){
+    m.style.display='flex';
+    const ds=fd(ev.dateStart),de=fd(ev.dateEnd);
+    document.getElementById('em-date').textContent=ev.dateStart?(ev.dateEnd&&ev.dateEnd!==ev.dateStart?ds+' – '+de:ds):'—';
+    document.getElementById('em-loc').textContent=ev.loc||'—';
+  }else m.style.display='none';
+}
+function fd(d){if(!d)return'—';try{const[y,m,day]=d.split('-');return parseInt(day)+' '+['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agt','Sep','Okt','Nov','Des'][parseInt(m)-1]+' '+y;}catch(e){return d;}}
+function renderDrawContent(){
+  const ev=selEvId?getEv(selEvId):null;
+  document.getElementById('no-ev').style.display=ev?'none':'flex';
+  document.getElementById('draw-content').style.display=ev?'block':'none';
+  if(!ev)return;
+  setMode(curMode);
+}
+function setMode(mode){
+  curMode=mode;const dp=mode==='dp';
+  document.getElementById('mtab-dp').className='mode-tab'+(dp?' dp':'');
+  document.getElementById('mtab-gp').className='mode-tab'+(dp?'':' gp');
+  document.getElementById('dp-stage').style.display=dp?'block':'none';
+  document.getElementById('gp-stage').style.display=dp?'none':'block';
+  if(!selEvId)return;
+  if(dp)renderDpStage();else renderGpStage();
+  updateModeBadge();
+}
+
+/* ── getAllNames returns plain string array ── */
+function getAllNames(){
+  const ev=getEv(selEvId);if(!ev)return[];
+  return[...(ev.organic||[]).map(e=>e.name),...(ev.nonOrganic||[]).map(e=>e.name)];
+}
+
+/* ──────────────────────────────
+   DOORPRIZE STAGE
+   - 1 card per prize type
+   - N rolling rows inside, all same height
+   - No chips below — winners shown inside cards
+────────────────────────────── */
+function renderDpStage(){
+  const ev=getEv(selEvId);if(!ev)return;
+  const winners=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE');
+  const total=ev.doorprizes.reduce((s,p)=>s+p.count,0);
+  document.getElementById('dp-total-num').textContent=total;
+  document.getElementById('dp-hc-sub').textContent=total
+    ?'Klik Undi untuk menampilkan '+total+' pemenang sekaligus'
+    :'Belum ada doorprize — tambahkan di Admin.';
+
+  const grid=document.getElementById('prize-grid');grid.innerHTML='';
+  const names=getAllNames();
+  const alreadyDone=winners.length>0;
+
+  // Find max count for uniform card height
+  const maxCount=ev.doorprizes.reduce((m,p)=>Math.max(m,p.count),1);
+  const rowH=44; // px per winner row
+  const cardBodyH=(maxCount*rowH); // all cards same height
+
+  let winnerOffset=0;
+  ev.doorprizes.forEach((prize,pi)=>{
+    const prizeWinners=winners.slice(winnerOffset,winnerOffset+prize.count);
+    winnerOffset+=prize.count;
+
+    const card=document.createElement('div');
+    card.className='prize-card-slot'+(alreadyDone?' done':'');
+    card.id='pcard-'+pi;
+
+    // Header
+    const hdr=document.createElement('div');
+    hdr.className='pc-header';
+    hdr.innerHTML='<span class="pc-title">'+prize.name+'</span><span class="pc-count-badge">×'+prize.count+'</span>';
+    card.appendChild(hdr);
+
+    // Winners body — fixed height regardless of count
+    const body=document.createElement('div');
+    body.className='pc-winners';
+    body.style.minHeight=cardBodyH+'px';
+
+    for(let i=0;i<prize.count;i++){
+      const w=prizeWinners[i]||null;
+      const row=document.createElement('div');
+      row.className='pc-winner-row'+(w?' revealed':'');
+      row.id='prow-'+pi+'-'+i;
+      row.style.height=rowH+'px';
+
+      const numSpan=document.createElement('span');
+      numSpan.className='pc-winner-num';
+      numSpan.textContent=i+1;
+      row.appendChild(numSpan);
+
+      const vp=document.createElement('div');
+      vp.className='pc-slot-vp';
+
+      const track=document.createElement('div');
+      track.className='pc-slot-track';
+      track.id='ptrack-'+pi+'-'+i;
+
+      if(w){
+        const item=document.createElement('div');
+        item.className='pc-slot-item winner';
+        item.innerHTML='<span>'+w.name+'</span>';
+        track.appendChild(item);
+      }else if(names.length){
+        const items=[...names,...names,...names,...names,...names,...names];
+        track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+        const mid=Math.floor(items.length/2);
+        track.style.transform='translateY(-'+(mid*28)+'px)';
+      }else{
+        track.innerHTML='<div class="pc-slot-item"><span style="color:var(--muted2)">—</span></div>';
+      }
+      vp.appendChild(track);
+      row.appendChild(vp);
+      body.appendChild(row);
+    }
+    card.appendChild(body);
+    grid.appendChild(card);
+  });
+
+  const btn=document.getElementById('btn-dp-draw');
+  if(alreadyDone){btn.textContent='✓ Doorprize Sudah Diundi';btn.disabled=true;}
+  else if(!total){btn.textContent='🎲 Undi Semua Doorprize';btn.disabled=true;}
+  else{btn.textContent='🎲 Undi Semua Doorprize';btn.disabled=!isOperator;}
+  document.getElementById('dp-status').textContent='';
+}
+
+/* Pool builders */
+function buildDpPool(){
+  /* DOORPRIZE RULES:
+     - Organik: hanya G2, G3, G4. G5 tidak eligible.
+       Probabilitas: G2 > G3 > G4 (makin tinggi pangkat, makin kecil peluang)
+     - Non-organik: semua eligible, flat equal weight
+     - Rasio: organik 40% total weight, non-organik 60% total weight
+     - Peserta yang sudah menang DP tidak bisa menang lagi
+  */
+  const ev=getEv(selEvId);if(!ev)return[];
+  const r=ev.ratios||{organic:40,non:60,g2:50,g3:35,g4:15};
+  const evW=S.winners.filter(w=>w.evId===selEvId);
+  const dpK=new Set(evW.filter(w=>w.prizeType==='DOORPRIZE').map(w=>w.key));
+  // Weight per grade dalam porsi organik: G2:g2%, G3:g3%, G4:g4%, G5:0%
+  const gm={G2:r.g2||50,G3:r.g3||35,G4:r.g4||15};
+  let pool=[];
+  const avO=(ev.organic||[]).filter(e=>{
+    const k=e.name+'|org';
+    if(dpK.has(k))return false;      // sudah menang DP
+    if(e.grade==='G5')return false;  // G5 tidak eligible DP
+    return true;
+  });
+  const avN=(ev.nonOrganic||[]).filter(e=>!dpK.has(e.name+'|non'));
+  // Organik: bobot = r.organic% dibagi per grade lalu per orang dalam grade
+  avO.forEach(e=>{
+    const k=e.name+'|org';
+    const grp=avO.filter(x=>x.grade===e.grade);
+    const gradeShare=r.organic*(gm[e.grade]||0)/100; // porsi grade dalam total
+    const w=grp.length?gradeShare/grp.length:0;
+    pool.push({name:e.name,type:'org',grade:e.grade,weight:w,key:k});
+  });
+  // Non-organik: bobot = r.non% dibagi rata per orang
+  avN.forEach(e=>{
+    const k=e.name+'|non';
+    const w=avN.length?r.non/avN.length:0;
+    pool.push({name:e.name,type:'non',grade:null,weight:w,key:k});
+  });
+  return pool;
+}
+function buildGpPool(){
+  /* GRAND PRIZE RULES:
+     - Organik: G2-G4 eligible (G5 tidak, sama seperti DP)
+       PLUS: organik max menang 1 grandprize total di seluruh sesi
+     - Non-organik: semua eligible, dibatasi policy DP
+     - Rasio GP mengikuti setting r.organic / r.non dari kegiatan
+       (terpisah dari DP — admin bisa setting berbeda jika mau)
+     - Policy dpPolicy berlaku: full / reduce / exclude
+  */
+  const ev=getEv(selEvId);if(!ev)return[];
+  const r=ev.ratios||{organic:40,non:60,g2:50,g3:35,g4:15};
+  const pol=ev.dpPolicy||'full',rf=(ev.reduceFactor||50)/100;
+  const evW=S.winners.filter(w=>w.evId===selEvId);
+  const dpK=new Set(evW.filter(w=>w.prizeType==='DOORPRIZE').map(w=>w.key));
+  const gpK=new Set(evW.filter(w=>w.prizeType==='GRAND PRIZE').map(w=>w.key));
+  const gm={G2:r.g2||50,G3:r.g3||35,G4:r.g4||15}; // G5=0
+  let pool=[];
+  const avO=(ev.organic||[]).filter(e=>{
+    const k=e.name+'|org';
+    if(gpK.has(k))return false;       // sudah menang 1 GP — tidak boleh lagi
+    if(e.grade==='G5')return false;   // G5 tidak eligible GP
+    if(pol==='exclude'&&dpK.has(k))return false;
+    return true;
+  });
+  const avN=(ev.nonOrganic||[]).filter(e=>{
+    const k=e.name+'|non';
+    if(gpK.has(k))return false;
+    if(pol==='exclude'&&dpK.has(k))return false;
+    return true;
+  });
+  // Organik: same grade-weighted as DP
+  avO.forEach(e=>{
+    const k=e.name+'|org';
+    const grp=avO.filter(x=>x.grade===e.grade);
+    const gradeShare=r.organic*(gm[e.grade]||0)/100;
+    let w=grp.length?gradeShare/grp.length:0;
+    if(pol==='reduce'&&dpK.has(k))w*=rf;
+    pool.push({name:e.name,type:'org',grade:e.grade,weight:w,key:k});
+  });
+  // Non-organik: flat equal
+  avN.forEach(e=>{
+    const k=e.name+'|non';
+    let w=avN.length?r.non/avN.length:0;
+    if(pol==='reduce'&&dpK.has(k))w*=rf;
+    pool.push({name:e.name,type:'non',grade:null,weight:w,key:k});
+  });
+  return pool;
+}
+function pick(pool,exclude=[]){
+  const av=pool.filter(p=>!exclude.some(e=>e.key===p.key));
+  if(!av.length)return null;
+  const tot=av.reduce((s,p)=>s+p.weight,0);
+  if(tot===0)return av[Math.floor(Math.random()*av.length)];
+  let r=Math.random()*tot;for(const p of av){r-=p.weight;if(r<=0)return p;}return av[av.length-1];
+}
+
+/* Start doorprize draw */
+async function startDpDraw(){
+  if(rolling||!isOperator)return;
+  const ev=getEv(selEvId);if(!ev)return;
+  // Build flat slot list
+  const slotList=[];
+  ev.doorprizes.forEach((p,pi)=>{for(let i=0;i<p.count;i++)slotList.push({prizeName:p.name,pi,si:i});});
+  if(!slotList.length)return;
+  const pool=buildDpPool();
+  if(pool.length<slotList.length){toast('⚠️ Peserta tidak cukup!');return;}
+  rolling=true;document.getElementById('btn-dp-draw').disabled=true;
+  // Pick unique winners
+  const winners=[];const used=[];
+  for(let i=0;i<slotList.length;i++){const w=pick(pool,used);if(!w)break;winners.push(w);used.push(w);}
+  const dur=(parseFloat(document.getElementById('roll-dur').value)||6)*1000;
+  const names=getAllNames();if(!names.length){rolling=false;return;}
+  // Prime all tracks
+  slotList.forEach(s=>{
+    const track=document.getElementById('ptrack-'+s.pi+'-'+s.si);if(!track)return;
+    const items=[...names,...names,...names,...names,...names,...names];
+    track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+    const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*28)+'px)';
+  });
+  document.getElementById('dp-status').textContent='🎰 Rolling…';
+  // Animate all with stagger
+  const promises=slotList.map((s,i)=>animatePrizeSlot(s.pi,s.si,winners[i],dur,i*90,names));
+  await Promise.all(promises);
+  document.getElementById('dp-status').textContent='';
+  // Save winners
+  slotList.forEach((s,i)=>{
+    const w=winners[i];if(!w)return;
+    S.winners.push({evId:selEvId,prizeName:s.prizeName,prizeType:'DOORPRIZE',name:w.name,type:w.type,grade:w.grade,key:w.key});
+  });
+  save();
+  document.getElementById('btn-dp-draw').textContent='✓ Doorprize Sudah Diundi';
+  rolling=false;
+  launchConfetti();
+}
+
+function animatePrizeSlot(pi,si,winner,dur,delay,names){
+  return new Promise(resolve=>{
+    setTimeout(()=>{
+      const track=document.getElementById('ptrack-'+pi+'-'+si);
+      if(!track||!winner){resolve();return;}
+      const safeIdx=Math.max(0,names.indexOf(winner.name));
+      const big=[];for(let i=0;i<60;i++)big.push(names[i%names.length]);big.push(names[safeIdx]);
+      track.innerHTML=big.map((n,j)=>'<div class="pc-slot-item'+(j===big.length-1?' winner':'')+'"><span>'+n+'</span></div>').join('');
+      const tIdx=big.length-1,tY=(tIdx*28)-(28/2-14);
+      const t0=performance.now();
+      const stopOff=(pi*10+si)*160;
+      function ease(t){return 1-Math.pow(1-t,5);}
+      function anim(now){
+        const p=Math.min((now-t0)/(dur+stopOff),1);
+        track.style.transform='translateY(-'+(tY*ease(p))+'px)';
+        if(p<1){requestAnimationFrame(anim);}
+        else{
+          const last=track.children[tIdx];
+          if(last){last.querySelector('span').style.color='var(--gold-text)';last.querySelector('span').style.fontWeight='800';}
+          const row=document.getElementById('prow-'+pi+'-'+si);
+          if(row)row.classList.add('revealed');
+          document.getElementById('pcard-'+pi).classList.add('done');
+          resolve();
+        }
+      }
+      requestAnimationFrame(anim);
+    },delay);
+  });
+}
+
+/* ── GRAND PRIZE ── */
+/* ── GRAND PRIZE: same card-grid logic as DP, sequential per winner ── */
+function renderGpStage(){
+  const ev=getEv(selEvId);if(!ev)return;
+  gpSelIdx=null;
+  const gpW=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE');
+  const totalWinners=ev.grandprizes.reduce((s,p)=>s+p.count,0);
+  document.getElementById('gp-total-num').textContent=totalWinners;
+  document.getElementById('gp-hc-sub').textContent=gpW.length===totalWinners&&totalWinners>0?'Semua grand prize sudah diundi!':'Pilih item di bawah lalu klik Undi';
+
+  // Picker list
+  const itemsEl=document.getElementById('gp-items');itemsEl.innerHTML='';
+  (ev.grandprizes||[]).forEach((p,i)=>{
+    const wonCount=gpW.filter(w=>w.prizeName===p.name).length;
+    const remaining=p.count-wonCount;const exhausted=remaining<=0;
+    const div=document.createElement('div');
+    div.className='gp-item'+(exhausted?' exhausted':'');
+    if(!exhausted)div.onclick=()=>selectGp(i);
+    div.innerHTML='<span class="gp-item-ico">🏆</span><div class="gp-item-info"><div class="gp-item-name">'+p.name+'</div><div class="gp-item-sub">'+p.count+' unit · '+wonCount+' sudah diundi</div></div><span class="gp-item-badge '+(exhausted?'gp-badge-done':'gp-badge-avail')+'">'+(exhausted?'✓ Selesai':remaining+' tersisa')+'</span>';
+    itemsEl.appendChild(div);
+  });
+
+  // Build prize-grid-gp: same card structure as DP
+  const grid=document.getElementById('prize-grid-gp');grid.innerHTML='';
+  const names=getAllNames();
+  const maxCount=Math.max(1,...(ev.grandprizes||[]).map(p=>p.count));
+  const rowH=44;
+  const cardBodyH=maxCount*rowH;
+
+  (ev.grandprizes||[]).forEach((prize,pi)=>{
+    const prizeWinners=gpW.filter(w=>w.prizeName===prize.name);
+    const card=document.createElement('div');
+    card.className='prize-card-slot'+(prizeWinners.length===prize.count?' done':'');
+    card.id='gpcard-'+pi;
+
+    const hdr=document.createElement('div');
+    hdr.className='pc-header';
+    hdr.style.background=prizeWinners.length===prize.count?'var(--teal)':'var(--coral)';
+    hdr.innerHTML='<span class="pc-title">'+prize.name+'</span><span class="pc-count-badge" style="background:rgba(255,255,255,0.25);color:#fff">×'+prize.count+'</span>';
+    card.appendChild(hdr);
+
+    const body=document.createElement('div');
+    body.className='pc-winners';
+    body.style.minHeight=cardBodyH+'px';
+
+    for(let i=0;i<prize.count;i++){
+      const w=prizeWinners[i]||null;
+      const row=document.createElement('div');
+      row.className='pc-winner-row'+(w?' revealed':'');
+      row.id='gprow-'+pi+'-'+i;
+      row.style.height=rowH+'px';
+
+      const numSpan=document.createElement('span');
+      numSpan.className='pc-winner-num';numSpan.textContent=i+1;
+      row.appendChild(numSpan);
+
+      const vp=document.createElement('div');vp.className='pc-slot-vp';
+      const track=document.createElement('div');track.className='pc-slot-track';track.id='gptrack-'+pi+'-'+i;
+
+      if(w){
+        const item=document.createElement('div');
+        item.className='pc-slot-item winner';
+        item.innerHTML='<span>'+w.name+'</span>';
+        track.appendChild(item);
+      }else if(names.length){
+        const items=[...names,...names,...names,...names,...names,...names];
+        track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+        const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*28)+'px)';
+      }else{
+        track.innerHTML='<div class="pc-slot-item"><span style="color:var(--muted2)">—</span></div>';
+      }
+      vp.appendChild(track);row.appendChild(vp);body.appendChild(row);
+    }
+    card.appendChild(body);grid.appendChild(card);
+  });
+
+  document.getElementById('btn-gp-draw').disabled=true;
+  document.getElementById('gp-status').textContent='';
+  updateModeBadge();
+}
+
+function selectGp(idx){
+  gpSelIdx=idx;
+  document.querySelectorAll('.gp-item').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  const ev=getEv(selEvId);const p=ev.grandprizes[idx];
+  const gpW=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===p.name).length;
+  const rem=p.count-gpW;
+  document.getElementById('btn-gp-draw').disabled=!isOperator;
+  document.getElementById('gp-status').textContent='Dipilih: '+p.name+' · '+rem+' pemenang akan diundi';
+  // Prime unfinished tracks for selected prize
+  const names=getAllNames();
+  const ev2=getEv(selEvId);
+  for(let i=gpW;i<p.count;i++){
+    const track=document.getElementById('gptrack-'+idx+'-'+i);
+    if(!track||!names.length)continue;
+    const items=[...names,...names,...names,...names,...names,...names];
+    track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+    const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*28)+'px)';
+  }
+}
+
+async function startGpDraw(){
+  if(rolling||gpSelIdx===null||!isOperator)return;
+  const ev=getEv(selEvId);if(!ev)return;
+  const p=ev.grandprizes[gpSelIdx];if(!p)return;
+  const alreadyWon=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===p.name).length;
+  const remaining=p.count-alreadyWon;if(remaining<=0){toast('Hadiah ini sudah selesai diundi.');return;}
+  const pool=buildGpPool();if(!pool.length){toast('⚠️ Tidak ada peserta eligible!');return;}
+  const winners=[];const used=[];
+  for(let i=0;i<remaining;i++){const w=pick(pool,used);if(!w)break;winners.push(w);used.push(w);}
+  if(!winners.length){toast('Peserta tidak cukup.');return;}
+  rolling=true;document.getElementById('btn-gp-draw').disabled=true;
+  document.getElementById('gp-status').textContent='🎰 Rolling…';
+  const names=getAllNames();
+  const dur=(parseFloat(document.getElementById('roll-dur-gp').value)||7)*1000;
+  const pi=gpSelIdx;
+
+  for(let i=0;i<winners.length;i++){
+    const w=winners[i];
+    const si=alreadyWon+i;
+    // Prime this specific track
+    const track=document.getElementById('gptrack-'+pi+'-'+si);
+    if(track&&names.length){
+      const items=[...names,...names,...names,...names,...names,...names];
+      track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+      const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*28)+'px)';
+    }
+    await animateGpTrack(pi,si,w,dur,names);
+    S.winners.push({evId:selEvId,prizeName:p.name,prizeType:'GRAND PRIZE',name:w.name,type:w.type,grade:w.grade,key:w.key});
+    save();launchConfetti();
+    if(i<winners.length-1)await new Promise(r=>setTimeout(r,900));
+  }
+  // Mark card done
+  const card=document.getElementById('gpcard-'+pi);
+  if(card){card.classList.add('done');const hdr=card.querySelector('.pc-header');if(hdr)hdr.style.background='var(--teal)';}
+  document.getElementById('gp-status').textContent='✓ '+p.name+' selesai ('+remaining+' pemenang)';
+  // Update picker badge
+  const gpW2=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===p.name).length;
+  const pickerItems=document.querySelectorAll('.gp-item');
+  if(pickerItems[pi]){
+    const badge=pickerItems[pi].querySelector('.gp-item-badge');
+    if(badge){badge.textContent='✓ Selesai';badge.className='gp-item-badge gp-badge-done';}
+    pickerItems[pi].classList.add('exhausted');pickerItems[pi].onclick=null;pickerItems[pi].classList.remove('selected');
+  }
+  rolling=false;gpSelIdx=null;
+  document.getElementById('btn-gp-draw').disabled=true;
+  // Update total counter
+  const totalDone=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE').length;
+  const totalAll=ev.grandprizes.reduce((s,p)=>s+p.count,0);
+  if(totalDone===totalAll)document.getElementById('gp-hc-sub').textContent='Semua grand prize sudah diundi! 🎉';
+}
+
+function animateGpTrack(pi,si,winner,dur,names){
+  return new Promise(resolve=>{
+    const track=document.getElementById('gptrack-'+pi+'-'+si);
+    if(!track||!winner){resolve();return;}
+    const safeIdx=Math.max(0,names.indexOf(winner.name));
+    const big=[];for(let i=0;i<60;i++)big.push(names[i%names.length]);big.push(names[safeIdx]);
+    track.innerHTML=big.map((n,j)=>'<div class="pc-slot-item'+(j===big.length-1?' winner':'')+'"><span>'+n+'</span></div>').join('');
+    const tIdx=big.length-1;
+    // Fix: target item center minus slot center
+    const tY=(tIdx*28)+14-14;  // scroll so winner row is visible
+    const t0=performance.now();
+    function ease(t){return 1-Math.pow(1-t,5);}
+    function anim(now){
+      const p=Math.min((now-t0)/dur,1);
+      track.style.transform='translateY(-'+(tIdx*28*ease(p))+'px)';
+      if(p<1){requestAnimationFrame(anim);}
+      else{
+        track.style.transform='translateY(-'+(tIdx*28)+'px)';
+        const last=track.children[tIdx];
+        if(last){last.querySelector('span').style.color='var(--gold-text)';last.querySelector('span').style.fontWeight='800';}
+        const row=document.getElementById('gprow-'+pi+'-'+si);
+        if(row)row.classList.add('revealed');
+        resolve();
+      }
+    }
+    requestAnimationFrame(anim);
+  });
+}
+
+/* Results */
+function refreshResults(){
+  const sel=document.getElementById('r-ev-fil');const cur=sel.value;
+  sel.innerHTML='<option value="">Semua</option>';
+  S.events.forEach(ev=>{const o=document.createElement('option');o.value=ev.id;o.textContent=ev.name||'(Tanpa nama)';sel.appendChild(o);});
+  if(S.events.find(e=>e.id===cur))sel.value=cur;
+  renderResults();
+}
+function setRTab(t,el){rTab=t;document.querySelectorAll('.rtab').forEach(r=>r.classList.remove('active'));el.classList.add('active');renderResults();}
+function renderResults(){
+  const ef=document.getElementById('r-ev-fil')?.value||'';
+  let w=S.winners;if(ef)w=w.filter(x=>x.evId===ef);
+  if(rTab==='dp')w=w.filter(x=>x.prizeType==='DOORPRIZE');
+  if(rTab==='gp')w=w.filter(x=>x.prizeType==='GRAND PRIZE');
+  const tb=document.getElementById('r-tbody'),em=document.getElementById('r-empty');
+  if(!w.length){tb.innerHTML='';em.style.display='block';return;}
+  em.style.display='none';
+  tb.innerHTML=w.map((x,i)=>{const ev=getEv(x.evId),dp=x.prizeType==='DOORPRIZE';return'<tr><td style="color:var(--muted);font-family:\'DM Mono\',monospace;font-size:.75rem">'+(i+1)+'</td><td style="font-size:.78rem;color:var(--muted)">'+(ev?ev.name:'—')+'</td><td>'+(dp?'🎁':'🏆')+' <strong>'+x.prizeName+'</strong> <span class="badge '+(dp?'b-dp':'b-gp')+'">'+x.prizeType+'</span></td><td style="font-weight:700">'+x.name+'</td><td><span class="badge '+(x.type==='org'?'b-org':'b-non')+'">'+(x.type==='org'?'Organik':'Non-Organik')+'</span></td><td style="font-family:\'DM Mono\',monospace;font-size:.74rem">'+(x.grade||'—')+'</td></tr>';}).join('');
+}
+function resetWinners(){
+  if(!confirm('Reset semua pemenang?'))return;
+  S.winners=[];save();renderResults();renderDrawContent();toast('✓ Semua pemenang direset.');
+}
+
+/* Admin */
+function refreshAdmin(){
+  fillAdminEvSel();
+  if(adminEvId&&S.events.find(e=>e.id===adminEvId))loadEvEd(adminEvId);
+  else if(S.events.length)loadEvEd(S.events[0].id);
+  else document.getElementById('a-ev-editor').style.display='none';
+}
+function fillAdminEvSel(){
+  const sel=document.getElementById('a-ev-sel');const cur=sel.value||adminEvId;
+  sel.innerHTML='<option value="">— Pilih kegiatan —</option>';
+  S.events.forEach(ev=>{const o=document.createElement('option');o.value=ev.id;o.textContent=ev.name||'(Tanpa nama)';sel.appendChild(o);});
+  if(S.events.find(e=>e.id===cur))sel.value=cur;
+}
+function createEv(){
+  const ev={id:uid(),name:'Kegiatan Baru',loc:'',dateStart:'',dateEnd:'',doorprizes:[],grandprizes:[],organic:[],nonOrganic:[],ratios:{organic:40,non:60,g2:50,g3:35,g4:15,g5:0},dpPolicy:'full',reduceFactor:50};
+  S.events.push(ev);save();fillAdminEvSel();loadEvEd(ev.id);fillDrawEvSel();
+}
+function deleteEv(){
+  if(!adminEvId)return;const ev=getEv(adminEvId);
+  if(!confirm('Hapus kegiatan "'+(ev?.name||'ini')+'"?'))return;
+  S.events=S.events.filter(e=>e.id!==adminEvId);S.winners=S.winners.filter(w=>w.evId!==adminEvId);
+  if(selEvId===adminEvId)selEvId=null;
+  adminEvId=null;save();fillAdminEvSel();fillDrawEvSel();document.getElementById('a-ev-editor').style.display='none';toast('✓ Kegiatan dihapus.');
+}
+function loadEvEd(id){
+  if(!id){document.getElementById('a-ev-editor').style.display='none';return;}
+  adminEvId=id;
+  const sel=document.getElementById('a-ev-sel');if(sel.value!==id)sel.value=id;
+  const ev=getEv(id);if(!ev)return;
+  document.getElementById('a-ev-editor').style.display='block';
+  document.getElementById('ev-name').value=ev.name||'';document.getElementById('ev-loc').value=ev.loc||'';
+  document.getElementById('ev-ds').value=ev.dateStart||'';document.getElementById('ev-de').value=ev.dateEnd||'';
+  renderPL('dp-list',ev.doorprizes,'dp');renderPL('gp-list',ev.grandprizes,'gp');
+  renderTL('org-list',ev.organic,'org');renderTL('non-list',ev.nonOrganic,'non');
+  const def={organic:40,non:60,g2:50,g3:35,g4:15};
+  ['organic','non','g2','g3','g4'].forEach(k=>{const el=document.getElementById('r-'+k);if(el)el.value=(ev.ratios||{})[k]??def[k];});
+  updR();selPol(ev.dpPolicy||'full',false);document.getElementById('reduce-fac').value=ev.reduceFactor||50;
+  document.getElementById('save-ok').style.display='none';
+}
+function addPrize(t){const ev=getEv(adminEvId);if(!ev)return;const name=document.getElementById(t+'-name').value.trim();const count=parseInt(document.getElementById(t+'-count').value)||1;if(!name)return;if(t==='dp')ev.doorprizes.push({name,count});else ev.grandprizes.push({name,count});document.getElementById(t+'-name').value='';renderPL(t+'-list',t==='dp'?ev.doorprizes:ev.grandprizes,t);}
+function removePrize(t,i){const ev=getEv(adminEvId);if(!ev)return;if(t==='dp')ev.doorprizes.splice(i,1);else ev.grandprizes.splice(i,1);renderPL(t+'-list',t==='dp'?ev.doorprizes:ev.grandprizes,t);}
+function renderPL(id,arr,t){const c=document.getElementById(id);if(!arr.length){c.innerHTML='<div style="color:var(--muted);font-size:.74rem;padding:6px 0">Belum ada item.</div>';return;}c.innerHTML=arr.map((p,i)=>'<div class="pe"><span style="font-size:.9rem">'+(t==='gp'?'🏆':'🎁')+'</span><div class="pe-info"><div class="pe-name">'+p.name+'</div><div class="pe-count">'+p.count+' unit</div></div><button class="pe-del" onclick="removePrize(\''+t+'\','+i+')">✕</button></div>').join('');}
+function addEmp(t){const ev=getEv(adminEvId);if(!ev)return;const name=document.getElementById(t==='org'?'org-name':'non-name').value.trim();if(!name)return;if(t==='org'){const grade=document.getElementById('org-grade').value;if((ev.organic||[]).some(e=>e.name===name)){toast('Nama sudah ada.');return;}if(!ev.organic)ev.organic=[];ev.organic.push({name,grade});document.getElementById('org-name').value='';renderTL('org-list',ev.organic,'org');}else{if((ev.nonOrganic||[]).some(e=>e.name===name)){toast('Nama sudah ada.');return;}if(!ev.nonOrganic)ev.nonOrganic=[];ev.nonOrganic.push({name});document.getElementById('non-name').value='';renderTL('non-list',ev.nonOrganic,'non');}}
+function removeEmp(t,i){const ev=getEv(adminEvId);if(!ev)return;if(t==='org')ev.organic.splice(i,1);else ev.nonOrganic.splice(i,1);renderTL(t==='org'?'org-list':'non-list',t==='org'?ev.organic:ev.nonOrganic,t);}
+function clearEmp(t){const ev=getEv(adminEvId);if(!ev)return;if(!confirm('Hapus semua?'))return;if(t==='org')ev.organic=[];else ev.nonOrganic=[];renderTL(t==='org'?'org-list':'non-list',t==='org'?ev.organic:ev.nonOrganic,t);}
+function renderTL(id,arr,t){const c=document.getElementById(id);const l=document.getElementById(t+'-lbl');if(l)l.textContent=(arr||[]).length+' pegawai';if(!arr||!arr.length){c.innerHTML='<div style="color:var(--muted);font-size:.74rem;padding:4px 0">Belum ada pegawai.</div>';return;}c.innerHTML=arr.map((p,i)=>'<div class="tag"><span class="tag-n">'+p.name+'</span>'+(p.grade?'<span class="tag-s">'+p.grade+'</span>':'')+'<button class="tag-d" onclick="removeEmp(\''+t+'\','+i+')">✕</button></div>').join('');}
+function bulkAdd(t){
+  const ev=getEv(adminEvId);if(!ev)return;
+  const raw=document.getElementById(t==='org'?'org-bulk':'non-bulk').value;
+  const lines=raw.split('\n').map(l=>l.trim()).filter(Boolean);let added=0,dup=0;
+  if(t==='org'){if(!ev.organic)ev.organic=[];lines.forEach(line=>{const parts=line.split(/\t|;/);const name=(parts[0]||'').trim();if(!name)return;let grade='G4';if(parts[1]){const g=(parts[1]||'').trim().toUpperCase().replace(/\s/g,'');if(['G2','G3','G4','G5'].includes(g))grade=g;}if(ev.organic.some(e=>e.name===name)){dup++;return;}ev.organic.push({name,grade});added++;});document.getElementById('org-bulk').value='';renderTL('org-list',ev.organic,'org');}
+  else{if(!ev.nonOrganic)ev.nonOrganic=[];lines.forEach(line=>{const name=line.split(/\t/)[0].trim();if(!name)return;if(ev.nonOrganic.some(e=>e.name===name)){dup++;return;}ev.nonOrganic.push({name});added++;});document.getElementById('non-bulk').value='';renderTL('non-list',ev.nonOrganic,'non');}
+  const msgs=[];if(added)msgs.push('✓ '+added+' ditambahkan');if(dup)msgs.push(dup+' duplikat dilewati');toast(msgs.join(', ')||'Tidak ada data baru.');
+}
+function updR(){
+  const r={};['organic','non','g2','g3','g4'].forEach(k=>{r[k]=parseFloat(document.getElementById('r-'+k)?.value)||0;});
+  r.g5=0; // G5 tidak eligible, selalu 0
+  const mt=r.organic+r.non, ot=r.g2+r.g3+r.g4; // G5 tidak dihitung
+  ['organic','non','g2','g3','g4'].forEach(k=>{const b=document.getElementById('rb-'+k);if(b)b.style.width=Math.min(r[k],100)+'%';});
+  const m1=document.getElementById('rt-main');m1.className='ratio-ttl '+(mt===100?'ok':'err');m1.textContent='Total: '+mt+'%'+(mt===100?' ✓':' ✗ (harus 100%)');
+  const m2=document.getElementById('rt-org');m2.className='ratio-ttl '+(ot===100?'ok':'err');m2.textContent='Total organik G2+G3+G4: '+ot+'%'+(ot===100?' ✓':' ✗ (harus 100%)');
+}
+function selPol(val,save2=true){['full','reduce','exclude'].forEach(p=>{document.getElementById('pol-'+p)?.classList.toggle('sel',p===val);});const r=document.querySelector('input[name="pol"][value="'+val+'"]');if(r)r.checked=true;document.getElementById('reduce-row').style.display=val==='reduce'?'flex':'none';}
+function saveEv(){
+  const ev=getEv(adminEvId);if(!ev)return;updR();
+  ev.name=document.getElementById('ev-name').value.trim()||'Kegiatan Baru';ev.loc=document.getElementById('ev-loc').value.trim();ev.dateStart=document.getElementById('ev-ds').value;ev.dateEnd=document.getElementById('ev-de').value;
+  const r={};['organic','non','g2','g3','g4'].forEach(k=>{r[k]=parseFloat(document.getElementById('r-'+k)?.value)||0;});r.g5=0;ev.ratios=r;
+  ev.dpPolicy=document.querySelector('input[name="pol"]:checked')?.value||'full';ev.reduceFactor=parseFloat(document.getElementById('reduce-fac').value)||50;
+  save();fillAdminEvSel();fillDrawEvSel();if(selEvId===adminEvId)renderDrawMeta(ev);
+  const ok=document.getElementById('save-ok');ok.style.display='block';setTimeout(()=>ok.style.display='none',2800);toast('✓ Pengaturan disimpan!');
+}
+
+/* Confetti */
+function launchConfetti(){
+  const cv=document.getElementById('confetti-canvas'),ctx=cv.getContext('2d');cv.width=window.innerWidth;cv.height=window.innerHeight;
+  const cols=['#D4961A','#E05A3A','#0E7A72','#6D28D9','#15803D','#1A2340','#F0D080'];
+  const ps=Array.from({length:150},()=>({x:Math.random()*cv.width,y:-10-Math.random()*200,w:7+Math.random()*8,h:3+Math.random()*5,r:Math.random()*Math.PI*2,dr:(Math.random()-.5)*.2,vy:2+Math.random()*4,vx:(Math.random()-.5)*3,c:cols[Math.floor(Math.random()*cols.length)],a:1}));
+  if(cFrame)cancelAnimationFrame(cFrame);
+  function draw(){ctx.clearRect(0,0,cv.width,cv.height);let alive=false;ps.forEach(p=>{p.y+=p.vy;p.x+=p.vx;p.r+=p.dr;p.a-=.005;if(p.y<cv.height&&p.a>0)alive=true;ctx.save();ctx.globalAlpha=Math.max(0,p.a);ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore();});if(alive)cFrame=requestAnimationFrame(draw);else ctx.clearRect(0,0,cv.width,cv.height);}
+  draw();
+}
+
+/* ── INIT ── */
+updateModeBadge();
+fillDrawEvSel();
+fillAdminEvSel();
+showSyncBadge('connecting');
+
+// Start Firebase — all data flows via onSnapshot after this
+initFirebase().catch(err => {
+  console.error('Firebase init failed:', err);
+  showSyncBadge('error');
+  // Fallback: show config error in UI
+  const body = document.querySelector('.draw-body');
+  if(body){
+    const msg = document.createElement('div');
+    msg.style.cssText='background:#FEF2F2;border:1.5px solid #FECACA;border-radius:12px;padding:20px 24px;max-width:560px;margin:40px auto;';
+    msg.innerHTML='<strong style="color:#DC2626;font-size:0.95rem">⚠️ Firebase belum dikonfigurasi</strong><br><span style="color:#555;font-size:0.82rem;line-height:1.6">Buka file <code>undian-hadiah.html</code>, cari <code>FIREBASE_CONFIG</code> di bagian atas script, dan isi dengan data dari Firebase Console Anda. Lihat panduan deploy untuk instruksi lengkap.</span>';
+    body.prepend(msg);
+  }
+});
+</script>
+</body>
+</html>
