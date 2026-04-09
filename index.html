@@ -170,9 +170,9 @@ nav{
 /* Prize card header */
 .pc-header{
   background:var(--navy);padding:6px 10px;
-  display:flex;align-items:center;justify-content:space-between;
+  display:flex;align-items:flex-start;justify-content:space-between;
 }
-.pc-title{font-size:var(--font-card);font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:6px;}
+.pc-title{font-size:var(--font-card);font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;flex:1;white-space:normal;word-break:break-word;line-height:1.25;margin-right:6px;}
 .pc-count-badge{background:var(--gold);color:var(--navy);font-size:0.62rem;font-weight:800;padding:2px 7px;border-radius:999px;flex-shrink:0;font-family:'DM Mono',monospace;}
 
 /* Winner rows inside card */
@@ -551,7 +551,7 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
   display:flex;align-items:center;gap:8px;
   padding:0 12px;
   flex:1;
-  min-height:52px;
+  min-height:80px;
   border-bottom:1px solid var(--border);
 }
 .gp-prize-row:last-child{border-bottom:none;}
@@ -561,16 +561,16 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
   font-family:'DM Mono',monospace;width:14px;flex-shrink:0;
 }
 .gp-prize-vp{
-  flex:1;height:34px;overflow:hidden;
+  flex:1;height:40px;overflow:hidden;
   border-radius:5px;background:var(--bg2);border:1px solid var(--border);
 }
 .gp-prize-track{display:flex;flex-direction:column;will-change:transform;}
 .gp-prize-item{
-  height:34px;display:flex;align-items:center;justify-content:center;
+  height:40px;display:flex;align-items:center;justify-content:center;
   flex-shrink:0;padding:0 6px;
 }
 .gp-prize-item span{
-  font-size:0.88rem;font-weight:600;color:var(--text);
+  font-size:0.92rem;font-weight:600;color:var(--text);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   max-width:100%;text-align:center;
 }
@@ -1437,7 +1437,7 @@ function renderGpStage(){
 
   const list=document.getElementById('gp-card-list');list.innerHTML='';
   const names=getAllNames();
-  const slotH=34;
+  const slotH=40;
 
   ev.grandprizes.forEach((prize,pi)=>{
     const prizeW=gpW.filter(w=>w.prizeName===prize.name);
@@ -1528,7 +1528,7 @@ async function startGpDrawAll(){
   rolling=true;document.getElementById('btn-gp-draw').disabled=true;
   const names=getAllNames();if(!names.length){rolling=false;return;}
   const dur=(parseFloat(document.getElementById('roll-dur-gp').value)||7)*1000;
-  const slotH=34; // GP row height 34px
+  const slotH=40; // GP row height 40px
 
   // Prime all tracks
   slotList.forEach(s=>{
