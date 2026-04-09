@@ -12,6 +12,7 @@
 ═══════════════════════════════ */
 :root{
   --card-min:130px;
+  --col-count:9;
   --row-h:34px;
   --slot-h:22px;
   --font-card:0.67rem;
@@ -146,12 +147,16 @@ nav{
 /* ── PRIZE GRID ──
    Fixed-size cards, equal height via grid-auto-rows */
 .prize-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(var(--card-min),1fr));
-  grid-auto-rows:auto;
-  gap:var(--grid-gap);
+  /* CSS Columns — kartu mengalir vertikal, tidak ada bolong */
+  columns:var(--col-count, 9) var(--card-min);
+  column-gap:var(--grid-gap);
   margin-bottom:8px;
-  align-items:start;
+}
+.prize-grid > .prize-card-slot{
+  break-inside:avoid;
+  display:block;
+  margin-bottom:var(--grid-gap);
+  width:100%;
 }
 
 /* Each prize card */
@@ -480,8 +485,50 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 .btn-reroll:hover{background:var(--coral);color:#fff;border-color:var(--coral);}
 
 
-.zoom-bar{display:flex;align-items:center;gap:8px;padding:4px 10px;margin-bottom:6px;border-radius:var(--rs);background:var(--panel);border:1px solid var(--border);}
-.zoom-bar label{font-size:0.82rem;}
+.zoom-bar{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.zoom-btn{padding:3px 10px;border-radius:6px;border:1.5px solid var(--border2);background:var(--panel);
+  color:var(--muted);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:700;transition:all .12s;}
+.zoom-btn:hover{border-color:var(--navy);color:var(--navy);}
+.zoom-btn.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+.zoom-lbl{font-size:0.68rem;color:var(--muted);margin-right:2px;}
+
+
+/* Grand Prize Grid — max 4 col, kartu besar */
+.prize-grid-gp{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:10px;
+  margin-bottom:10px;
+}
+.prize-grid-gp > .prize-card-slot{
+  min-height:100px;
+}
+.prize-card-slot.gp-card .pc-header{
+  padding:10px 14px;
+  background:var(--coral);
+}
+.prize-card-slot.gp-card.done .pc-header{
+  background:var(--teal);
+}
+.prize-card-slot.gp-card .pc-title{
+  font-size:0.8rem;
+}
+.prize-card-slot.gp-card .pc-winner-row{
+  height:44px;
+}
+.prize-card-slot.gp-card .pc-slot-vp{
+  height:28px;
+}
+.prize-card-slot.gp-card .pc-slot-item{
+  height:28px;
+}
+.prize-card-slot.gp-card .pc-slot-item span{
+  font-size:0.88rem;
+}
+.prize-card-slot.gp-card.revealed-card{
+  border-color:var(--gold-border);
+  box-shadow:0 0 0 3px rgba(212,150,26,0.2);
+}
 
 </style>
 </head>
@@ -573,9 +620,12 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
           <span class="dur-val" id="dur-val">6s</span>
         </div>
         <div class="zoom-bar">
-          <label>🔍</label>
-          <input type="range" id="zoom-slider" min="0" max="4" value="2" step="1" oninput="applyZoom(this.value)" style="flex:1;accent-color:var(--navy);cursor:pointer">
-          <span style="font-size:0.68rem;color:var(--muted);min-width:28px;text-align:right" id="zoom-label">100%</span>
+          <span class="zoom-lbl">🔍 Ukuran:</span>
+          <button class="zoom-btn" onclick="applyZoom(0)">XS</button>
+          <button class="zoom-btn" onclick="applyZoom(1)">S</button>
+          <button class="zoom-btn active" id="zoom-btn-2" onclick="applyZoom(2)">M</button>
+          <button class="zoom-btn" onclick="applyZoom(3)">L</button>
+          <button class="zoom-btn" onclick="applyZoom(4)">XL</button>
         </div>
         <div class="prize-grid" id="prize-grid"></div>
         <div class="ctrl-row">
@@ -608,7 +658,7 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
           <input type="range" id="roll-dur-gp" min="3" max="20" value="7" oninput="document.getElementById('dur-val-gp').textContent=this.value+'s'">
           <span class="dur-val" id="dur-val-gp">7s</span>
         </div>
-        <div class="prize-grid" id="prize-grid-gp"></div>
+        <div class="prize-grid-gp" id="prize-grid-gp"></div>
         <div class="ctrl-row">
           <button class="btn-main coral" id="btn-gp-draw" onclick="startGpDrawAll()">🏆 Undi Semua Grand Prize</button>
           <button class="btn-reroll" id="btn-gp-reroll" onclick="rerollDraw()" style="display:none">↺ Undi Ulang</button>
@@ -1343,15 +1393,14 @@ function renderGpStage(){
   const grid=document.getElementById('prize-grid-gp');grid.innerHTML='';
   const names=getAllNames();
   const alreadyDone=gpW.length>=total&&total>0;
-  const rowH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--row-h'))||34;
-  const slotH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slot-h'))||22;
+  const rowH=44; // GP always large
+  const slotH=28;
 
-  let winnerOffset=0;
   ev.grandprizes.forEach((prize,pi)=>{
     const prizeWinners=gpW.filter(w=>w.prizeName===prize.name);
 
     const card=document.createElement('div');
-    card.className='prize-card-slot'+(prizeWinners.length>=prize.count?' done':'');
+    card.className='prize-card-slot gp-card'+(prizeWinners.length>=prize.count?' done':'');
     card.id='gpcard-'+pi;
 
     const hdr=document.createElement('div');
@@ -1380,7 +1429,7 @@ function renderGpStage(){
         const items=[...names,...names,...names,...names,...names,...names];
         track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
         const mid=Math.floor(items.length/2);
-        track.style.transform='translateY(-'+(mid*slotH)+'px)';
+        track.style.transform='translateY(-'+(mid*28)+'px)';
       }else{
         track.innerHTML='<div class="pc-slot-item"><span style="color:var(--muted2)">—</span></div>';
       }
@@ -1440,7 +1489,7 @@ async function startGpDrawAll(){
   rolling=true;document.getElementById('btn-gp-draw').disabled=true;
   const names=getAllNames();if(!names.length){rolling=false;return;}
   const dur=(parseFloat(document.getElementById('roll-dur-gp').value)||7)*1000;
-  const slotH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slot-h'))||22;
+  const slotH=28; // GP fixed large
 
   // Prime all tracks
   slotList.forEach(s=>{
@@ -1789,24 +1838,29 @@ function rerollDraw(){
 
 
 const ZOOM_LEVELS = [
-  {label:'60%', cardMin:'88px',  rowH:'24px', slotH:'16px', fontCard:'0.55rem', fontSlot:'0.6rem',  gap:'4px'},
-  {label:'80%', cardMin:'108px', rowH:'28px', slotH:'19px', fontCard:'0.61rem', fontSlot:'0.65rem', gap:'5px'},
-  {label:'100%',cardMin:'130px', rowH:'34px', slotH:'22px', fontCard:'0.67rem', fontSlot:'0.72rem', gap:'6px'},
-  {label:'125%',cardMin:'160px', rowH:'40px', slotH:'26px', fontCard:'0.74rem', fontSlot:'0.8rem',  gap:'8px'},
-  {label:'150%',cardMin:'190px', rowH:'46px', slotH:'30px', fontCard:'0.82rem', fontSlot:'0.88rem', gap:'10px'},
+  {label:'XS', cardMin:'88px',  rowH:'24px', slotH:'16px', fontCard:'0.55rem', fontSlot:'0.6rem',  gap:'4px', cols:12},
+  {label:'S',  cardMin:'110px', rowH:'28px', slotH:'19px', fontCard:'0.61rem', fontSlot:'0.65rem', gap:'5px', cols:10},
+  {label:'M',  cardMin:'130px', rowH:'34px', slotH:'22px', fontCard:'0.67rem', fontSlot:'0.72rem', gap:'6px', cols:9},
+  {label:'L',  cardMin:'155px', rowH:'40px', slotH:'26px', fontCard:'0.74rem', fontSlot:'0.8rem',  gap:'8px', cols:7},
+  {label:'XL', cardMin:'185px', rowH:'46px', slotH:'30px', fontCard:'0.82rem', fontSlot:'0.88rem', gap:'10px',cols:6},
 ];
+let currentZoom=2;
 function applyZoom(level){
   const z=ZOOM_LEVELS[parseInt(level)]||ZOOM_LEVELS[2];
-  const r=document.documentElement.style;
-  r.setProperty('--card-min', z.cardMin);
-  r.setProperty('--row-h',    z.rowH);
-  r.setProperty('--slot-h',   z.slotH);
-  r.setProperty('--font-card',z.fontCard);
-  r.setProperty('--font-slot',z.fontSlot);
-  r.setProperty('--grid-gap', z.gap);
-  document.getElementById('zoom-label').textContent=z.label;
-  // Rebuild grid with new rowH for track positions
-  if(selEvId&&curMode==='dp') renderDpStage();
+  const s=document.documentElement.style;
+  s.setProperty('--card-min', z.cardMin);
+  s.setProperty('--row-h',    z.rowH);
+  s.setProperty('--slot-h',   z.slotH);
+  s.setProperty('--font-card',z.fontCard);
+  s.setProperty('--font-slot',z.fontSlot);
+  s.setProperty('--grid-gap', z.gap);
+  s.setProperty('--col-count', z.cols);
+  // Update active button — no DOM rebuild needed
+  document.querySelectorAll('.zoom-btn').forEach((b,i)=>b.classList.toggle('active',i===parseInt(level)));
+  currentZoom=parseInt(level);
+  // Only rebuild if zoom changes row height (affects track translateY)
+  if(selEvId&&curMode==='dp')renderDpStage();
+  if(selEvId&&curMode==='gp')renderGpStage();
 }
 
 </script>
