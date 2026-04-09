@@ -80,7 +80,7 @@ nav{
   border-bottom:3px solid var(--gold);
   padding:16px 20px 14px;
 }
-.draw-hero-inner{max-width:860px;margin:0 auto;}
+.draw-hero-inner{max-width:1100px;margin:0 auto;}
 .ev-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
 .ev-label{color:rgba(255,255,255,0.5);font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.6px;white-space:nowrap;}
 .ev-select{
@@ -100,15 +100,15 @@ nav{
 
 /* Mode tabs */
 .mode-bar{background:var(--panel);border-bottom:2px solid var(--border);}
-.mode-bar-inner{max-width:860px;margin:0 auto;padding:0 20px;display:flex;}
-.mode-tab{padding:12px 24px;border:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.84rem;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.mode-bar-inner{max-width:1100px;margin:0 auto;padding:0 16px;display:flex;}
+.mode-tab{padding:8px 20px;border:none;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.82rem;font-weight:700;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
 .mode-tab:hover{color:var(--text);}
 .mode-tab.dp{color:var(--gold-text);border-bottom-color:var(--gold);}
 .mode-tab.gp{color:var(--coral);border-bottom-color:var(--coral);}
 
 /* Draw body */
-.draw-body{flex:1;background:var(--bg);padding:14px 16px 24px;display:flex;flex-direction:column;align-items:center;}
-.draw-inner{width:100%;max-width:860px;}
+.draw-body{flex:1;background:var(--bg);padding:10px 12px 16px;display:flex;flex-direction:column;align-items:center;}
+.draw-inner{width:100%;max-width:1100px;}
 
 /* No event */
 .no-ev{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 20px;text-align:center;}
@@ -119,20 +119,20 @@ nav{
 /* Header card */
 .dp-header-card{
   background:var(--panel);border:1.5px solid var(--border);border-radius:var(--rl);
-  padding:10px 16px;margin-bottom:10px;
-  display:flex;align-items:center;gap:12px;box-shadow:var(--sh);
+  padding:8px 14px;margin-bottom:8px;
+  display:flex;align-items:center;gap:10px;box-shadow:var(--sh);
 }
-.dp-hc-ico{width:46px;height:46px;border-radius:12px;background:var(--gold-bg);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
+.dp-hc-ico{width:38px;height:38px;border-radius:12px;background:var(--gold-bg);border:1.5px solid var(--gold-border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;}
 .dp-hc-info{flex:1;}
 .dp-hc-label{font-size:0.67rem;font-weight:700;color:var(--gold-text);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;}
-.dp-hc-title{font-size:1.05rem;font-weight:800;color:var(--text);}
+.dp-hc-title{font-size:0.92rem;font-weight:800;color:var(--text);}
 .dp-hc-sub{font-size:0.74rem;color:var(--muted);margin-top:2px;}
 .dp-hc-num-wrap{background:var(--navy);border-radius:10px;padding:8px 14px;text-align:center;flex-shrink:0;}
 .dp-hc-num{font-size:1.4rem;font-weight:800;color:var(--gold);font-family:'DM Mono',monospace;display:block;line-height:1;}
 .dp-hc-lbl{font-size:0.62rem;color:rgba(255,255,255,0.5);display:block;margin-top:1px;}
 
 /* Duration bar */
-.dur-bar{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:var(--rs);background:var(--panel);border:1.5px solid var(--border);margin-bottom:10px;}
+.dur-bar{display:flex;align-items:center;gap:8px;padding:5px 10px;border-radius:var(--rs);background:var(--panel);border:1px solid var(--border);margin-bottom:6px;}
 .dur-bar label{font-size:0.7rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
 .dur-bar input[type=range]{flex:1;accent-color:var(--gold-text);cursor:pointer;}
 .dur-val{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--gold-text);min-width:32px;text-align:right;font-weight:600;}
@@ -141,10 +141,10 @@ nav{
    Fixed-size cards, equal height via grid-auto-rows */
 .prize-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
   grid-auto-rows:auto;
-  gap:8px;
-  margin-bottom:12px;
+  gap:6px;
+  margin-bottom:8px;
   align-items:start;
 }
 
@@ -184,7 +184,7 @@ nav{
 .pc-winner-row.revealed .pc-slot-item.winner span{color:var(--gold-text);font-weight:800;}
 
 /* Controls */
-.ctrl-row{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:12px;flex-wrap:wrap;}
+.ctrl-row{display:flex;align-items:center;gap:8px;justify-content:center;margin-bottom:6px;flex-wrap:wrap;}
 .btn-main{
   padding:12px 36px;border-radius:10px;border:none;cursor:pointer;
   font-family:'Plus Jakarta Sans',sans-serif;font-size:0.94rem;font-weight:800;
@@ -255,9 +255,9 @@ nav{
   position:fixed;bottom:0;left:0;right:0;z-index:400;
   background:rgba(26,35,64,0.97);border-top:2px solid rgba(212,150,26,0.4);
   backdrop-filter:blur(12px);
-  padding:10px 20px;
+  padding:7px 16px;
   display:flex;align-items:center;justify-content:center;gap:12px;
-  font-size:0.8rem;color:rgba(255,255,255,0.6);
+  font-size:0.76rem;color:rgba(255,255,255,0.6);
 }
 .viewer-lock-badge{display:flex;align-items:center;gap:6px;background:var(--teal-bg);border:1px solid var(--teal-border);color:var(--teal);padding:4px 11px;border-radius:7px;font-size:0.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
 
@@ -786,17 +786,7 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
             <div class="ratio-ttl ok" id="rt-org">Total organik: 100% ✓</div>
           </div>
         </div>
-        <!-- Kebijakan -->
-        <div class="as">
-          <div class="as-hdr"><div class="as-ico" style="background:var(--purple-bg)">🔁</div><h3>Kebijakan Pemenang Doorprize → Grand Prize</h3></div>
-          <p class="sec-d">Perlakuan peserta yang sudah menang doorprize saat undian grand prize.</p>
-          <div class="pol-g">
-            <label class="pol-opt sel" id="pol-full" onclick="selPol('full')"><input type="radio" name="pol" value="full" checked><div><span class="po-t">Peluang Penuh</span><span class="po-d">Pemenang doorprize ikut grand prize dengan peluang normal.</span></div></label>
-            <label class="pol-opt" id="pol-reduce" onclick="selPol('reduce')"><input type="radio" name="pol" value="reduce"><div><span class="po-t">Peluang Dikurangi</span><span class="po-d">Pemenang doorprize ikut tapi bobot peluangnya diperkecil.</span></div></label>
-            <div class="reduce-row" id="reduce-row" style="display:none"><label>Sisa peluang:</label><div style="position:relative;width:68px"><input type="number" id="reduce-fac" min="1" max="99" value="50"></div><span style="font-size:.74rem;color:var(--muted)">% dari normal</span></div>
-            <label class="pol-opt" id="pol-exclude" onclick="selPol('exclude')"><input type="radio" name="pol" value="exclude"><div><span class="po-t">Tidak Ikut</span><span class="po-d">Pemenang doorprize tidak bisa mendapatkan grand prize.</span></div></label>
-          </div>
-        </div>
+
         <!-- Simpan -->
         <div class="as">
           <button class="btn-save" onclick="saveEv()">💾 Simpan Pengaturan Kegiatan Ini</button>
@@ -1182,57 +1172,20 @@ function buildDpPool(){
 }
 function buildGpPool(){
   /* GRAND PRIZE RULES:
-     - Organik: G2-G4 eligible (G5 tidak, sama seperti DP)
-       PLUS: organik max menang 1 grandprize total di seluruh sesi
-     - Non-organik: semua eligible, dibatasi policy DP
-     - Rasio GP mengikuti setting r.organic / r.non dari kegiatan
-       (terpisah dari DP — admin bisa setting berbeda jika mau)
-     - Policy dpPolicy berlaku: full / reduce / exclude
+     - Pool organik: belum menang DP + belum menang GP + grade weight > 0
+     - Pool non-organik: belum menang DP + belum menang GP
+     - Rasio gpOrganic:gpNon dijaga PERSIS via stratified (di startGpDraw)
   */
   const ev=getEv(selEvId);if(!ev)return[];
-  const rFull=ev.ratios||{};
-  // GP uses its own organic/non ratio (gpOrganic/gpNon)
-  const r={...rFull, organic:rFull.gpOrganic||50, non:rFull.gpNon||50};
-  const pol=ev.dpPolicy||'full',rf=(ev.reduceFactor||50)/100;
-  const evW=S.winners.filter(w=>w.evId===selEvId);
-  const dpK=new Set(evW.filter(w=>w.prizeType==='DOORPRIZE').map(w=>w.key));
-  const gpK=new Set(evW.filter(w=>w.prizeType==='GRAND PRIZE').map(w=>w.key));
-  const gm={G2:r.g2||0,G3:r.g3||0,G4:r.g4||0,G5:r.g5||0,G6:r.g6||0,G7:r.g7||0};
-  let pool=[];
-  const avO=(ev.organic||[]).filter(e=>{
-    const k=e.name+'|org';
-    if(gpK.has(k))return false;       // sudah menang 1 GP — tidak boleh lagi
-    if((gm[e.grade]||0)===0)return false;  // grade dengan bobot 0 tidak eligible
-    if(pol==='exclude'&&dpK.has(k))return false;
-    return true;
-  });
-  const avN=(ev.nonOrganic||[]).filter(e=>{
-    const k=e.name+'|non';
-    if(gpK.has(k))return false;
-    if(pol==='exclude'&&dpK.has(k))return false;
-    return true;
-  });
-  // Organik: grade-weighted, normalized
-  const activeGradesGp=[...new Set(avO.map(e=>e.grade))];
-  const activeGradeTotalGp=activeGradesGp.reduce((s,g)=>s+(gm[g]||0),0);
-  avO.forEach(e=>{
-    const k=e.name+'|org';
-    const grp=avO.filter(x=>x.grade===e.grade);
-    const normalizedGradeShare=activeGradeTotalGp>0?(gm[e.grade]||0)/activeGradeTotalGp:0;
-    let w=grp.length?r.organic*normalizedGradeShare/grp.length:0;
-    if(pol==='reduce'&&dpK.has(k))w*=rf;
-    pool.push({name:e.name,type:'org',grade:e.grade,weight:w,key:k});
-  });
-  // Non-organik: flat equal
-  avN.forEach(e=>{
-    const k=e.name+'|non';
-    let w=avN.length?r.non/avN.length:0;
-    if(pol==='reduce'&&dpK.has(k))w*=rf;
-    pool.push({name:e.name,type:'non',grade:null,weight:w,key:k});
-  });
-  // Normalize to 100
-  const totalWgp=pool.reduce((s,p)=>s+p.weight,0);
-  if(totalWgp>0)pool.forEach(p=>p.weight=p.weight/totalWgp*100);
+  const gpK=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE').map(w=>w.key));
+  const dpK=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE').map(w=>w.key));
+  const gm={G2:(ev.ratios||{}).g2||0,G3:(ev.ratios||{}).g3||0,G4:(ev.ratios||{}).g4||0,
+            G5:(ev.ratios||{}).g5||0,G6:(ev.ratios||{}).g6||0,G7:(ev.ratios||{}).g7||0};
+  const avO=(ev.organic||[]).filter(e=>!gpK.has(e.name+'|org')&&!dpK.has(e.name+'|org')&&(gm[e.grade]||0)>0);
+  const avN=(ev.nonOrganic||[]).filter(e=>!gpK.has(e.name+'|non')&&!dpK.has(e.name+'|non'));
+  const pool=[];
+  avO.forEach(e=>pool.push({name:e.name,type:'org',grade:e.grade,weight:1,key:e.name+'|org'}));
+  avN.forEach(e=>pool.push({name:e.name,type:'non',grade:null,weight:1,key:e.name+'|non'}));
   return pool;
 }
 function pick(pool,exclude=[]){
@@ -1252,47 +1205,48 @@ async function startDpDraw(){
   ev.doorprizes.forEach((p,pi)=>{for(let i=0;i<p.count;i++)slotList.push({prizeName:p.name,pi,si:i});});
   if(!slotList.length)return;
   rolling=true;document.getElementById('btn-dp-draw').disabled=true;
-  // Stratified pick: pick organik dan non-organik secara terpisah
-  // agar rasio PERSIS sesuai setting (bukan probabilistik)
+  // Stratified pick — 3 level: total → organik/non → grade dalam organik
+  // Semua level dijamin PERSIS sesuai setting (bukan probabilistik)
   const ev2=getEv(selEvId);
   const r2=ev2.ratios||{organic:40,non:60};
-  const nOrg=Math.round(slotList.length*r2.organic/100);
-  const nNon=slotList.length-nOrg;
   const gm2={G2:r2.g2||0,G3:r2.g3||0,G4:r2.g4||0,G5:r2.g5||0,G6:r2.g6||0,G7:r2.g7||0};
-  const avO2=(ev2.organic||[]).filter(e=>!S.winners.some(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE'&&w.key===e.name+'|org')&&(gm2[e.grade]||0)>0);
-  const avN2=(ev2.nonOrganic||[]).filter(e=>!S.winners.some(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE'&&w.key===e.name+'|non'));
-  if(avO2.length<nOrg||avN2.length<nNon){
-    if(avO2.length+avN2.length<slotList.length){toast('⚠️ Peserta tidak cukup!');rolling=false;return;}
-    // Fallback: adjust counts if one group is too small
-  }
-  // Build weighted sub-pools
-  function buildSubPool(arr,isOrg){
-    const activeG=[...new Set(arr.map(e=>e.grade))];
-    const actTotal=activeG.reduce((s,g)=>s+(gm2[g]||0),0);
-    return arr.map(e=>{
-      if(!isOrg)return{...e,weight:1,key:e.name+'|non',type:'non'};
-      const grp=arr.filter(x=>x.grade===e.grade);
-      const norm=actTotal>0?(gm2[e.grade]||0)/actTotal:1/arr.length;
-      return{...e,weight:norm/grp.length,key:e.name+'|org',type:'org'};
-    });
-  }
-  function pickFrom(pool,n,usedKeys){
-    const picked=[];
-    for(let i=0;i<n;i++){
-      const av=pool.filter(p=>!usedKeys.has(p.key));
-      if(!av.length)break;
-      const tot=av.reduce((s,p)=>s+p.weight,0);
-      let rr=Math.random()*tot;
-      let chosen=av[av.length-1];
-      for(const p of av){rr-=p.weight;if(rr<=0){chosen=p;break;}}
-      picked.push(chosen);usedKeys.add(chosen.key);
-    }
-    return picked;
-  }
-  const usedKeys=new Set();
-  const orgWinners=pickFrom(buildSubPool(avO2,true),Math.min(nOrg,avO2.length),usedKeys);
-  const nonWinners=pickFrom(buildSubPool(avN2,false),Math.min(nNon,avN2.length),usedKeys);
-  // Interleave: shuffle org+non together in random order
+  const dpDone=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE').map(w=>w.key));
+  const avO2=(ev2.organic||[]).filter(e=>(gm2[e.grade]||0)>0&&!dpDone.has(e.name+'|org'));
+  const avN2=(ev2.nonOrganic||[]).filter(e=>!dpDone.has(e.name+'|non'));
+  const total=slotList.length;
+  // Level 1: berapa organik vs non-organik
+  let nOrg=Math.round(total*r2.organic/100);
+  let nNon=total-nOrg;
+  // Adjust jika salah satu pool tidak cukup
+  if(avO2.length<nOrg){nOrg=avO2.length;nNon=Math.min(total-nOrg,avN2.length);}
+  if(avN2.length<nNon){nNon=avN2.length;nOrg=Math.min(total-nNon,avO2.length);}
+  if(nOrg+nNon<total){toast('⚠️ Peserta tidak cukup!');rolling=false;return;}
+  // Level 2: berapa per grade dalam organik (stratified juga)
+  const activeGrades=[...new Set(avO2.map(e=>e.grade))].filter(g=>(gm2[g]||0)>0);
+  const gradeWeightTotal=activeGrades.reduce((s,g)=>s+(gm2[g]||0),0);
+  // Hitung kuota per grade, pastikan total = nOrg
+  const gradeQuotas={};
+  let quotaSum=0;
+  activeGrades.forEach((g,i)=>{
+    const q=i===activeGrades.length-1
+      ?nOrg-quotaSum  // sisa masuk grade terakhir agar total pas
+      :Math.round(nOrg*(gm2[g]||0)/gradeWeightTotal);
+    gradeQuotas[g]=Math.min(q,avO2.filter(e=>e.grade===g).length);
+    quotaSum+=gradeQuotas[g];
+  });
+  // Jika ada sisa akibat rounding atau pool kecil, distribusi ulang
+  let remaining2=nOrg-Object.values(gradeQuotas).reduce((s,v)=>s+v,0);
+  for(const g of activeGrades){if(remaining2===0)break;const cap=avO2.filter(e=>e.grade===g).length-gradeQuotas[g];if(cap>0){gradeQuotas[g]++;remaining2--;}}
+  // Pick peserta per grade secara random shuffle
+  function shufflePick(arr,n){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,n);}
+  const orgWinners=[];
+  activeGrades.forEach(g=>{
+    const pool=avO2.filter(e=>e.grade===g);
+    shufflePick(pool,gradeQuotas[g]).forEach(e=>orgWinners.push({...e,key:e.name+'|org',type:'org'}));
+  });
+  // Level 3: non-organik — random shuffle (semua equal weight)
+  const nonWinners=shufflePick(avN2,nNon).map(e=>({...e,key:e.name+'|non',type:'non'}));
+  // Gabung & shuffle urutan tampil
   const allWinners=[...orgWinners,...nonWinners];
   for(let i=allWinners.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[allWinners[i],allWinners[j]]=[allWinners[j],allWinners[i]];}
   const winners=allWinners;
@@ -1463,51 +1417,45 @@ async function startGpDraw(){
   const p=ev.grandprizes[gpSelIdx];if(!p)return;
   const alreadyWon=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===p.name).length;
   const remaining=p.count-alreadyWon;if(remaining<=0){toast('Hadiah ini sudah selesai diundi.');return;}
-  // GP stratified pick
+  // GP: pool = belum menang DP & belum menang GP, rasio persis via stratified
   const evGp=getEv(selEvId);
   const rGp=evGp.ratios||{};
-  const gpOrgPct=rGp.gpOrganic||50,gpNonPct=rGp.gpNon||50;
-  const nGpOrg=Math.round(remaining*gpOrgPct/100);
-  const nGpNon=remaining-nGpOrg;
+  const gpOrgPct=rGp.gpOrganic||50;
   const gmGp={G2:rGp.g2||0,G3:rGp.g3||0,G4:rGp.g4||0,G5:rGp.g5||0,G6:rGp.g6||0,G7:rGp.g7||0};
-  const pol2=evGp.dpPolicy||'full',rf2=(evGp.reduceFactor||50)/100;
-  const dpKeys2=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE').map(w=>w.key));
   const gpKeys2=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE').map(w=>w.key));
-  const avOgp=(evGp.organic||[]).filter(e=>{
-    const k=e.name+'|org';
-    return !gpKeys2.has(k)&&(gmGp[e.grade]||0)>0&&!(pol2==='exclude'&&dpKeys2.has(k));
-  });
-  const avNgp=(evGp.nonOrganic||[]).filter(e=>{
-    const k=e.name+'|non';
-    return !gpKeys2.has(k)&&!(pol2==='exclude'&&dpKeys2.has(k));
-  });
+  const dpKeys2=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE').map(w=>w.key));
+  // Exclude pemenang DP dari pool GP (mereka tidak ikut GP)
+  const avOgp=(evGp.organic||[]).filter(e=>!gpKeys2.has(e.name+'|org')&&!dpKeys2.has(e.name+'|org')&&(gmGp[e.grade]||0)>0);
+  const avNgp=(evGp.nonOrganic||[]).filter(e=>!gpKeys2.has(e.name+'|non')&&!dpKeys2.has(e.name+'|non'));
   if(avOgp.length+avNgp.length<remaining){toast('⚠️ Peserta tidak cukup!');return;}
-  function buildGpSubPool(arr,isOrg){
-    const actG=[...new Set(arr.map(e=>e.grade))];
-    const actT=actG.reduce((s,g)=>s+(gmGp[g]||0),0);
-    return arr.map(e=>{
-      if(!isOrg){let w2=1;if(pol2==='reduce'&&dpKeys2.has(e.name+'|non'))w2*=rf2;return{...e,weight:w2,key:e.name+'|non',type:'non'};}
-      const grp=arr.filter(x=>x.grade===e.grade);
-      const norm=actT>0?(gmGp[e.grade]||0)/actT:1/arr.length;
-      let w2=norm/grp.length;if(pol2==='reduce'&&dpKeys2.has(e.name+'|org'))w2*=rf2;
-      return{...e,weight:w2,key:e.name+'|org',type:'org'};
-    });
-  }
-  function pickFromGp(pool2,n2,usedK){
-    const picked2=[];
-    for(let i=0;i<n2;i++){
-      const av2=pool2.filter(p=>!usedK.has(p.key));
-      if(!av2.length)break;
-      const tot2=av2.reduce((s,p)=>s+p.weight,0);
-      let rr2=Math.random()*tot2;let ch2=av2[av2.length-1];
-      for(const p of av2){rr2-=p.weight;if(rr2<=0){ch2=p;break;}}
-      picked2.push(ch2);usedK.add(ch2.key);
-    }
-    return picked2;
-  }
-  const usedKgp=new Set();
-  const orgWgp=pickFromGp(buildGpSubPool(avOgp,true),Math.min(nGpOrg,avOgp.length),usedKgp);
-  const nonWgp=pickFromGp(buildGpSubPool(avNgp,false),Math.min(nGpNon,avNgp.length),usedKgp);
+  // Kuota organik vs non — PERSIS sesuai rasio, fallback jika pool tidak cukup
+  let nGpOrg=Math.round(remaining*gpOrgPct/100);
+  let nGpNon=remaining-nGpOrg;
+  if(avOgp.length<nGpOrg){nGpOrg=avOgp.length;nGpNon=Math.min(remaining-nGpOrg,avNgp.length);}
+  if(avNgp.length<nGpNon){nGpNon=avNgp.length;nGpOrg=Math.min(remaining-nGpNon,avOgp.length);}
+  // Kuota per grade dalam organik (stratified)
+  const activeGradesGp=[...new Set(avOgp.map(e=>e.grade))].filter(g=>(gmGp[g]||0)>0);
+  const gradeWtTotalGp=activeGradesGp.reduce((s,g)=>s+(gmGp[g]||0),0);
+  const gradeQuotasGp={};let quotaSumGp=0;
+  activeGradesGp.forEach((g,i)=>{
+    const q=i===activeGradesGp.length-1?nGpOrg-quotaSumGp:Math.round(nGpOrg*(gmGp[g]||0)/gradeWtTotalGp);
+    gradeQuotasGp[g]=Math.min(Math.max(0,q),avOgp.filter(e=>e.grade===g).length);
+    quotaSumGp+=gradeQuotasGp[g];
+  });
+  // Sisa rounding
+  let remGp2=nGpOrg-Object.values(gradeQuotasGp).reduce((s,v)=>s+v,0);
+  for(const g of activeGradesGp){if(remGp2===0)break;const cap=avOgp.filter(e=>e.grade===g).length-gradeQuotasGp[g];if(cap>0){gradeQuotasGp[g]++;remGp2--;}}
+  // Pick organik per grade — random shuffle
+  const orgWgp=[];
+  activeGradesGp.forEach(g=>{
+    const pool=[...avOgp.filter(e=>e.grade===g)];
+    for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
+    pool.slice(0,gradeQuotasGp[g]).forEach(e=>orgWgp.push({...e,key:e.name+'|org',type:'org'}));
+  });
+  // Pick non-organik — random shuffle
+  const poolN=[...avNgp];
+  for(let i=poolN.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[poolN[i],poolN[j]]=[poolN[j],poolN[i]];}
+  const nonWgp=poolN.slice(0,nGpNon).map(e=>({...e,key:e.name+'|non',type:'non'}));
   const winners=[...orgWgp,...nonWgp];
   if(!winners.length){toast('Peserta tidak cukup.');return;}
   rolling=true;document.getElementById('btn-gp-draw').disabled=true;
@@ -1619,7 +1567,7 @@ function fillAdminEvSel(){
   if(S.events.find(e=>e.id===cur))sel.value=cur;
 }
 function createEv(){
-  const ev={id:uid(),name:'Kegiatan Baru',loc:'',dateStart:'',dateEnd:'',doorprizes:[],grandprizes:[],organic:[],nonOrganic:[],ratios:{organic:40,non:60,g2:50,g3:35,g4:15,g5:0,g6:0,g7:0,gpOrganic:50,gpNon:50},dpPolicy:'full',reduceFactor:50};
+  const ev={id:uid(),name:'Kegiatan Baru',loc:'',dateStart:'',dateEnd:'',doorprizes:[],grandprizes:[],organic:[],nonOrganic:[],ratios:{organic:40,non:60,g2:50,g3:35,g4:15,g5:0,g6:0,g7:0,gpOrganic:50,gpNon:50}};
   S.events.push(ev);save();fillAdminEvSel();loadEvEd(ev.id);fillDrawEvSel();
 }
 function deleteEv(){
@@ -1643,7 +1591,7 @@ function loadEvEd(id){
   ['organic','non','g2','g3','g4','g5','g6','g7'].forEach(k=>{const el=document.getElementById('r-'+k);if(el)el.value=(ev.ratios||{})[k]??def[k];});
   const gpOEl=document.getElementById('r-gp-organic');if(gpOEl)gpOEl.value=(ev.ratios||{}).gpOrganic??50;
   const gpNEl=document.getElementById('r-gp-non');if(gpNEl)gpNEl.value=(ev.ratios||{}).gpNon??50;
-  updR();selPol(ev.dpPolicy||'full',false);document.getElementById('reduce-fac').value=ev.reduceFactor||50;
+  updR();
   document.getElementById('save-ok').style.display='none';
 }
 function addPrize(t){const ev=getEv(adminEvId);if(!ev)return;const name=document.getElementById(t+'-name').value.trim();const count=parseInt(document.getElementById(t+'-count').value)||1;if(!name)return;if(t==='dp')ev.doorprizes.push({name,count});else ev.grandprizes.push({name,count});document.getElementById(t+'-name').value='';renderPL(t+'-list',t==='dp'?ev.doorprizes:ev.grandprizes,t);}
@@ -1691,12 +1639,12 @@ function updR(){
   const mgp=document.getElementById('rt-gp-main');if(mgp){mgp.className='ratio-ttl '+(gpmt===100?'ok':'err');mgp.textContent='Total GP: '+gpmt+'%'+(gpmt===100?' ✓':' ✗ (harus 100%)');}
   const m2=document.getElementById('rt-org');m2.className='ratio-ttl '+(ot===100?'ok':'err');m2.textContent='Total organik: '+ot+'%'+(ot===100?' ✓':' ✗ (harus 100%)');
 }
-function selPol(val,save2=true){['full','reduce','exclude'].forEach(p=>{document.getElementById('pol-'+p)?.classList.toggle('sel',p===val);});const r=document.querySelector('input[name="pol"][value="'+val+'"]');if(r)r.checked=true;document.getElementById('reduce-row').style.display=val==='reduce'?'flex':'none';}
+
 function saveEv(){
   const ev=getEv(adminEvId);if(!ev)return;updR();
   ev.name=document.getElementById('ev-name').value.trim()||'Kegiatan Baru';ev.loc=document.getElementById('ev-loc').value.trim();ev.dateStart=document.getElementById('ev-ds').value;ev.dateEnd=document.getElementById('ev-de').value;
   const r={};['organic','non','g2','g3','g4','g5','g6','g7'].forEach(k=>{r[k]=parseFloat(document.getElementById('r-'+k)?.value)||0;});r.gpOrganic=parseFloat(document.getElementById('r-gp-organic')?.value)||50;r.gpNon=parseFloat(document.getElementById('r-gp-non')?.value)||50;ev.ratios=r;
-  ev.dpPolicy=document.querySelector('input[name="pol"]:checked')?.value||'full';ev.reduceFactor=parseFloat(document.getElementById('reduce-fac').value)||50;
+
   save();fillAdminEvSel();fillDrawEvSel();if(selEvId===adminEvId)renderDrawMeta(ev);
   const ok=document.getElementById('save-ok');ok.style.display='block';setTimeout(()=>ok.style.display='none',2800);toast('✓ Pengaturan disimpan!');
 }
@@ -1779,7 +1727,17 @@ function renderInfoPanel(type){
 
   if(orgW.length>0){
     html+='<div class="info-row" style="flex-direction:column;align-items:flex-start;gap:6px"><span class="info-row-label">Breakdown Pangkat Organik</span><div class="info-grade-grid">';
-    const totalGradeW=Object.values(gradeCnt).reduce((s,v)=>s+v,0);Object.entries(gradeCnt).sort().forEach(([g,c])=>{const pct=totalGradeW?(c/totalGradeW*100).toFixed(2):0;html+='<span class="info-grade-chip">'+g+': '+c+' ('+pct+'%)</span>';});
+    const totalGradeW=Object.values(gradeCnt).reduce((s,v)=>s+v,0);
+  const evInfo=getEv(selEvId);const rInfo=evInfo?evInfo.ratios||{}:{};
+  const gmInfo={G2:rInfo.g2||0,G3:rInfo.g3||0,G4:rInfo.g4||0,G5:rInfo.g5||0,G6:rInfo.g6||0,G7:rInfo.g7||0};
+  const activeGInfo=[...new Set(orgW.map(w=>w.grade))];
+  const gmTotal=activeGInfo.reduce((s,g)=>s+(gmInfo[g]||0),0);
+  Object.entries(gradeCnt).sort().forEach(([g,c])=>{
+    const pct=totalGradeW?(c/totalGradeW*100).toFixed(2):0;
+    const tgt=gmTotal>0?((gmInfo[g]||0)/gmTotal*100).toFixed(0):'?';
+    const isOk=Math.abs(parseFloat(pct)-parseFloat(tgt))<=15;
+    html+='<span class="info-grade-chip" title="Target: '+tgt+'%">'+g+': '+c+' ('+pct+'% | target ~'+tgt+'%)</span>';
+  });
     html+='</div></div>';
   }
 
@@ -1790,9 +1748,7 @@ function renderInfoPanel(type){
     html+='<div class="info-row"><span class="info-row-label">Pemenang DP yang juga menang GP</span><span class="info-row-value '+(overlap.length>0?'warn':'ok')+'">'+(overlap.length>0?overlap.map(w=>w.name).join(', '):overlap.length+' orang')+'</span></div>';
   }
   if(!isDp&&dpW.length>0){
-    const pol=ev.dpPolicy||'full';
-    html+='<div class="info-row"><span class="info-row-label">Pemenang GP yang juga menang DP</span><span class="info-row-value '+(overlap.length>0?(pol==='exclude'?'bad':'warn'):'ok')+'">'+(overlap.length>0?overlap.map(w=>w.name+' ('+w.prizeName+')').join(', '):'Tidak ada')+'</span></div>';
-    html+='<div class="info-row"><span class="info-row-label">Policy aktif</span><span class="info-row-value">'+({'full':'Peluang Penuh','reduce':'Dikurangi '+(ev.reduceFactor||50)+'%','exclude':'Dikecualikan'}[pol]||pol)+'</span></div>';
+    html+='<div class="info-row"><span class="info-row-label">Pemenang GP yang juga menang DP</span><span class="info-row-value '+(overlap.length>0?'warn':'ok')+'">'+(overlap.length>0?overlap.map(w=>w.name+' ('+w.prizeName+')').join(', '):'Tidak ada')+'</span></div>';
   }
 
   panel.innerHTML=html;
