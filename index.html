@@ -12,7 +12,6 @@
 ═══════════════════════════════ */
 :root{
   --card-min:130px;
-  --col-count:9;
   --row-h:34px;
   --slot-h:22px;
   --font-card:0.67rem;
@@ -147,16 +146,12 @@ nav{
 /* ── PRIZE GRID ──
    Fixed-size cards, equal height via grid-auto-rows */
 .prize-grid{
-  /* CSS Columns — kartu mengalir vertikal, tidak ada bolong */
-  columns:var(--col-count, 9) var(--card-min);
-  column-gap:var(--grid-gap);
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(var(--card-min),1fr));
+  grid-auto-rows:auto;
+  gap:var(--grid-gap);
   margin-bottom:8px;
-}
-.prize-grid > .prize-card-slot{
-  break-inside:avoid;
-  display:block;
-  margin-bottom:var(--grid-gap);
-  width:100%;
+  align-items:start;
 }
 
 /* Each prize card */
@@ -485,140 +480,8 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 .btn-reroll:hover{background:var(--coral);color:#fff;border-color:var(--coral);}
 
 
-.zoom-bar{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
-.zoom-btn{padding:3px 10px;border-radius:6px;border:1.5px solid var(--border2);background:var(--panel);
-  color:var(--muted);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.72rem;font-weight:700;transition:all .12s;}
-.zoom-btn:hover{border-color:var(--navy);color:var(--navy);}
-.zoom-btn.active{background:var(--navy);color:#fff;border-color:var(--navy);}
-.zoom-lbl{font-size:0.68rem;color:var(--muted);margin-right:2px;}
-
-
-
-/* ══ GRAND PRIZE — SLOT MACHINE STYLE ══ */
-#gp-stage{
-  width:100%;
-}
-#gp-stage.active-stage{
-  display:flex;flex-direction:column;align-items:center;
-}
-.gp-slot-arena{
-  width:100%;max-width:860px;
-  display:flex;flex-direction:column;gap:14px;
-  margin-bottom:14px;
-}
-/* Each GP prize = satu "mesin slot" sendiri */
-.gp-machine{
-  background:var(--navy);
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 6px 32px rgba(26,35,64,0.35);
-  border:3px solid var(--navy2);
-  transition:border-color .3s,box-shadow .3s;
-}
-.gp-machine.spinning{
-  border-color:var(--gold);
-  box-shadow:0 6px 40px rgba(212,150,26,0.4);
-}
-.gp-machine.jackpot{
-  border-color:var(--gold);
-  box-shadow:0 0 0 4px rgba(212,150,26,0.25), 0 8px 40px rgba(212,150,26,0.4);
-}
-/* Header mesin */
-.gp-machine-hdr{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 18px;
-  background:linear-gradient(135deg,var(--navy2),#1A2340);
-  border-bottom:2px solid rgba(255,255,255,0.06);
-}
-.gp-machine-prize{
-  font-size:0.88rem;font-weight:800;color:#fff;
-  text-transform:uppercase;letter-spacing:.8px;
-}
-.gp-machine-badge{
-  background:var(--gold);color:var(--navy);
-  font-size:0.65rem;font-weight:800;
-  padding:3px 9px;border-radius:999px;
-  font-family:'DM Mono',monospace;
-}
-.gp-machine-badge.done-badge{
-  background:var(--teal);color:#fff;
-}
-/* Slot viewport — main area */
-.gp-machine-slots{
-  display:flex;gap:0;
-  background:#0D1526;
-  padding:12px 14px;
-  gap:10px;
-}
-/* Each winner slot */
-.gp-slot-col{
-  flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;
-  min-width:0;
-}
-.gp-slot-num{
-  font-size:0.6rem;font-weight:700;color:rgba(212,150,26,0.6);
-  font-family:'DM Mono',monospace;letter-spacing:.5px;
-}
-.gp-slot-frame{
-  width:100%;
-  background:#0A1020;
-  border-radius:10px;
-  border:2px solid #253160;
-  overflow:hidden;
-  position:relative;
-  height:72px;  /* slot window height */
-  box-shadow:inset 0 2px 8px rgba(0,0,0,0.5);
-  transition:border-color .3s;
-}
-.gp-slot-frame.active{border-color:var(--gold);}
-.gp-slot-frame.won{
-  border-color:var(--gold);
-  box-shadow:inset 0 0 0 2px rgba(212,150,26,0.3), 0 0 16px rgba(212,150,26,0.3);
-}
-/* Highlight line in center of slot */
-.gp-slot-hl{
-  position:absolute;top:50%;left:0;right:0;height:44px;
-  transform:translateY(-50%);z-index:2;pointer-events:none;
-  border-top:1.5px solid rgba(212,150,26,0.5);
-  border-bottom:1.5px solid rgba(212,150,26,0.5);
-  background:rgba(212,150,26,0.04);
-}
-.gp-slot-vp{
-  position:absolute;inset:0;overflow:hidden;z-index:1;
-}
-.gp-slot-track{
-  display:flex;flex-direction:column;will-change:transform;
-}
-.gp-slot-item{
-  height:44px;display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;padding:0 8px;
-}
-.gp-slot-item span{
-  font-size:0.88rem;font-weight:700;color:rgba(255,255,255,0.75);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  max-width:100%;text-align:center;
-}
-.gp-slot-item.winner span{
-  color:var(--gold);font-weight:800;font-size:0.95rem;
-}
-/* Footer per mesin */
-.gp-machine-footer{
-  padding:8px 14px;
-  background:rgba(0,0,0,0.2);
-  display:flex;align-items:center;justify-content:center;
-  min-height:32px;
-}
-.gp-machine-winner-name{
-  font-size:0.82rem;font-weight:700;color:var(--gold);
-  font-family:'Plus Jakarta Sans',sans-serif;
-  text-align:center;letter-spacing:.3px;
-  display:none;
-}
-.gp-machine-winner-name.show{display:block;}
-.gp-machine-status{
-  font-size:0.72rem;color:rgba(255,255,255,0.3);
-  font-style:italic;
-}
+.zoom-bar{display:flex;align-items:center;gap:8px;padding:4px 10px;margin-bottom:6px;border-radius:var(--rs);background:var(--panel);border:1px solid var(--border);}
+.zoom-bar label{font-size:0.82rem;}
 
 </style>
 </head>
@@ -710,12 +573,9 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
           <span class="dur-val" id="dur-val">6s</span>
         </div>
         <div class="zoom-bar">
-          <span class="zoom-lbl">🔍 Ukuran:</span>
-          <button class="zoom-btn" onclick="applyZoom(0)">XS</button>
-          <button class="zoom-btn" onclick="applyZoom(1)">S</button>
-          <button class="zoom-btn active" id="zoom-btn-2" onclick="applyZoom(2)">M</button>
-          <button class="zoom-btn" onclick="applyZoom(3)">L</button>
-          <button class="zoom-btn" onclick="applyZoom(4)">XL</button>
+          <label>🔍</label>
+          <input type="range" id="zoom-slider" min="0" max="4" value="2" step="1" oninput="applyZoom(this.value)" style="flex:1;accent-color:var(--navy);cursor:pointer">
+          <span style="font-size:0.68rem;color:var(--muted);min-width:28px;text-align:right" id="zoom-label">100%</span>
         </div>
         <div class="prize-grid" id="prize-grid"></div>
         <div class="ctrl-row">
@@ -731,38 +591,33 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 
       <!-- GP STAGE -->
       <div id="gp-stage" style="display:none">
-        <!-- GP Header -->
-        <div style="width:100%;max-width:860px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">
-          <div>
-            <div style="font-size:0.68rem;font-weight:700;color:var(--coral);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px">🏆 Grand Prize</div>
-            <div style="font-size:1rem;font-weight:800;color:var(--text)" id="gp-hc-title">Siap Diundi</div>
-            <div style="font-size:0.74rem;color:var(--muted);margin-top:2px" id="gp-hc-sub">Klik Undi untuk mengundi semua sekaligus</div>
+        <div class="dp-header-card" style="margin-bottom:8px">
+          <div class="dp-hc-ico" style="background:var(--coral-bg);border-color:var(--coral-border)">🏆</div>
+          <div class="dp-hc-info">
+            <div class="dp-hc-label" style="color:var(--coral)">Grand Prize — Semua Hadiah</div>
+            <div class="dp-hc-title" id="gp-hc-title">Siap Diundi</div>
+            <div class="dp-hc-sub" id="gp-hc-sub">Klik Undi untuk mengundi semua grand prize sekaligus</div>
           </div>
-          <div style="background:var(--navy);border-radius:10px;padding:8px 16px;text-align:center;flex-shrink:0">
-            <span style="font-size:1.6rem;font-weight:800;color:var(--gold);font-family:'DM Mono',monospace;display:block;line-height:1" id="gp-total-num">0</span>
-            <span style="font-size:0.62rem;color:rgba(255,255,255,0.5)">pemenang</span>
+          <div class="dp-hc-num-wrap">
+            <span class="dp-hc-num" id="gp-total-num">0</span>
+            <span class="dp-hc-lbl">pemenang</span>
           </div>
         </div>
-        <!-- Slot machines arena -->
-        <div class="gp-slot-arena" id="gp-slot-arena"></div>
-        <!-- Controls -->
-        <div style="width:100%;max-width:860px;display:flex;flex-direction:column;align-items:center;gap:8px">
-          <div class="ctrl-row" style="width:100%;justify-content:center">
-            <button class="btn-main coral" id="btn-gp-draw" onclick="startGpDrawAll()">🏆 Undi Semua Grand Prize</button>
-            <button class="btn-reroll" id="btn-gp-reroll" onclick="rerollDraw()" style="display:none">↺ Undi Ulang</button>
-          </div>
-          <div class="dur-bar" style="width:100%">
-            <label>⏱ Durasi</label>
-            <input type="range" id="roll-dur-gp" min="3" max="20" value="7" oninput="document.getElementById('dur-val-gp').textContent=this.value+'s'">
-            <span class="dur-val" id="dur-val-gp">7s</span>
-          </div>
-          <div class="status-txt" id="gp-status"></div>
+        <div class="dur-bar">
+          <label>⏱ Durasi per pemenang</label>
+          <input type="range" id="roll-dur-gp" min="3" max="20" value="7" oninput="document.getElementById('dur-val-gp').textContent=this.value+'s'">
+          <span class="dur-val" id="dur-val-gp">7s</span>
         </div>
+        <div class="prize-grid" id="prize-grid-gp"></div>
+        <div class="ctrl-row">
+          <button class="btn-main coral" id="btn-gp-draw" onclick="startGpDrawAll()">🏆 Undi Semua Grand Prize</button>
+          <button class="btn-reroll" id="btn-gp-reroll" onclick="rerollDraw()" style="display:none">↺ Undi Ulang</button>
         </div>
-        <button class="info-panel-toggle" id="gp-info-toggle" onclick="toggleInfoPanel('gp')" style="display:none;width:100%;max-width:860px">
+        <div class="status-txt" id="gp-status"></div>
+        <button class="info-panel-toggle" id="gp-info-toggle" onclick="toggleInfoPanel('gp')" style="display:none">
           ℹ️ Lihat detail statistik undian
         </button>
-        <div class="info-panel" id="gp-info-panel" style="width:100%;max-width:860px"></div>
+        <div class="info-panel" id="gp-info-panel"></div>
       </div>
 
     </div>
@@ -1186,7 +1041,7 @@ function setMode(mode){
   document.getElementById('mtab-dp').className='mode-tab'+(dp?' dp':'');
   document.getElementById('mtab-gp').className='mode-tab'+(dp?'':' gp');
   document.getElementById('dp-stage').style.display=dp?'block':'none';
-  const gpStageEl=document.getElementById('gp-stage');gpStageEl.style.display=dp?'none':'flex';gpStageEl.classList.toggle('active-stage',!dp);
+  document.getElementById('gp-stage').style.display=dp?'none':'block';
   if(!selEvId)return;
   if(dp)renderDpStage();else renderGpStage();
   updateModeBadge();
@@ -1480,84 +1335,62 @@ function renderGpStage(){
   const gpW=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE');
   const total=ev.grandprizes.reduce((s,p)=>s+p.count,0);
   document.getElementById('gp-total-num').textContent=total;
-  const allDone=gpW.length>=total&&total>0;
-  document.getElementById('gp-hc-sub').textContent=allDone
+  document.getElementById('gp-hc-sub').textContent=gpW.length===total&&total>0
     ?'Semua grand prize sudah diundi! 🎉'
     :'Klik Undi untuk mengundi semua grand prize sekaligus';
 
-  const arena=document.getElementById('gp-slot-arena');arena.innerHTML='';
+  // Build grid — same structure as DP grid
+  const grid=document.getElementById('prize-grid-gp');grid.innerHTML='';
   const names=getAllNames();
+  const alreadyDone=gpW.length>=total&&total>0;
+  const rowH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--row-h'))||34;
+  const slotH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slot-h'))||22;
 
+  let winnerOffset=0;
   ev.grandprizes.forEach((prize,pi)=>{
     const prizeWinners=gpW.filter(w=>w.prizeName===prize.name);
-    const isDone=prizeWinners.length>=prize.count;
 
-    // Mesin slot container
-    const machine=document.createElement('div');
-    machine.className='gp-machine'+(isDone?' jackpot':'');
-    machine.id='gp-machine-'+pi;
+    const card=document.createElement('div');
+    card.className='prize-card-slot'+(prizeWinners.length>=prize.count?' done':'');
+    card.id='gpcard-'+pi;
 
-    // Header mesin
-    const mhdr=document.createElement('div');
-    mhdr.className='gp-machine-hdr';
-    mhdr.innerHTML='<span class="gp-machine-prize">🏆 '+prize.name+'</span>'
-      +'<span class="gp-machine-badge'+(isDone?' done-badge':'')+'">×'+prize.count+'</span>';
-    machine.appendChild(mhdr);
+    const hdr=document.createElement('div');
+    hdr.className='pc-header';
+    hdr.style.background=prizeWinners.length>=prize.count?'var(--teal)':'var(--coral)';
+    hdr.innerHTML='<span class="pc-title">'+prize.name+'</span><span class="pc-count-badge" style="background:rgba(255,255,255,0.25);color:#fff">×'+prize.count+'</span>';
+    card.appendChild(hdr);
 
-    // Slot columns
-    const slots=document.createElement('div');
-    slots.className='gp-machine-slots';
+    const body=document.createElement('div');
+    body.className='pc-winners';
 
     for(let i=0;i<prize.count;i++){
       const w=prizeWinners[i]||null;
-      const col=document.createElement('div');
-      col.className='gp-slot-col';
-
-      const num=document.createElement('div');
-      num.className='gp-slot-num';num.textContent='#'+(i+1);
-      col.appendChild(num);
-
-      const frame=document.createElement('div');
-      frame.className='gp-slot-frame'+(w?' won':'');
-      frame.id='gpframe-'+pi+'-'+i;
-
-      const hl=document.createElement('div');hl.className='gp-slot-hl';
-      frame.appendChild(hl);
-
-      const vp=document.createElement('div');vp.className='gp-slot-vp';
-      const track=document.createElement('div');track.className='gp-slot-track';track.id='gptrack-'+pi+'-'+i;
-
+      const row=document.createElement('div');
+      row.className='pc-winner-row'+(w?' revealed':'');
+      row.id='gprow-'+pi+'-'+i;
+      row.style.height=rowH+'px';
+      const numSpan=document.createElement('span');
+      numSpan.className='pc-winner-num';numSpan.textContent=i+1;
+      row.appendChild(numSpan);
+      const vp=document.createElement('div');vp.className='pc-slot-vp';
+      const track=document.createElement('div');track.className='pc-slot-track';track.id='gptrack-'+pi+'-'+i;
       if(w){
-        track.innerHTML='<div class="gp-slot-item winner"><span>'+w.name+'</span></div>';
-        // Center it
-        track.style.transform='translateY(14px)';
+        track.innerHTML='<div class="pc-slot-item winner"><span>'+w.name+'</span></div>';
       }else if(names.length){
         const items=[...names,...names,...names,...names,...names,...names];
-        track.innerHTML=items.map(n=>'<div class="gp-slot-item"><span>'+n+'</span></div>').join('');
+        track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
         const mid=Math.floor(items.length/2);
-        track.style.transform='translateY(-'+(mid*44-14)+'px)';
+        track.style.transform='translateY(-'+(mid*slotH)+'px)';
       }else{
-        track.innerHTML='<div class="gp-slot-item"><span style="color:rgba(255,255,255,0.3)">—</span></div>';
+        track.innerHTML='<div class="pc-slot-item"><span style="color:var(--muted2)">—</span></div>';
       }
-      vp.appendChild(track);frame.appendChild(vp);col.appendChild(frame);
-      slots.appendChild(col);
+      vp.appendChild(track);row.appendChild(vp);body.appendChild(row);
     }
-    machine.appendChild(slots);
-
-    // Footer — nama pemenang setelah selesai
-    const footer=document.createElement('div');
-    footer.className='gp-machine-footer';
-    if(isDone){
-      footer.innerHTML=prizeWinners.map((w,i)=>'<span class="gp-machine-winner-name show" style="'+(prize.count>1?'margin:0 8px':'')+'">'+(prize.count>1?(i+1)+'. ':'')+w.name+'</span>').join('');
-    }else{
-      footer.innerHTML='<span class="gp-machine-status">Belum diundi</span>';
-    }
-    machine.appendChild(footer);
-    arena.appendChild(machine);
+    card.appendChild(body);grid.appendChild(card);
   });
 
   const btn=document.getElementById('btn-gp-draw');
-  if(allDone){btn.textContent='✓ Grand Prize Sudah Diundi';btn.disabled=true;}
+  if(alreadyDone){btn.textContent='✓ Grand Prize Sudah Diundi';btn.disabled=true;}
   else if(!total){btn.textContent='🏆 Undi Semua Grand Prize';btn.disabled=true;}
   else{btn.textContent='🏆 Undi Semua Grand Prize';btn.disabled=!isOperator;}
   document.getElementById('gp-status').textContent='';
@@ -1607,54 +1440,30 @@ async function startGpDrawAll(){
   rolling=true;document.getElementById('btn-gp-draw').disabled=true;
   const names=getAllNames();if(!names.length){rolling=false;return;}
   const dur=(parseFloat(document.getElementById('roll-dur-gp').value)||7)*1000;
-  const slotH=28; // GP fixed large
+  const slotH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slot-h'))||22;
 
   // Prime all tracks
   slotList.forEach(s=>{
     const track=document.getElementById('gptrack-'+s.pi+'-'+s.si);if(!track)return;
     const items=[...names,...names,...names,...names,...names,...names];
-    track.innerHTML=items.map(n=>'<div class="gp-slot-item"><span>'+n+'</span></div>').join('');
-    const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*slotH-14)+'px)';
+    track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+    const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*slotH)+'px)';
   });
   document.getElementById('gp-status').textContent='🎰 Rolling…';
 
-  // Animate all — stagger start, all finish together, reveal serentak
-  const slotH=44; // GP slot item height
+  // Animate all — stagger start, finish together, reveal serentak
   const promises=slotList.map((s,i)=>animateGpSlotAll(s.pi,s.si,allWinners[i],dur,i*60,names,slotH));
-
-  // Mark machines as spinning
-  ev.grandprizes.forEach((_,pi)=>{
-    const m=document.getElementById('gp-machine-'+pi);
-    if(m)m.classList.add('spinning');
-    // Pulse frames
-    for(let i=0;i<_.count;i++){
-      const f=document.getElementById('gpframe-'+pi+'-'+i);
-      if(f)f.classList.add('active');
-    }
-  });
-
   await Promise.all(promises);
 
-  // Reveal all at once — jackpot!
+  // Reveal all at once
   slotList.forEach((s,i)=>{
     const w=allWinners[i];if(!w)return;
     const track=document.getElementById('gptrack-'+s.pi+'-'+s.si);
-    if(track){
-      const last=track.lastElementChild;
-      if(last){last.querySelector('span').style.color='var(--gold)';last.querySelector('span').style.fontWeight='800';}
-    }
-    const frame=document.getElementById('gpframe-'+s.pi+'-'+s.si);
-    if(frame){frame.classList.remove('active');frame.classList.add('won');}
-    const machine=document.getElementById('gp-machine-'+s.pi);
-    if(machine){machine.classList.remove('spinning');machine.classList.add('jackpot');}
-  });
-  // Update footers
-  ev.grandprizes.forEach((prize,pi)=>{
-    const prizeW=allWinners.filter((_,i)=>slotList[i].pi===pi);
-    const footer=document.querySelector('#gp-machine-'+pi+' .gp-machine-footer');
-    if(footer){
-      footer.innerHTML=prizeW.map((w,i)=>'<span class="gp-machine-winner-name show" style="'+(prize.count>1?'margin:0 8px':'')+'">'+(prize.count>1?(i+1)+'. ':'')+w.name+'</span>').join('');
-    }
+    if(track){const last=track.lastElementChild;if(last){last.querySelector('span').style.color='var(--gold-text)';last.querySelector('span').style.fontWeight='800';}}
+    const row=document.getElementById('gprow-'+s.pi+'-'+s.si);
+    if(row)row.classList.add('revealed');
+    const card=document.getElementById('gpcard-'+s.pi);
+    if(card){card.classList.add('done');const hdr=card.querySelector('.pc-header');if(hdr)hdr.style.background='var(--teal)';}
   });
 
   // Save
@@ -1677,9 +1486,8 @@ function animateGpSlotAll(pi,si,winner,dur,delay,names,slotH){
       if(!track||!winner){resolve();return;}
       const safeIdx=Math.max(0,names.indexOf(winner.name));
       const big=[];for(let i=0;i<60;i++)big.push(names[i%names.length]);big.push(names[safeIdx]);
-      track.innerHTML=big.map((n,j)=>'<div class="gp-slot-item'+(j===big.length-1?' winner':'')+'"><span>'+n+'</span></div>').join('');
-      const tIdx=big.length-1;
-      const tY=(tIdx*slotH)-14; // center in 72px frame (item=44, offset=14)
+      track.innerHTML=big.map((n,j)=>'<div class="pc-slot-item'+(j===big.length-1?' winner':'')+'"><span>'+n+'</span></div>').join('');
+      const tIdx=big.length-1,tY=tIdx*slotH;
       const t0=performance.now();
       function ease(t){return 1-Math.pow(1-t,4);}
       function anim(now){
@@ -1981,29 +1789,24 @@ function rerollDraw(){
 
 
 const ZOOM_LEVELS = [
-  {label:'XS', cardMin:'88px',  rowH:'24px', slotH:'16px', fontCard:'0.55rem', fontSlot:'0.6rem',  gap:'4px', cols:12},
-  {label:'S',  cardMin:'110px', rowH:'28px', slotH:'19px', fontCard:'0.61rem', fontSlot:'0.65rem', gap:'5px', cols:10},
-  {label:'M',  cardMin:'130px', rowH:'34px', slotH:'22px', fontCard:'0.67rem', fontSlot:'0.72rem', gap:'6px', cols:9},
-  {label:'L',  cardMin:'155px', rowH:'40px', slotH:'26px', fontCard:'0.74rem', fontSlot:'0.8rem',  gap:'8px', cols:7},
-  {label:'XL', cardMin:'185px', rowH:'46px', slotH:'30px', fontCard:'0.82rem', fontSlot:'0.88rem', gap:'10px',cols:6},
+  {label:'60%', cardMin:'88px',  rowH:'24px', slotH:'16px', fontCard:'0.55rem', fontSlot:'0.6rem',  gap:'4px'},
+  {label:'80%', cardMin:'108px', rowH:'28px', slotH:'19px', fontCard:'0.61rem', fontSlot:'0.65rem', gap:'5px'},
+  {label:'100%',cardMin:'130px', rowH:'34px', slotH:'22px', fontCard:'0.67rem', fontSlot:'0.72rem', gap:'6px'},
+  {label:'125%',cardMin:'160px', rowH:'40px', slotH:'26px', fontCard:'0.74rem', fontSlot:'0.8rem',  gap:'8px'},
+  {label:'150%',cardMin:'190px', rowH:'46px', slotH:'30px', fontCard:'0.82rem', fontSlot:'0.88rem', gap:'10px'},
 ];
-let currentZoom=2;
 function applyZoom(level){
   const z=ZOOM_LEVELS[parseInt(level)]||ZOOM_LEVELS[2];
-  const s=document.documentElement.style;
-  s.setProperty('--card-min', z.cardMin);
-  s.setProperty('--row-h',    z.rowH);
-  s.setProperty('--slot-h',   z.slotH);
-  s.setProperty('--font-card',z.fontCard);
-  s.setProperty('--font-slot',z.fontSlot);
-  s.setProperty('--grid-gap', z.gap);
-  s.setProperty('--col-count', z.cols);
-  // Update active button — no DOM rebuild needed
-  document.querySelectorAll('.zoom-btn').forEach((b,i)=>b.classList.toggle('active',i===parseInt(level)));
-  currentZoom=parseInt(level);
-  // Only rebuild if zoom changes row height (affects track translateY)
-  if(selEvId&&curMode==='dp')renderDpStage();
-  if(selEvId&&curMode==='gp')renderGpStage();
+  const r=document.documentElement.style;
+  r.setProperty('--card-min', z.cardMin);
+  r.setProperty('--row-h',    z.rowH);
+  r.setProperty('--slot-h',   z.slotH);
+  r.setProperty('--font-card',z.fontCard);
+  r.setProperty('--font-slot',z.fontSlot);
+  r.setProperty('--grid-gap', z.gap);
+  document.getElementById('zoom-label').textContent=z.label;
+  // Rebuild grid with new rowH for track positions
+  if(selEvId&&curMode==='dp') renderDpStage();
 }
 
 </script>
