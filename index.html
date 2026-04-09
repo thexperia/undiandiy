@@ -513,7 +513,6 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 /* ── GRAND PRIZE — simple centered cards ── */
 /* GP layout: 3 tingkat — header / slider / tabel kartu */
 #gp-stage{
-  display:flex;
   flex-direction:column;
   align-items:stretch;
   width:100%;
@@ -1160,7 +1159,7 @@ function setMode(mode){
   document.getElementById('mtab-dp').className='mode-tab'+(dp?' dp':'');
   document.getElementById('mtab-gp').className='mode-tab'+(dp?'':' gp');
   document.getElementById('dp-stage').style.display=dp?'block':'none';
-  document.getElementById('gp-stage').style.display=dp?'none':'';
+  document.getElementById('gp-stage').style.display=dp?'none':'flex';
   if(!selEvId)return;
   if(dp)renderDpStage();else renderGpStage();
   updateModeBadge();
@@ -2074,14 +2073,14 @@ function rerollDraw(){
 }
 
 
-const ZOOM_LEVELS = [
+ZOOM_LEVELS = [
   {label:'XS', cardMin:'88px',  rowH:'24px', slotH:'16px', fontCard:'0.55rem', fontSlot:'0.6rem',  gap:'4px', cols:12},
   {label:'S',  cardMin:'110px', rowH:'28px', slotH:'19px', fontCard:'0.61rem', fontSlot:'0.65rem', gap:'5px', cols:10},
   {label:'M',  cardMin:'130px', rowH:'34px', slotH:'22px', fontCard:'0.67rem', fontSlot:'0.72rem', gap:'6px', cols:9},
   {label:'L',  cardMin:'155px', rowH:'40px', slotH:'26px', fontCard:'0.74rem', fontSlot:'0.8rem',  gap:'8px', cols:7},
   {label:'XL', cardMin:'185px', rowH:'46px', slotH:'30px', fontCard:'0.82rem', fontSlot:'0.88rem', gap:'10px',cols:6},
 ];
-let currentZoom=2;
+currentZoom=2;
 function applyZoom(level){
   const z=ZOOM_LEVELS[parseInt(level)]||ZOOM_LEVELS[2];
   const s=document.documentElement.style;
