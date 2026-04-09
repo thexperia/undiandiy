@@ -11,6 +11,12 @@
    PALETTE — warm light base, dark navy accents
 ═══════════════════════════════ */
 :root{
+  --card-min:130px;
+  --row-h:34px;
+  --slot-h:22px;
+  --font-card:0.67rem;
+  --font-slot:0.72rem;
+  --grid-gap:6px;
   --bg:#F0F2F8;
   --bg2:#E4E8F4;
   --panel:#FFFFFF;
@@ -141,9 +147,9 @@ nav{
    Fixed-size cards, equal height via grid-auto-rows */
 .prize-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(130px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(var(--card-min),1fr));
   grid-auto-rows:auto;
-  gap:6px;
+  gap:var(--grid-gap);
   margin-bottom:8px;
   align-items:start;
 }
@@ -161,23 +167,23 @@ nav{
   background:var(--navy);padding:6px 10px;
   display:flex;align-items:center;justify-content:space-between;
 }
-.pc-title{font-size:0.67rem;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:6px;}
+.pc-title{font-size:var(--font-card);font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-right:6px;}
 .pc-count-badge{background:var(--gold);color:var(--navy);font-size:0.62rem;font-weight:800;padding:2px 7px;border-radius:999px;flex-shrink:0;font-family:'DM Mono',monospace;}
 
 /* Winner rows inside card */
 .pc-winners{display:flex;flex-direction:column;flex:1;}
 .pc-winner-row{
   display:flex;align-items:center;gap:6px;
-  padding:0 8px;height:34px;flex-shrink:0;
+  padding:0 8px;height:var(--row-h);flex-shrink:0;
   border-bottom:1px solid var(--border);
 }
 .pc-winner-row:last-child{border-bottom:none;}
 .pc-winner-num{font-size:0.6rem;font-weight:700;color:var(--muted2);font-family:'DM Mono',monospace;width:16px;flex-shrink:0;}
 /* Slot viewport */
-.pc-slot-vp{flex:1;height:22px;overflow:hidden;position:relative;border-radius:4px;background:var(--bg2);border:1px solid var(--border);}
+.pc-slot-vp{flex:1;height:var(--slot-h);overflow:hidden;position:relative;border-radius:4px;background:var(--bg2);border:1px solid var(--border);}
 .pc-slot-track{display:flex;flex-direction:column;will-change:transform;}
-.pc-slot-item{height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 5px;}
-.pc-slot-item span{font-size:0.72rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;}
+.pc-slot-item{height:var(--slot-h);display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 5px;}
+.pc-slot-item span{font-size:var(--font-slot);font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;}
 /* Winner state */
 .pc-winner-row.revealed{background:var(--gold-bg);}
 .pc-winner-row.revealed .pc-slot-vp{background:var(--gold-bg);border-color:var(--gold-border);}
@@ -473,6 +479,10 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 }
 .btn-reroll:hover{background:var(--coral);color:#fff;border-color:var(--coral);}
 
+
+.zoom-bar{display:flex;align-items:center;gap:8px;padding:4px 10px;margin-bottom:6px;border-radius:var(--rs);background:var(--panel);border:1px solid var(--border);}
+.zoom-bar label{font-size:0.82rem;}
+
 </style>
 </head>
 <body>
@@ -562,6 +572,11 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
           <input type="range" id="roll-dur" min="3" max="15" value="6" oninput="document.getElementById('dur-val').textContent=this.value+'s'">
           <span class="dur-val" id="dur-val">6s</span>
         </div>
+        <div class="zoom-bar">
+          <label>🔍</label>
+          <input type="range" id="zoom-slider" min="0" max="4" value="2" step="1" oninput="applyZoom(this.value)" style="flex:1;accent-color:var(--navy);cursor:pointer">
+          <span style="font-size:0.68rem;color:var(--muted);min-width:28px;text-align:right" id="zoom-label">100%</span>
+        </div>
         <div class="prize-grid" id="prize-grid"></div>
         <div class="ctrl-row">
           <button class="btn-main gold" id="btn-dp-draw" onclick="startDpDraw()">🎲 Undi Semua Doorprize</button>
@@ -576,29 +591,27 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 
       <!-- GP STAGE -->
       <div id="gp-stage" style="display:none">
-        <div class="dp-header-card" style="margin-bottom:16px">
+        <div class="dp-header-card" style="margin-bottom:8px">
           <div class="dp-hc-ico" style="background:var(--coral-bg);border-color:var(--coral-border)">🏆</div>
           <div class="dp-hc-info">
-            <div class="dp-hc-label" style="color:var(--coral)">Grand Prize</div>
+            <div class="dp-hc-label" style="color:var(--coral)">Grand Prize — Semua Hadiah</div>
             <div class="dp-hc-title" id="gp-hc-title">Siap Diundi</div>
-            <div class="dp-hc-sub" id="gp-hc-sub">Pilih grand prize lalu klik Undi</div>
+            <div class="dp-hc-sub" id="gp-hc-sub">Klik Undi untuk mengundi semua grand prize sekaligus</div>
           </div>
           <div class="dp-hc-num-wrap">
             <span class="dp-hc-num" id="gp-total-num">0</span>
             <span class="dp-hc-lbl">pemenang</span>
           </div>
         </div>
-        <div class="gp-picker-label">Pilih Grand Prize yang akan diundi:</div>
-        <div class="gp-items" id="gp-items"></div>
-        <div id="gp-focused-card" style="width:100%;margin-bottom:10px;display:none"></div>
-        <div class="ctrl-row">
-          <button class="btn-main coral" id="btn-gp-draw" onclick="startGpDraw()" disabled>🏆 Undi Grand Prize</button>
-          <button class="btn-reroll" id="btn-gp-reroll" onclick="rerollDraw()" style="display:none">↺ Undi Ulang</button>
-        </div>
-        <div class="dur-bar" style="margin-top:6px">
-          <label>⏱ Durasi</label>
+        <div class="dur-bar">
+          <label>⏱ Durasi per pemenang</label>
           <input type="range" id="roll-dur-gp" min="3" max="20" value="7" oninput="document.getElementById('dur-val-gp').textContent=this.value+'s'">
           <span class="dur-val" id="dur-val-gp">7s</span>
+        </div>
+        <div class="prize-grid" id="prize-grid-gp"></div>
+        <div class="ctrl-row">
+          <button class="btn-main coral" id="btn-gp-draw" onclick="startGpDrawAll()">🏆 Undi Semua Grand Prize</button>
+          <button class="btn-reroll" id="btn-gp-reroll" onclick="rerollDraw()" style="display:none">↺ Undi Ulang</button>
         </div>
         <div class="status-txt" id="gp-status"></div>
         <button class="info-panel-toggle" id="gp-info-toggle" onclick="toggleInfoPanel('gp')" style="display:none">
@@ -965,12 +978,10 @@ function updateModeBadge(){
     ta.innerHTML='';
   }
   // toggle draw buttons
-  ['btn-dp-draw'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el&&!el.textContent.includes('✓'))el.disabled=!isOperator;
-  });
+  const dpBtn=document.getElementById('btn-dp-draw');
+  if(dpBtn&&!dpBtn.textContent.includes('✓'))dpBtn.disabled=!isOperator;
   const gpBtn=document.getElementById('btn-gp-draw');
-  if(gpBtn)gpBtn.disabled=!isOperator||gpSelIdx===null;
+  if(gpBtn&&!gpBtn.textContent.includes('✓'))gpBtn.disabled=!isOperator;
 }
 function openOpModal(){document.getElementById('op-modal').style.display='flex';document.getElementById('op-pin-inp').value='';document.getElementById('op-modal-err').style.display='none';setTimeout(()=>document.getElementById('op-pin-inp').focus(),100);}
 function closeOpModal(){document.getElementById('op-modal').style.display='none';}
@@ -1063,7 +1074,7 @@ function renderDpStage(){
 
   // Find max count for uniform card height
   const maxCount=ev.doorprizes.reduce((m,p)=>Math.max(m,p.count),1);
-  const rowH=34; // px per winner row (compact)
+  const rowH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--row-h'))||34;
   const cardBodyH=(maxCount*rowH);
 
   let winnerOffset=0;
@@ -1321,184 +1332,172 @@ function revealAllDpSlots(slotList,winners){
 /* ── GRAND PRIZE: same card-grid logic as DP, sequential per winner ── */
 function renderGpStage(){
   const ev=getEv(selEvId);if(!ev)return;
-  gpSelIdx=null;
   const gpW=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE');
-  const totalWinners=ev.grandprizes.reduce((s,p)=>s+p.count,0);
-  document.getElementById('gp-total-num').textContent=totalWinners;
-  document.getElementById('gp-hc-sub').textContent=gpW.length===totalWinners&&totalWinners>0?'Semua grand prize sudah diundi!':'Pilih item di bawah lalu klik Undi';
+  const total=ev.grandprizes.reduce((s,p)=>s+p.count,0);
+  document.getElementById('gp-total-num').textContent=total;
+  document.getElementById('gp-hc-sub').textContent=gpW.length===total&&total>0
+    ?'Semua grand prize sudah diundi! 🎉'
+    :'Klik Undi untuk mengundi semua grand prize sekaligus';
 
-  // Picker list
-  const itemsEl=document.getElementById('gp-items');itemsEl.innerHTML='';
-  (ev.grandprizes||[]).forEach((p,i)=>{
-    const wonCount=gpW.filter(w=>w.prizeName===p.name).length;
-    const remaining=p.count-wonCount;const exhausted=remaining<=0;
-    const div=document.createElement('div');
-    div.className='gp-item'+(exhausted?' exhausted':'');
-    if(!exhausted)div.onclick=()=>selectGp(i);
-    div.innerHTML='<span class="gp-item-ico">🏆</span><div class="gp-item-info"><div class="gp-item-name">'+p.name+'</div><div class="gp-item-sub">'+p.count+' unit · '+wonCount+' sudah diundi</div></div><span class="gp-item-badge '+(exhausted?'gp-badge-done':'gp-badge-avail')+'">'+(exhausted?'✓ Selesai':remaining+' tersisa')+'</span>';
-    itemsEl.appendChild(div);
+  // Build grid — same structure as DP grid
+  const grid=document.getElementById('prize-grid-gp');grid.innerHTML='';
+  const names=getAllNames();
+  const alreadyDone=gpW.length>=total&&total>0;
+  const rowH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--row-h'))||34;
+  const slotH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slot-h'))||22;
+
+  let winnerOffset=0;
+  ev.grandprizes.forEach((prize,pi)=>{
+    const prizeWinners=gpW.filter(w=>w.prizeName===prize.name);
+
+    const card=document.createElement('div');
+    card.className='prize-card-slot'+(prizeWinners.length>=prize.count?' done':'');
+    card.id='gpcard-'+pi;
+
+    const hdr=document.createElement('div');
+    hdr.className='pc-header';
+    hdr.style.background=prizeWinners.length>=prize.count?'var(--teal)':'var(--coral)';
+    hdr.innerHTML='<span class="pc-title">'+prize.name+'</span><span class="pc-count-badge" style="background:rgba(255,255,255,0.25);color:#fff">×'+prize.count+'</span>';
+    card.appendChild(hdr);
+
+    const body=document.createElement('div');
+    body.className='pc-winners';
+
+    for(let i=0;i<prize.count;i++){
+      const w=prizeWinners[i]||null;
+      const row=document.createElement('div');
+      row.className='pc-winner-row'+(w?' revealed':'');
+      row.id='gprow-'+pi+'-'+i;
+      row.style.height=rowH+'px';
+      const numSpan=document.createElement('span');
+      numSpan.className='pc-winner-num';numSpan.textContent=i+1;
+      row.appendChild(numSpan);
+      const vp=document.createElement('div');vp.className='pc-slot-vp';
+      const track=document.createElement('div');track.className='pc-slot-track';track.id='gptrack-'+pi+'-'+i;
+      if(w){
+        track.innerHTML='<div class="pc-slot-item winner"><span>'+w.name+'</span></div>';
+      }else if(names.length){
+        const items=[...names,...names,...names,...names,...names,...names];
+        track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+        const mid=Math.floor(items.length/2);
+        track.style.transform='translateY(-'+(mid*slotH)+'px)';
+      }else{
+        track.innerHTML='<div class="pc-slot-item"><span style="color:var(--muted2)">—</span></div>';
+      }
+      vp.appendChild(track);row.appendChild(vp);body.appendChild(row);
+    }
+    card.appendChild(body);grid.appendChild(card);
   });
 
-  // Clear focused card — shown only when item is selected
-  const fc=document.getElementById('gp-focused-card');
-  if(fc){fc.innerHTML='';fc.style.display='none';}
-  document.getElementById('btn-gp-draw').disabled=true;
+  const btn=document.getElementById('btn-gp-draw');
+  if(alreadyDone){btn.textContent='✓ Grand Prize Sudah Diundi';btn.disabled=true;}
+  else if(!total){btn.textContent='🏆 Undi Semua Grand Prize';btn.disabled=true;}
+  else{btn.textContent='🏆 Undi Semua Grand Prize';btn.disabled=!isOperator;}
   document.getElementById('gp-status').textContent='';
   updateModeBadge();
 }
 
-function selectGp(idx){
-  gpSelIdx=idx;
-  document.querySelectorAll('.gp-item').forEach((el,i)=>el.classList.toggle('selected',i===idx));
-  const ev=getEv(selEvId);const p=ev.grandprizes[idx];
-  const gpW=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===p.name).length;
-  const rem=p.count-gpW;
-  document.getElementById('btn-gp-draw').disabled=!isOperator;
-  document.getElementById('gp-status').textContent='Dipilih: '+p.name+' · '+rem+' pemenang akan diundi';
-  // Build & show focused card
-  buildGpFocusedCard(idx,p,gpW);
-}
-
-function buildGpFocusedCard(pi,prize,wonCount){
-  const fc=document.getElementById('gp-focused-card');if(!fc)return;
-  const names=getAllNames();
-  const rowH=34;
-  const cardBodyH=Math.max(prize.count*rowH, 68);
-  const gpAllW=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===prize.name);
-  const isDone=gpAllW.length>=prize.count;
-
-  const card=document.createElement('div');
-  card.className='prize-card-slot'+(isDone?' done':'');
-  card.id='gpcard-'+pi;
-  card.style.cssText='width:100%;border-width:2px;box-shadow:0 4px 24px rgba(26,35,64,0.14);';
-
-  const hdr=document.createElement('div');
-  hdr.className='pc-header';
-  hdr.style.cssText='background:'+(isDone?'var(--teal)':'var(--coral)')+';padding:10px 16px;';
-  hdr.innerHTML='<span class="pc-title" style="font-size:1rem">🏆 '+prize.name+'</span><span class="pc-count-badge" style="background:rgba(255,255,255,0.25);color:#fff;font-size:0.8rem">×'+prize.count+'</span>';
-  card.appendChild(hdr);
-
-  const body=document.createElement('div');
-  body.className='pc-winners';
-  body.style.minHeight=''; // each card fits content
-
-  for(let i=0;i<prize.count;i++){
-    const w=gpAllW[i]||null;
-    const row=document.createElement('div');
-    row.className='pc-winner-row'+(w?' revealed':'');
-    row.id='gprow-'+pi+'-'+i;
-    row.style.height=rowH+'px';
-    const numSpan=document.createElement('span');
-    numSpan.className='pc-winner-num';numSpan.textContent=i+1;
-    row.appendChild(numSpan);
-    const vp=document.createElement('div');vp.className='pc-slot-vp';
-    const track=document.createElement('div');track.className='pc-slot-track';track.id='gptrack-'+pi+'-'+i;
-    if(w){
-      track.innerHTML='<div class="pc-slot-item winner"><span>'+w.name+'</span></div>';
-    }else if(names.length){
-      const items=[...names,...names,...names,...names,...names,...names];
-      track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
-      const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*22)+'px)';
-    }else{
-      track.innerHTML='<div class="pc-slot-item"><span style="color:var(--muted2)">—</span></div>';
-    }
-    vp.appendChild(track);row.appendChild(vp);body.appendChild(row);
-  }
-  card.appendChild(body);
-  fc.innerHTML='';fc.appendChild(card);
-  fc.style.display='block';
-  // Smooth scroll to card
-  fc.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-
-async function startGpDraw(){
-  if(rolling||gpSelIdx===null||!isOperator)return;
+async function startGpDraw(){} // kept for compat
+async function startGpDrawAll(){
+  if(rolling||!isOperator)return;
   const ev=getEv(selEvId);if(!ev)return;
-  const p=ev.grandprizes[gpSelIdx];if(!p)return;
-  const alreadyWon=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===p.name).length;
-  const remaining=p.count-alreadyWon;if(remaining<=0){toast('Hadiah ini sudah selesai diundi.');return;}
-  // GP: pool = belum menang DP & belum menang GP, rasio persis via stratified
-  const evGp=getEv(selEvId);
-  const rGp=evGp.ratios||{};
+  const gpDone=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE');
+  if(gpDone.length>0){toast('Grand prize sudah diundi. Klik Undi Ulang untuk reset.');return;}
+
+  // Flat list semua GP slots
+  const slotList=[];
+  ev.grandprizes.forEach((p,pi)=>{for(let i=0;i<p.count;i++)slotList.push({prizeName:p.name,pi,si:i});});
+  if(!slotList.length){toast('Belum ada grand prize.');return;}
+  const total=slotList.length;
+
+  // GP stratified: total organik vs non persis sesuai rasio
+  // Pool = belum menang DP, belum menang GP, grade > 0
+  const rGp=ev.ratios||{};
   const gpOrgPct=rGp.gpOrganic||50;
   const gmGp={G2:rGp.g2||0,G3:rGp.g3||0,G4:rGp.g4||0,G5:rGp.g5||0,G6:rGp.g6||0,G7:rGp.g7||0};
-  const gpKeys2=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE').map(w=>w.key));
-  const dpKeys2=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE').map(w=>w.key));
-  // Exclude pemenang DP dari pool GP (mereka tidak ikut GP)
-  const avOgp=(evGp.organic||[]).filter(e=>!gpKeys2.has(e.name+'|org')&&!dpKeys2.has(e.name+'|org')&&(gmGp[e.grade]||0)>0);
-  const avNgp=(evGp.nonOrganic||[]).filter(e=>!gpKeys2.has(e.name+'|non')&&!dpKeys2.has(e.name+'|non'));
-  if(avOgp.length+avNgp.length<remaining){toast('⚠️ Peserta tidak cukup!');return;}
-  // Kuota organik vs non — PERSIS sesuai rasio, fallback jika pool tidak cukup
-  let nGpOrg=Math.round(remaining*gpOrgPct/100);
-  let nGpNon=remaining-nGpOrg;
-  if(avOgp.length<nGpOrg){nGpOrg=avOgp.length;nGpNon=Math.min(remaining-nGpOrg,avNgp.length);}
-  if(avNgp.length<nGpNon){nGpNon=avNgp.length;nGpOrg=Math.min(remaining-nGpNon,avOgp.length);}
-  // Kuota per grade dalam organik (stratified)
-  const activeGradesGp=[...new Set(avOgp.map(e=>e.grade))].filter(g=>(gmGp[g]||0)>0);
-  const gradeWtTotalGp=activeGradesGp.reduce((s,g)=>s+(gmGp[g]||0),0);
-  const gradeQuotasGp={};let quotaSumGp=0;
-  activeGradesGp.forEach((g,i)=>{
-    const q=i===activeGradesGp.length-1?nGpOrg-quotaSumGp:Math.round(nGpOrg*(gmGp[g]||0)/gradeWtTotalGp);
-    gradeQuotasGp[g]=Math.min(Math.max(0,q),avOgp.filter(e=>e.grade===g).length);
-    quotaSumGp+=gradeQuotasGp[g];
-  });
-  // Sisa rounding
-  let remGp2=nGpOrg-Object.values(gradeQuotasGp).reduce((s,v)=>s+v,0);
-  for(const g of activeGradesGp){if(remGp2===0)break;const cap=avOgp.filter(e=>e.grade===g).length-gradeQuotasGp[g];if(cap>0){gradeQuotasGp[g]++;remGp2--;}}
-  // Pick organik per grade — random shuffle
-  const orgWgp=[];
-  activeGradesGp.forEach(g=>{
-    const pool=[...avOgp.filter(e=>e.grade===g)];
-    for(let i=pool.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[pool[i],pool[j]]=[pool[j],pool[i]];}
-    pool.slice(0,gradeQuotasGp[g]).forEach(e=>orgWgp.push({...e,key:e.name+'|org',type:'org'}));
-  });
-  // Pick non-organik — random shuffle
-  const poolN=[...avNgp];
-  for(let i=poolN.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[poolN[i],poolN[j]]=[poolN[j],poolN[i]];}
-  const nonWgp=poolN.slice(0,nGpNon).map(e=>({...e,key:e.name+'|non',type:'non'}));
-  const winners=[...orgWgp,...nonWgp];
-  if(!winners.length){toast('Peserta tidak cukup.');return;}
-  rolling=true;document.getElementById('btn-gp-draw').disabled=true;
-  document.getElementById('gp-status').textContent='🎰 Rolling…';
-  const names=getAllNames();
-  const dur=(parseFloat(document.getElementById('roll-dur-gp').value)||7)*1000;
-  const pi=gpSelIdx;
+  const dpKeys=new Set(S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='DOORPRIZE').map(w=>w.key));
+  const avOgp=(ev.organic||[]).filter(e=>(gmGp[e.grade]||0)>0&&!dpKeys.has(e.name+'|org'));
+  const avNgp=(ev.nonOrganic||[]).filter(e=>!dpKeys.has(e.name+'|non'));
 
-  for(let i=0;i<winners.length;i++){
-    const w=winners[i];
-    const si=alreadyWon+i;
-    // Prime this specific track
-    const track=document.getElementById('gptrack-'+pi+'-'+si);
-    if(track&&names.length){
-      const items=[...names,...names,...names,...names,...names,...names];
-      track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
-      const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*28)+'px)';
-    }
-    await animateGpTrack(pi,si,w,dur,names);
-    S.winners.push({evId:selEvId,prizeName:p.name,prizeType:'GRAND PRIZE',name:w.name,type:w.type,grade:w.grade,key:w.key});
-    save();launchConfetti();
-    if(i<winners.length-1)await new Promise(r=>setTimeout(r,900));
-  }
-  // Mark card done
-  const card=document.getElementById('gpcard-'+pi);
-  if(card){card.classList.add('done');const hdr=card.querySelector('.pc-header');if(hdr)hdr.style.background='var(--teal)';}
-  document.getElementById('gp-status').textContent='✓ '+p.name+' selesai ('+remaining+' pemenang)';
-  // Update picker badge
-  const gpW2=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE'&&w.prizeName===p.name).length;
-  const pickerItems=document.querySelectorAll('.gp-item');
-  if(pickerItems[pi]){
-    const badge=pickerItems[pi].querySelector('.gp-item-badge');
-    if(badge){badge.textContent='✓ Selesai';badge.className='gp-item-badge gp-badge-done';}
-    pickerItems[pi].classList.add('exhausted');pickerItems[pi].onclick=null;pickerItems[pi].classList.remove('selected');
-  }
-  rolling=false;gpSelIdx=null;
-  document.getElementById('btn-gp-draw').disabled=true;
+  if(avOgp.length+avNgp.length<total){toast('⚠️ Peserta tidak cukup!');return;}
+
+  // Kuota organik vs non
+  let nOrg=Math.round(total*gpOrgPct/100);
+  let nNon=total-nOrg;
+  if(avOgp.length<nOrg){nOrg=avOgp.length;nNon=Math.min(total-nOrg,avNgp.length);}
+  if(avNgp.length<nNon){nNon=avNgp.length;nOrg=Math.min(total-nNon,avOgp.length);}
+
+  // Shuffle pick organik (tanpa grade stratified untuk GP — pure organik vs non saja)
+  function shufflePick(arr,n){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,n);}
+  const orgW=shufflePick(avOgp,nOrg).map(e=>({...e,key:e.name+'|org',type:'org'}));
+  const nonW=shufflePick(avNgp,nNon).map(e=>({...e,key:e.name+'|non',type:'non'}));
+  const allWinners=[...orgW,...nonW];
+  // Shuffle urutan tampil
+  for(let i=allWinners.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[allWinners[i],allWinners[j]]=[allWinners[j],allWinners[i]];}
+
+  if(!allWinners.length){toast('Peserta tidak cukup.');return;}
+
+  rolling=true;document.getElementById('btn-gp-draw').disabled=true;
+  const names=getAllNames();if(!names.length){rolling=false;return;}
+  const dur=(parseFloat(document.getElementById('roll-dur-gp').value)||7)*1000;
+  const slotH=parseInt(getComputedStyle(document.documentElement).getPropertyValue('--slot-h'))||22;
+
+  // Prime all tracks
+  slotList.forEach(s=>{
+    const track=document.getElementById('gptrack-'+s.pi+'-'+s.si);if(!track)return;
+    const items=[...names,...names,...names,...names,...names,...names];
+    track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+    const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*slotH)+'px)';
+  });
+  document.getElementById('gp-status').textContent='🎰 Rolling…';
+
+  // Animate all — stagger start, finish together, reveal serentak
+  const promises=slotList.map((s,i)=>animateGpSlotAll(s.pi,s.si,allWinners[i],dur,i*60,names,slotH));
+  await Promise.all(promises);
+
+  // Reveal all at once
+  slotList.forEach((s,i)=>{
+    const w=allWinners[i];if(!w)return;
+    const track=document.getElementById('gptrack-'+s.pi+'-'+s.si);
+    if(track){const last=track.lastElementChild;if(last){last.querySelector('span').style.color='var(--gold-text)';last.querySelector('span').style.fontWeight='800';}}
+    const row=document.getElementById('gprow-'+s.pi+'-'+s.si);
+    if(row)row.classList.add('revealed');
+    const card=document.getElementById('gpcard-'+s.pi);
+    if(card){card.classList.add('done');const hdr=card.querySelector('.pc-header');if(hdr)hdr.style.background='var(--teal)';}
+  });
+
+  // Save
+  slotList.forEach((s,i)=>{
+    const w=allWinners[i];if(!w)return;
+    S.winners.push({evId:selEvId,prizeName:s.prizeName,prizeType:'GRAND PRIZE',name:w.name,type:w.type,grade:w.grade||null,key:w.key});
+  });
+  save();
+  document.getElementById('gp-status').textContent='';
+  document.getElementById('btn-gp-draw').textContent='✓ Grand Prize Sudah Diundi';
+  rolling=false;launchConfetti();
   showInfoToggle('gp');
   if(isOperator){const rb=document.getElementById('btn-gp-reroll');if(rb)rb.style.display='flex';}
-  // Update total counter
-  const totalDone=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE').length;
-  const totalAll=ev.grandprizes.reduce((s,p)=>s+p.count,0);
-  if(totalDone===totalAll)document.getElementById('gp-hc-sub').textContent='Semua grand prize sudah diundi! 🎉';
+}
+
+function animateGpSlotAll(pi,si,winner,dur,delay,names,slotH){
+  return new Promise(resolve=>{
+    setTimeout(()=>{
+      const track=document.getElementById('gptrack-'+pi+'-'+si);
+      if(!track||!winner){resolve();return;}
+      const safeIdx=Math.max(0,names.indexOf(winner.name));
+      const big=[];for(let i=0;i<60;i++)big.push(names[i%names.length]);big.push(names[safeIdx]);
+      track.innerHTML=big.map((n,j)=>'<div class="pc-slot-item'+(j===big.length-1?' winner':'')+'"><span>'+n+'</span></div>').join('');
+      const tIdx=big.length-1,tY=tIdx*slotH;
+      const t0=performance.now();
+      function ease(t){return 1-Math.pow(1-t,4);}
+      function anim(now){
+        const p=Math.min((now-t0)/dur,1);
+        track.style.transform='translateY(-'+(tY*ease(p))+'px)';
+        if(p<1)requestAnimationFrame(anim);else resolve();
+      }
+      requestAnimationFrame(anim);
+    },delay);
+  });
 }
 
 function animateGpTrack(pi,si,winner,dur,names){
@@ -1725,19 +1724,18 @@ function renderInfoPanel(type){
   html+='<div class="info-row"><span class="info-row-label">Pegawai Organik</span><span class="info-row-value">'+orgW.length+' orang ('+orgPct+'%)</span></div>';
   html+='<div class="info-row"><span class="info-row-label">Non-Organik</span><span class="info-row-value">'+nonW.length+' orang ('+nonPct+'%)</span></div>';
 
-  if(orgW.length>0){
+  if(orgW.length>0&&isDp){
     html+='<div class="info-row" style="flex-direction:column;align-items:flex-start;gap:6px"><span class="info-row-label">Breakdown Pangkat Organik</span><div class="info-grade-grid">';
     const totalGradeW=Object.values(gradeCnt).reduce((s,v)=>s+v,0);
-  const evInfo=getEv(selEvId);const rInfo=evInfo?evInfo.ratios||{}:{};
-  const gmInfo={G2:rInfo.g2||0,G3:rInfo.g3||0,G4:rInfo.g4||0,G5:rInfo.g5||0,G6:rInfo.g6||0,G7:rInfo.g7||0};
-  const activeGInfo=[...new Set(orgW.map(w=>w.grade))];
-  const gmTotal=activeGInfo.reduce((s,g)=>s+(gmInfo[g]||0),0);
-  Object.entries(gradeCnt).sort().forEach(([g,c])=>{
-    const pct=totalGradeW?(c/totalGradeW*100).toFixed(2):0;
-    const tgt=gmTotal>0?((gmInfo[g]||0)/gmTotal*100).toFixed(0):'?';
-    const isOk=Math.abs(parseFloat(pct)-parseFloat(tgt))<=15;
-    html+='<span class="info-grade-chip" title="Target: '+tgt+'%">'+g+': '+c+' ('+pct+'% | target ~'+tgt+'%)</span>';
-  });
+    const evInfo=getEv(selEvId);const rInfo=evInfo?evInfo.ratios||{}:{};
+    const gmInfo={G2:rInfo.g2||0,G3:rInfo.g3||0,G4:rInfo.g4||0,G5:rInfo.g5||0,G6:rInfo.g6||0,G7:rInfo.g7||0};
+    const activeGInfo=[...new Set(orgW.map(w=>w.grade))];
+    const gmTotal=activeGInfo.reduce((s,g)=>s+(gmInfo[g]||0),0);
+    Object.entries(gradeCnt).sort().forEach(([g,c])=>{
+      const pct=totalGradeW?(c/totalGradeW*100).toFixed(2):0;
+      const tgt=gmTotal>0?((gmInfo[g]||0)/gmTotal*100).toFixed(0):'?';
+      html+='<span class="info-grade-chip" title="Target: '+tgt+'%">'+g+': '+c+' ('+pct+'% | target ~'+tgt+'%)</span>';
+    });
     html+='</div></div>';
   }
 
@@ -1779,13 +1777,36 @@ function rerollDraw(){
     const it=document.getElementById('dp-info-toggle');if(it)it.style.display='none';
     renderDpStage();
   } else {
-    document.getElementById('btn-gp-draw').disabled=true;
+    document.getElementById('btn-gp-draw').textContent='🏆 Undi Semua Grand Prize';
+    document.getElementById('btn-gp-draw').disabled=!isOperator;
     document.getElementById('btn-gp-reroll').style.display='none';
     const ip=document.getElementById('gp-info-panel');if(ip)ip.classList.remove('open');
     const it=document.getElementById('gp-info-toggle');if(it)it.style.display='none';
     renderGpStage();
   }
   toast('↺ '+modeLabel+' direset — siap diundi ulang.');
+}
+
+
+const ZOOM_LEVELS = [
+  {label:'60%', cardMin:'88px',  rowH:'24px', slotH:'16px', fontCard:'0.55rem', fontSlot:'0.6rem',  gap:'4px'},
+  {label:'80%', cardMin:'108px', rowH:'28px', slotH:'19px', fontCard:'0.61rem', fontSlot:'0.65rem', gap:'5px'},
+  {label:'100%',cardMin:'130px', rowH:'34px', slotH:'22px', fontCard:'0.67rem', fontSlot:'0.72rem', gap:'6px'},
+  {label:'125%',cardMin:'160px', rowH:'40px', slotH:'26px', fontCard:'0.74rem', fontSlot:'0.8rem',  gap:'8px'},
+  {label:'150%',cardMin:'190px', rowH:'46px', slotH:'30px', fontCard:'0.82rem', fontSlot:'0.88rem', gap:'10px'},
+];
+function applyZoom(level){
+  const z=ZOOM_LEVELS[parseInt(level)]||ZOOM_LEVELS[2];
+  const r=document.documentElement.style;
+  r.setProperty('--card-min', z.cardMin);
+  r.setProperty('--row-h',    z.rowH);
+  r.setProperty('--slot-h',   z.slotH);
+  r.setProperty('--font-card',z.fontCard);
+  r.setProperty('--font-slot',z.fontSlot);
+  r.setProperty('--grid-gap', z.gap);
+  document.getElementById('zoom-label').textContent=z.label;
+  // Rebuild grid with new rowH for track positions
+  if(selEvId&&curMode==='dp') renderDpStage();
 }
 
 </script>
