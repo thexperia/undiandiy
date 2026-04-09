@@ -495,57 +495,82 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 
 
 /* ── GRAND PRIZE — simple centered cards ── */
-/* GP: kartu horizontal berdampingan, vertikal memanjang ke bawah */
+/* GP layout: 3 tingkat — header / slider / tabel kartu */
+#gp-stage{
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  width:100%;
+}
+#gp-stage > *{
+  width:100%;
+}
 .gp-card-list{
-  display:flex;flex-direction:row;gap:10px;align-items:stretch;
-  width:100%;margin:0 auto 14px;
+  display:flex;
+  flex-direction:row;
+  gap:10px;
+  width:100%;
+  margin:0 0 12px 0;
+  align-items:stretch;
 }
 .gp-prize-card{
-  flex:1;min-width:0;
-  background:var(--panel);border:2px solid var(--coral-border);
-  border-radius:var(--rl);overflow:hidden;box-shadow:var(--sh-lg);
-  display:flex;flex-direction:column;
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  background:var(--panel);
+  border:2px solid var(--coral-border);
+  border-radius:var(--r);
+  overflow:hidden;
+  box-shadow:var(--sh-lg);
 }
 .gp-prize-card.done{border-color:var(--teal);}
 .gp-prize-card-hdr{
-  background:var(--coral);padding:14px 16px;
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  text-align:center;flex-shrink:0;
+  background:var(--coral);
+  padding:10px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-shrink:0;
 }
 .gp-prize-card.done .gp-prize-card-hdr{background:var(--teal);}
 .gp-prize-card-name{
-  font-size:0.82rem;font-weight:800;color:#fff;
-  text-transform:uppercase;letter-spacing:.5px;
-  text-align:center;line-height:1.3;
+  font-size:0.78rem;font-weight:800;color:#fff;
+  text-transform:uppercase;letter-spacing:.4px;
+  flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-right:6px;
 }
 .gp-prize-card-badge{
   background:rgba(255,255,255,0.25);color:#fff;
-  font-size:0.68rem;font-weight:800;padding:2px 8px;
-  border-radius:999px;font-family:'DM Mono',monospace;
+  font-size:0.65rem;font-weight:800;padding:2px 7px;
+  border-radius:999px;font-family:'DM Mono',monospace;flex-shrink:0;
 }
-.gp-prize-rows{display:flex;flex-direction:column;flex:1;}
+.gp-prize-rows{
+  display:flex;flex-direction:column;flex:1;
+}
 .gp-prize-row{
   display:flex;align-items:center;gap:8px;
-  padding:0 12px;flex:1;min-height:60px;
+  padding:0 12px;
+  flex:1;
+  min-height:52px;
   border-bottom:1px solid var(--border);
 }
 .gp-prize-row:last-child{border-bottom:none;}
 .gp-prize-row.revealed{background:var(--gold-bg);}
 .gp-prize-row-num{
   font-size:0.6rem;font-weight:700;color:var(--muted2);
-  font-family:'DM Mono',monospace;width:16px;flex-shrink:0;
+  font-family:'DM Mono',monospace;width:14px;flex-shrink:0;
 }
 .gp-prize-vp{
-  flex:1;height:36px;overflow:hidden;
-  border-radius:6px;background:var(--bg2);border:1px solid var(--border);
+  flex:1;height:34px;overflow:hidden;
+  border-radius:5px;background:var(--bg2);border:1px solid var(--border);
 }
 .gp-prize-track{display:flex;flex-direction:column;will-change:transform;}
 .gp-prize-item{
-  height:36px;display:flex;align-items:center;justify-content:center;
+  height:34px;display:flex;align-items:center;justify-content:center;
   flex-shrink:0;padding:0 6px;
 }
 .gp-prize-item span{
-  font-size:0.9rem;font-weight:600;color:var(--text);
+  font-size:0.88rem;font-weight:600;color:var(--text);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
   max-width:100%;text-align:center;
 }
@@ -1111,7 +1136,7 @@ function setMode(mode){
   document.getElementById('mtab-dp').className='mode-tab'+(dp?' dp':'');
   document.getElementById('mtab-gp').className='mode-tab'+(dp?'':' gp');
   document.getElementById('dp-stage').style.display=dp?'block':'none';
-  document.getElementById('gp-stage').style.display=dp?'none':'flex';
+  document.getElementById('gp-stage').style.display=dp?'none':'';
   if(!selEvId)return;
   if(dp)renderDpStage();else renderGpStage();
   updateModeBadge();
@@ -1412,7 +1437,7 @@ function renderGpStage(){
 
   const list=document.getElementById('gp-card-list');list.innerHTML='';
   const names=getAllNames();
-  const slotH=36;
+  const slotH=34;
 
   ev.grandprizes.forEach((prize,pi)=>{
     const prizeW=gpW.filter(w=>w.prizeName===prize.name);
@@ -1503,7 +1528,7 @@ async function startGpDrawAll(){
   rolling=true;document.getElementById('btn-gp-draw').disabled=true;
   const names=getAllNames();if(!names.length){rolling=false;return;}
   const dur=(parseFloat(document.getElementById('roll-dur-gp').value)||7)*1000;
-  const slotH=36; // GP row height = 36px matching CSS
+  const slotH=34; // GP row height 34px
 
   // Prime all tracks
   slotList.forEach(s=>{
