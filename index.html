@@ -493,43 +493,39 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 .zoom-lbl{font-size:0.68rem;color:var(--muted);margin-right:2px;}
 
 
-/* Grand Prize Grid — max 4 col, kartu besar */
-.prize-grid-gp{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-  gap:10px;
-  margin-bottom:10px;
-}
-.prize-grid-gp > .prize-card-slot{
-  min-height:100px;
-}
-.prize-card-slot.gp-card .pc-header{
-  padding:10px 14px;
-  background:var(--coral);
-}
-.prize-card-slot.gp-card.done .pc-header{
-  background:var(--teal);
-}
-.prize-card-slot.gp-card .pc-title{
-  font-size:0.8rem;
-}
-.prize-card-slot.gp-card .pc-winner-row{
-  height:44px;
-}
-.prize-card-slot.gp-card .pc-slot-vp{
-  height:28px;
-}
-.prize-card-slot.gp-card .pc-slot-item{
-  height:28px;
-}
-.prize-card-slot.gp-card .pc-slot-item span{
-  font-size:0.88rem;
-}
-.prize-card-slot.gp-card.revealed-card{
-  border-color:var(--gold-border);
-  box-shadow:0 0 0 3px rgba(212,150,26,0.2);
-}
 
+/* ── GRAND PRIZE — simple centered cards ── */
+.gp-card-list{
+  display:flex;flex-direction:column;gap:12px;
+  width:100%;max-width:700px;margin:0 auto 14px;
+}
+.gp-prize-card{
+  background:var(--panel);border:2px solid var(--coral-border);
+  border-radius:var(--rl);overflow:hidden;box-shadow:var(--sh-lg);
+}
+.gp-prize-card.done{border-color:var(--teal);box-shadow:0 0 0 2px rgba(14,122,114,0.15);}
+.gp-prize-card-hdr{
+  background:var(--coral);padding:12px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.gp-prize-card.done .gp-prize-card-hdr{background:var(--teal);}
+.gp-prize-card-name{font-size:1rem;font-weight:800;color:#fff;text-transform:uppercase;letter-spacing:.5px;}
+.gp-prize-card-badge{background:rgba(255,255,255,0.25);color:#fff;font-size:0.72rem;font-weight:800;padding:3px 10px;border-radius:999px;font-family:'DM Mono',monospace;}
+.gp-prize-rows{display:flex;flex-direction:column;}
+.gp-prize-row{
+  display:flex;align-items:center;gap:10px;
+  padding:0 16px;height:52px;flex-shrink:0;
+  border-bottom:1px solid var(--border);
+}
+.gp-prize-row:last-child{border-bottom:none;}
+.gp-prize-row.revealed{background:var(--gold-bg);}
+.gp-prize-row-num{font-size:0.65rem;font-weight:700;color:var(--muted2);font-family:'DM Mono',monospace;width:18px;flex-shrink:0;}
+.gp-prize-vp{flex:1;height:32px;overflow:hidden;position:relative;border-radius:6px;background:var(--bg2);border:1px solid var(--border);}
+.gp-prize-track{display:flex;flex-direction:column;will-change:transform;}
+.gp-prize-item{height:32px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 8px;}
+.gp-prize-item span{font-size:0.95rem;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;}
+.gp-prize-row.revealed .gp-prize-vp{background:var(--gold-bg);border-color:var(--gold-border);}
+.gp-prize-row.revealed .gp-prize-item.winner span{color:var(--gold-text);font-weight:800;font-size:1rem;}
 </style>
 </head>
 <body>
@@ -641,7 +637,7 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 
       <!-- GP STAGE -->
       <div id="gp-stage" style="display:none">
-        <div class="dp-header-card" style="margin-bottom:8px">
+        <div class="dp-header-card" style="margin-bottom:10px">
           <div class="dp-hc-ico" style="background:var(--coral-bg);border-color:var(--coral-border)">🏆</div>
           <div class="dp-hc-info">
             <div class="dp-hc-label" style="color:var(--coral)">Grand Prize — Semua Hadiah</div>
@@ -654,11 +650,11 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
           </div>
         </div>
         <div class="dur-bar">
-          <label>⏱ Durasi per pemenang</label>
+          <label>⏱ Durasi</label>
           <input type="range" id="roll-dur-gp" min="3" max="20" value="7" oninput="document.getElementById('dur-val-gp').textContent=this.value+'s'">
           <span class="dur-val" id="dur-val-gp">7s</span>
         </div>
-        <div class="prize-grid-gp" id="prize-grid-gp"></div>
+        <div class="gp-card-list" id="gp-card-list"></div>
         <div class="ctrl-row">
           <button class="btn-main coral" id="btn-gp-draw" onclick="startGpDrawAll()">🏆 Undi Semua Grand Prize</button>
           <button class="btn-reroll" id="btn-gp-reroll" onclick="rerollDraw()" style="display:none">↺ Undi Ulang</button>
@@ -669,7 +665,6 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
         </button>
         <div class="info-panel" id="gp-info-panel"></div>
       </div>
-
     </div>
   </div>
 
@@ -1091,7 +1086,7 @@ function setMode(mode){
   document.getElementById('mtab-dp').className='mode-tab'+(dp?' dp':'');
   document.getElementById('mtab-gp').className='mode-tab'+(dp?'':' gp');
   document.getElementById('dp-stage').style.display=dp?'block':'none';
-  document.getElementById('gp-stage').style.display=dp?'none':'block';
+  document.getElementById('gp-stage').style.display=dp?'none':'flex';
   if(!selEvId)return;
   if(dp)renderDpStage();else renderGpStage();
   updateModeBadge();
@@ -1385,61 +1380,55 @@ function renderGpStage(){
   const gpW=S.winners.filter(w=>w.evId===selEvId&&w.prizeType==='GRAND PRIZE');
   const total=ev.grandprizes.reduce((s,p)=>s+p.count,0);
   document.getElementById('gp-total-num').textContent=total;
-  document.getElementById('gp-hc-sub').textContent=gpW.length===total&&total>0
+  const allDone=gpW.length>=total&&total>0;
+  document.getElementById('gp-hc-sub').textContent=allDone
     ?'Semua grand prize sudah diundi! 🎉'
     :'Klik Undi untuk mengundi semua grand prize sekaligus';
 
-  // Build grid — same structure as DP grid
-  const grid=document.getElementById('prize-grid-gp');grid.innerHTML='';
+  const list=document.getElementById('gp-card-list');list.innerHTML='';
   const names=getAllNames();
-  const alreadyDone=gpW.length>=total&&total>0;
-  const rowH=44; // GP always large
-  const slotH=28;
+  const slotH=32;
 
   ev.grandprizes.forEach((prize,pi)=>{
-    const prizeWinners=gpW.filter(w=>w.prizeName===prize.name);
+    const prizeW=gpW.filter(w=>w.prizeName===prize.name);
+    const isDone=prizeW.length>=prize.count;
 
     const card=document.createElement('div');
-    card.className='prize-card-slot gp-card'+(prizeWinners.length>=prize.count?' done':'');
+    card.className='gp-prize-card'+(isDone?' done':'');
     card.id='gpcard-'+pi;
 
-    const hdr=document.createElement('div');
-    hdr.className='pc-header';
-    hdr.style.background=prizeWinners.length>=prize.count?'var(--teal)':'var(--coral)';
-    hdr.innerHTML='<span class="pc-title">'+prize.name+'</span><span class="pc-count-badge" style="background:rgba(255,255,255,0.25);color:#fff">×'+prize.count+'</span>';
+    const hdr=document.createElement('div');hdr.className='gp-prize-card-hdr';
+    hdr.innerHTML='<span class="gp-prize-card-name">🏆 '+prize.name+'</span>'
+      +'<span class="gp-prize-card-badge">×'+prize.count+'</span>';
     card.appendChild(hdr);
 
-    const body=document.createElement('div');
-    body.className='pc-winners';
-
+    const rows=document.createElement('div');rows.className='gp-prize-rows';
     for(let i=0;i<prize.count;i++){
-      const w=prizeWinners[i]||null;
+      const w=prizeW[i]||null;
       const row=document.createElement('div');
-      row.className='pc-winner-row'+(w?' revealed':'');
+      row.className='gp-prize-row'+(w?' revealed':'');
       row.id='gprow-'+pi+'-'+i;
-      row.style.height=rowH+'px';
-      const numSpan=document.createElement('span');
-      numSpan.className='pc-winner-num';numSpan.textContent=i+1;
-      row.appendChild(numSpan);
-      const vp=document.createElement('div');vp.className='pc-slot-vp';
-      const track=document.createElement('div');track.className='pc-slot-track';track.id='gptrack-'+pi+'-'+i;
+      const num=document.createElement('span');num.className='gp-prize-row-num';num.textContent=i+1;
+      row.appendChild(num);
+      const vp=document.createElement('div');vp.className='gp-prize-vp';
+      const track=document.createElement('div');track.className='gp-prize-track';track.id='gptrack-'+pi+'-'+i;
       if(w){
-        track.innerHTML='<div class="pc-slot-item winner"><span>'+w.name+'</span></div>';
+        track.innerHTML='<div class="gp-prize-item winner"><span>'+w.name+'</span></div>';
       }else if(names.length){
         const items=[...names,...names,...names,...names,...names,...names];
-        track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+        track.innerHTML=items.map(n=>'<div class="gp-prize-item"><span>'+n+'</span></div>').join('');
         const mid=Math.floor(items.length/2);
-        track.style.transform='translateY(-'+(mid*28)+'px)';
+        track.style.transform='translateY(-'+(mid*slotH)+'px)';
       }else{
-        track.innerHTML='<div class="pc-slot-item"><span style="color:var(--muted2)">—</span></div>';
+        track.innerHTML='<div class="gp-prize-item"><span style="color:var(--muted2)">—</span></div>';
       }
-      vp.appendChild(track);row.appendChild(vp);body.appendChild(row);
+      vp.appendChild(track);row.appendChild(vp);rows.appendChild(row);
     }
-    card.appendChild(body);grid.appendChild(card);
+    card.appendChild(rows);list.appendChild(card);
   });
 
   const btn=document.getElementById('btn-gp-draw');
-  if(alreadyDone){btn.textContent='✓ Grand Prize Sudah Diundi';btn.disabled=true;}
+  if(allDone){btn.textContent='✓ Grand Prize Sudah Diundi';btn.disabled=true;}
   else if(!total){btn.textContent='🏆 Undi Semua Grand Prize';btn.disabled=true;}
   else{btn.textContent='🏆 Undi Semua Grand Prize';btn.disabled=!isOperator;}
   document.getElementById('gp-status').textContent='';
@@ -1495,24 +1484,31 @@ async function startGpDrawAll(){
   slotList.forEach(s=>{
     const track=document.getElementById('gptrack-'+s.pi+'-'+s.si);if(!track)return;
     const items=[...names,...names,...names,...names,...names,...names];
-    track.innerHTML=items.map(n=>'<div class="pc-slot-item"><span>'+n+'</span></div>').join('');
+    track.innerHTML=items.map(n=>'<div class="gp-prize-item"><span>'+n+'</span></div>').join('');
     const mid=Math.floor(items.length/2);track.style.transform='translateY(-'+(mid*slotH)+'px)';
   });
   document.getElementById('gp-status').textContent='🎰 Rolling…';
 
-  // Animate all — stagger start, finish together, reveal serentak
+  // Animate all — stagger start, all finish together, reveal serentak
+  const slotH=44; // GP slot item height
   const promises=slotList.map((s,i)=>animateGpSlotAll(s.pi,s.si,allWinners[i],dur,i*60,names,slotH));
+
   await Promise.all(promises);
 
   // Reveal all at once
   slotList.forEach((s,i)=>{
     const w=allWinners[i];if(!w)return;
     const track=document.getElementById('gptrack-'+s.pi+'-'+s.si);
-    if(track){const last=track.lastElementChild;if(last){last.querySelector('span').style.color='var(--gold-text)';last.querySelector('span').style.fontWeight='800';}}
+    if(track){
+      const last=track.lastElementChild;
+      if(last){last.querySelector('span').style.color='var(--gold-text)';last.querySelector('span').style.fontWeight='800';}
+    }
     const row=document.getElementById('gprow-'+s.pi+'-'+s.si);
     if(row)row.classList.add('revealed');
     const card=document.getElementById('gpcard-'+s.pi);
-    if(card){card.classList.add('done');const hdr=card.querySelector('.pc-header');if(hdr)hdr.style.background='var(--teal)';}
+    if(card)card.classList.add('done');
+    const hdr=card?card.querySelector('.gp-prize-card-hdr'):null;
+    if(hdr)hdr.style.background='var(--teal)';
   });
 
   // Save
@@ -1535,8 +1531,8 @@ function animateGpSlotAll(pi,si,winner,dur,delay,names,slotH){
       if(!track||!winner){resolve();return;}
       const safeIdx=Math.max(0,names.indexOf(winner.name));
       const big=[];for(let i=0;i<60;i++)big.push(names[i%names.length]);big.push(names[safeIdx]);
-      track.innerHTML=big.map((n,j)=>'<div class="pc-slot-item'+(j===big.length-1?' winner':'')+'"><span>'+n+'</span></div>').join('');
-      const tIdx=big.length-1,tY=tIdx*slotH;
+      track.innerHTML=big.map((n,j)=>'<div class="gp-prize-item'+(j===big.length-1?' winner':'')+'"><span>'+n+'</span></div>').join('');
+      const tIdx=big.length-1, tY=tIdx*slotH;
       const t0=performance.now();
       function ease(t){return 1-Math.pow(1-t,4);}
       function anim(now){
