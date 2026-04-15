@@ -498,7 +498,6 @@ textarea{resize:vertical;min-height:80px;line-height:1.5;}
 /* ── GRAND PRIZE — simple centered cards ── */
 /* GP layout: 3 tingkat — header / slider / tabel kartu */
 #gp-stage{
-  display:flex;
   flex-direction:column;
   align-items:stretch;
   width:100%;
@@ -947,6 +946,7 @@ function getEv(id){return S.events.find(e=>e.id===id);}
 ══════════════════════════════════════ */
 let db = null;
 let fbReady = false;
+let winnersLoaded = false; // guard: jangan saveWinners sebelum load
 const FB_SETTINGS_DOC = 'settings';
 const FB_WINNERS_DOC  = 'winners';
 const FB_COLLECTION   = 'undian';
@@ -994,6 +994,7 @@ async function initFirebase(){
   onSnapshot(winnersRef, snap => {
     if(snap.exists()){
       S.winners = snap.data().list || [];
+      winnersLoaded = true;
       // Refresh results page if open
       if(document.getElementById('page-results').classList.contains('active')) renderResults();
       // Refresh draw stage winner display (non-rolling)
@@ -1014,6 +1015,7 @@ async function saveSettings(){
 
 async function saveWinners(){
   if(!db){console.warn('Firebase not ready');return;}
+  if(!winnersLoaded){console.warn('saveWinners blocked: winners not loaded yet');return;}
   const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
   await setDoc(doc(db, FB_COLLECTION, FB_WINNERS_DOC), { list: S.winners });
 }
@@ -1137,7 +1139,7 @@ function setMode(mode){
   document.getElementById('mtab-dp').className='mode-tab'+(dp?' dp':'');
   document.getElementById('mtab-gp').className='mode-tab'+(dp?'':' gp');
   document.getElementById('dp-stage').style.display=dp?'block':'none';
-  document.getElementById('gp-stage').style.display=dp?'none':'';
+  document.getElementById('gp-stage').style.display=dp?'none':'flex';
   if(!selEvId)return;
   if(dp)renderDpStage();else renderGpStage();
   updateModeBadge();
@@ -1643,8 +1645,9 @@ function renderResults(){
   tb.innerHTML=w.map((x,i)=>{const ev=getEv(x.evId),dp=x.prizeType==='DOORPRIZE';return'<tr><td style="color:var(--muted);font-family:\'DM Mono\',monospace;font-size:.75rem">'+(i+1)+'</td><td style="font-size:.78rem;color:var(--muted)">'+(ev?ev.name:'—')+'</td><td>'+(dp?'🎁':'🏆')+' <strong>'+x.prizeName+'</strong> <span class="badge '+(dp?'b-dp':'b-gp')+'">'+x.prizeType+'</span></td><td style="font-weight:700">'+x.name+'</td><td><span class="badge '+(x.type==='org'?'b-org':'b-non')+'">'+(x.type==='org'?'Organik':'Non-Organik')+'</span></td><td style="font-family:\'DM Mono\',monospace;font-size:.74rem">'+(x.grade||'—')+'</td></tr>';}).join('');
 }
 function resetWinners(){
-  if(!confirm('Reset semua pemenang?'))return;
-  S.winners=[];save();renderResults();renderDrawContent();toast('✓ Semua pemenang direset.');
+  const input=prompt('Ketik RESET untuk menghapus semua pemenang (tidak bisa dibatalkan):');
+  if(input!=='RESET'){toast('Reset dibatalkan.');return;}
+  S.winners=[];saveWinners();renderResults();renderDrawContent();toast('✓ Semua pemenang direset.');
 }
 
 /* Admin */
@@ -1662,14 +1665,14 @@ function fillAdminEvSel(){
 }
 function createEv(){
   const ev={id:uid(),name:'Kegiatan Baru',loc:'',dateStart:'',dateEnd:'',doorprizes:[],grandprizes:[],organic:[],nonOrganic:[],ratios:{organic:40,non:60,g2:50,g3:35,g4:15,g5:0,g6:0,g7:0,gpOrganic:50,gpNon:50}};
-  S.events.push(ev);save();fillAdminEvSel();loadEvEd(ev.id);fillDrawEvSel();
+  S.events.push(ev);saveSettings();fillAdminEvSel();loadEvEd(ev.id);fillDrawEvSel();
 }
 function deleteEv(){
   if(!adminEvId)return;const ev=getEv(adminEvId);
   if(!confirm('Hapus kegiatan "'+(ev?.name||'ini')+'"?'))return;
   S.events=S.events.filter(e=>e.id!==adminEvId);S.winners=S.winners.filter(w=>w.evId!==adminEvId);
   if(selEvId===adminEvId)selEvId=null;
-  adminEvId=null;save();fillAdminEvSel();fillDrawEvSel();document.getElementById('a-ev-editor').style.display='none';toast('✓ Kegiatan dihapus.');
+  adminEvId=null;saveSettings();fillAdminEvSel();fillDrawEvSel();document.getElementById('a-ev-editor').style.display='none';toast('✓ Kegiatan dihapus.');
 }
 function loadEvEd(id){
   if(!id){document.getElementById('a-ev-editor').style.display='none';return;}
@@ -1739,7 +1742,7 @@ function saveEv(){
   ev.name=document.getElementById('ev-name').value.trim()||'Kegiatan Baru';ev.loc=document.getElementById('ev-loc').value.trim();ev.dateStart=document.getElementById('ev-ds').value;ev.dateEnd=document.getElementById('ev-de').value;
   const r={};['organic','non','g2','g3','g4','g5','g6','g7'].forEach(k=>{r[k]=parseFloat(document.getElementById('r-'+k)?.value)||0;});r.gpOrganic=parseFloat(document.getElementById('r-gp-organic')?.value)||50;r.gpNon=parseFloat(document.getElementById('r-gp-non')?.value)||50;ev.ratios=r;
 
-  save();fillAdminEvSel();fillDrawEvSel();if(selEvId===adminEvId)renderDrawMeta(ev);
+  saveSettings();fillAdminEvSel();fillDrawEvSel();if(selEvId===adminEvId)renderDrawMeta(ev);
   const ok=document.getElementById('save-ok');ok.style.display='block';setTimeout(()=>ok.style.display='none',2800);toast('✓ Pengaturan disimpan!');
 }
 
