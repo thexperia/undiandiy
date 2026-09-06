@@ -1050,8 +1050,8 @@ async function saveWinners(){
   const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js');
   // Sanitize: replace any undefined fields with null (Firestore rejects undefined)
   const sanitized = S.winners.map(w=>({
-    evId: w.evId||'', prizeName: w.prizeName||'', prizeType: w.prizeType||'',
-    name: w.name||'', type: w.type||'non', grade: w.grade||null, key: w.key||''
+    evId: w.evId||'', prizeName: w.prizeName||'', prizeIndex: w.prizeIndex!==undefined?w.prizeIndex:null,
+    prizeType: w.prizeType||'', name: w.name||'', type: w.type||'non', grade: w.grade||null, key: w.key||''
   }));
   await setDoc(doc(db, FB_COLLECTION, FB_WINNERS_DOC), { list: sanitized });
   console.log('[SAVE WINNERS] done, wrote', sanitized.length);
@@ -1220,8 +1220,8 @@ function renderDpStage(){
   const cardBodyH=(maxCount*rowH);
 
   ev.doorprizes.forEach((prize,pi)=>{
-    // Ambil entry TERBARU per prize (slice terakhir) — hindari duplikat dari undi ulang
-    const allPrizeW=winners.filter(w=>w.prizeName===prize.name);
+    // Filter by prizeIndex (unik per kartu) — fallback ke prizeName utk data lama
+    const allPrizeW=winners.filter(w=>w.prizeIndex!==undefined?w.prizeIndex===pi:w.prizeName===prize.name);
     const prizeWinners=allPrizeW.slice(-prize.count);
 
     const card=document.createElement('div');
@@ -1388,8 +1388,21 @@ async function startDpDraw(){
     quotaSum+=gradeQuotas[g];
   });
   // Jika ada sisa akibat rounding atau pool kecil, distribusi ulang
+  // PENTING: loop sampai benar-benar habis (bukan hanya 1 putaran) —
+  // kalau sisa > jumlah grade aktif, 1 putaran saja tidak cukup dan
+  // menyebabkan sebagian slot kehabisan pemenang (kolom tidak muter)
   let remaining2=nOrg-Object.values(gradeQuotas).reduce((s,v)=>s+v,0);
-  for(const g of activeGrades){if(remaining2===0)break;const cap=avO2.filter(e=>e.grade===g).length-gradeQuotas[g];if(cap>0){gradeQuotas[g]++;remaining2--;}}
+  let safety=0;
+  while(remaining2>0&&safety<1000){
+    let addedThisPass=false;
+    for(const g of activeGrades){
+      if(remaining2===0)break;
+      const cap=avO2.filter(e=>e.grade===g).length-gradeQuotas[g];
+      if(cap>0){gradeQuotas[g]++;remaining2--;addedThisPass=true;}
+    }
+    if(!addedThisPass)break; // semua grade sudah maksimal, tidak bisa ditambah lagi
+    safety++;
+  }
   // Pick peserta per grade secara random shuffle
   function shufflePick(arr,n){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,n);}
   const orgWinners=[];
@@ -1422,7 +1435,7 @@ async function startDpDraw(){
   S.winners=S.winners.filter(w=>!(w.evId===selEvId&&w.prizeType==='DOORPRIZE'));
   slotList.forEach((s,i)=>{
     const w=winners[i];if(!w)return;
-    S.winners.push({evId:selEvId,prizeName:s.prizeName,prizeType:'DOORPRIZE',name:w.name||'',type:w.type||'non',grade:w.grade||null,key:w.key||''});
+    S.winners.push({evId:selEvId,prizeName:s.prizeName,prizeIndex:s.pi,prizeType:'DOORPRIZE',name:w.name||'',type:w.type||'non',grade:w.grade||null,key:w.key||''});
   });
   save();
   document.getElementById('btn-dp-draw').textContent='✓ Doorprize Sudah Diundi';
@@ -1488,7 +1501,7 @@ function renderGpStage(){
   const slotH=40;
 
   ev.grandprizes.forEach((prize,pi)=>{
-    const allPrizeWGp=gpW.filter(w=>w.prizeName===prize.name);
+    const allPrizeWGp=gpW.filter(w=>w.prizeIndex!==undefined?w.prizeIndex===pi:w.prizeName===prize.name);
     const prizeW=allPrizeWGp.slice(-prize.count);
     const isDone=prizeW.length>=prize.count;
 
@@ -1612,7 +1625,7 @@ async function startGpDrawAll(){
   // Save
   slotList.forEach((s,i)=>{
     const w=allWinners[i];if(!w)return;
-    S.winners.push({evId:selEvId,prizeName:s.prizeName,prizeType:'GRAND PRIZE',name:w.name||'',type:w.type||'non',grade:w.grade||null,key:w.key||''});
+    S.winners.push({evId:selEvId,prizeName:s.prizeName,prizeIndex:s.pi,prizeType:'GRAND PRIZE',name:w.name||'',type:w.type||'non',grade:w.grade||null,key:w.key||''});
   });
   save();
   document.getElementById('gp-status').textContent='';
